@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "413605639008",
+    "project_id": "quanlysanbong-cc421",
+    "storage_bucket": "quanlysanbong-cc421.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413605639008:android:8f0bf21c996633c5376405",
+        "android_client_info": {
+          "package_name": "vn.edu.ntu.QuanLySanBong.quanlysanbong"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413605639008-4jngq2qndsd91lgfskrjhdm23qo7eo65.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.edu.ntu.QuanLySanBong",
+            "certificate_hash": "b1b9109e317dbd7f254221d331a73b8c22e6e622"
+          }
+        },
+        {
+          "client_id": "413605639008-e2q4qol2evkd2d61ojm5n9eecj1aebem.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbSxdRIwZGMgbBQQVw9S6NJwpHMCn0Fu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "413605639008-e2q4qol2evkd2d61ojm5n9eecj1aebem.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
