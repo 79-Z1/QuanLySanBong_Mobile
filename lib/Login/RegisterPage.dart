@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quanlysanbong/RegisterPage.dart';
+import 'package:quanlysanbong/Login/LoginPage.dart';
 
-class PageLogin extends StatelessWidget {
-  const PageLogin({Key? key}) : super(key: key);
+class PageRegister extends StatelessWidget {
+  const PageRegister({Key? key}) : super(key: key);
   Widget inputField(String text,Widget icon){
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30,vertical: 8),
@@ -37,7 +37,7 @@ class PageLogin extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("asset/images/backgroundqlsb.jpg"),
+                    image: AssetImage("asset/images/login/backgroundqlsb.jpg"),
                     fit: BoxFit.cover
                 )
             ),
@@ -46,43 +46,21 @@ class PageLogin extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 100,),
-                Text("Đăng nhập",style: TextStyle(color: Colors.white,fontSize: 50),),
+                Text("Đăng ký",style: TextStyle(color: Colors.white,fontSize: 50),),
                 inputField("Email",Icon(Icons.email)),
                 inputField("Mật khẩu",Icon(Icons.lock,)),
+                inputField("SĐT",Icon(Icons.lock,)),
                 Container(
                   height:50,
                   child: ElevatedButton(onPressed: () {
-                  }, child: Text("Đăng nhập",style: TextStyle(fontSize: 20),)),
+
+                  }, child: Text("Đăng Ký",style: TextStyle(fontSize: 20),)),
                 ),
                 Spacer(),
                 TextButton(onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PageRegister()));
-                }, child: Text("Chưa có tài khoản?",style: TextStyle(fontSize: 20,color: Colors.white),)
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PageLogin()));
+                }, child: Text("Đã có tài khoản?",style: TextStyle(fontSize: 20,color: Colors.white),)
                 ),
-                Container(
-                  height: 70,
-                  padding: EdgeInsets.symmetric(horizontal: 30,vertical: 8),
-                  child: ElevatedButton(onPressed: () {
-                  },child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.facebook),
-                      SizedBox(width: 40,),
-                      Text("Tiếp tục với Facebook",style: TextStyle(fontSize: 25),)
-                    ],
-                  )),),
-                Container(
-                  height: 70,
-                  padding: EdgeInsets.symmetric(horizontal: 30,vertical: 8),
-                  child: ElevatedButton(onPressed: () {
-                  },child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.tiktok),
-                      SizedBox(width: 40),
-                      Text(("Tiếp tục với Google"),style: TextStyle(fontSize: 25),)
-                    ],
-                  )),),
               ],
             ),
           )
