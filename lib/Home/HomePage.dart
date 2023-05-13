@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
               height: 80,
               decoration: BoxDecoration(
                   color: Colors.green,
+
               ),
               child: Row(
                 children: [
@@ -84,7 +85,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 void _showSnackbar(BuildContext context, String message){
   ScaffoldMessenger.of(context).clearSnackBars();
   ScaffoldMessenger.of(context).showSnackBar(
