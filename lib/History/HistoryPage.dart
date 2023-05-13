@@ -21,12 +21,14 @@ class _PageHistoryState extends State<PageHistory> {
           fit: StackFit.expand,
           children: [
             Container(
+              padding: EdgeInsets.only(top: 30),
               color: Colors.green,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  SizedBox(width: 20),
+                  SizedBox(width: 20, height: 20),
                   InkWell(
+
                     child: Icon(
                       CupertinoIcons.arrow_left_circle_fill,
                       color: Colors.white,
@@ -34,12 +36,12 @@ class _PageHistoryState extends State<PageHistory> {
                     )
                   ),
                   Spacer(),
-                  Text("Lịch sử")
+                  Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
                 ],
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 50),
+              margin: const EdgeInsets.only(top: 80),
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
