@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quanlysanbong/Login/LoginPage.dart';
+import 'package:quanlysanbong/Authen/LoginPage.dart';
 
 class PageRegister extends StatelessWidget {
   const PageRegister({Key? key}) : super(key: key);
