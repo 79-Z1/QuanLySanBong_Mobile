@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:quanlysanbong/Rss/Model/RssItem.dart';
 import 'package:xml2json/xml2json.dart';
 
-String _rssUrlVNExpress="https://thethao247.vn/bong-da.rss";
+String _rssUrlVNExpress="https://thethao247.vn/bong-da-viet-nam-c1.rss";
 String reSourceName="Tin tức bóng đá";
 
 class ControllerRss extends GetxController{
