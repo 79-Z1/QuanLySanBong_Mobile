@@ -68,7 +68,7 @@ class PageLogin extends StatelessWidget {
                     children: [
                       Icon(Icons.facebook),
                       SizedBox(width: 40,),
-                      Text("Tiếp tục với Facebook",style: TextStyle(fontSize: 25),)
+                      Text("Tiếp tục với Facebook",style: TextStyle(fontSize: 22),)
                     ],
                   )),),
                 Container(
@@ -80,7 +80,7 @@ class PageLogin extends StatelessWidget {
                     children: [
                       Icon(Icons.tiktok),
                       SizedBox(width: 40),
-                      Text(("Tiếp tục với Google"),style: TextStyle(fontSize: 25),)
+                      Text(("Tiếp tục với Google"),style: TextStyle(fontSize: 22),)
                     ],
                   )),),
               ],
