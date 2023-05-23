@@ -1,5 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
+
+class FireBaseBooking extends StatelessWidget {
+  const FireBaseBooking({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MyFirebaseConnect(
+        builder: (context) => PageBooking(),
+        errorMessage: "Lỗi kết nối với firebase!",
+        connectingMessage: "Vui lòng đợi kết nối!"
+    );
+  }
+}
+
+
 
 class PageBooking extends StatefulWidget {
   const PageBooking({Key? key}) : super(key: key);
