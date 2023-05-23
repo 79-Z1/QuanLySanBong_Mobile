@@ -59,164 +59,164 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-            children: [
-              Container(
-                height: 80,
-                decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                    ),
+          children: [
+            Container(
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
                 ),
-                child: Row(
-                  children: [
-                    Icon(Icons.account_circle,size: 50,color: Colors.white,),
-                    SizedBox(width: 5,),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Xin chào",
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.account_circle,size: 50,color: Colors.white,),
+                  SizedBox(width: 5,),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Xin chào",
+                        style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.white
+                        ),
+                      ),
+                      Text("${userName}",
                           style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.white
-                          ),
-                        ),
-                        Text("${userName}",
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white)
-                        ),
-                      ],
-                    )
-                  ],
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: 20,),
+            Container(
+              height: 200,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  style:BorderStyle.solid,
+                  width: 3,
                 ),
               ),
-              SizedBox(height: 20,),
-              Container(
-                height: 200,
-                decoration: BoxDecoration(
-                 border: Border.all(
-                   color: Colors.grey,
-                   style:BorderStyle.solid,
-                   width: 3,
-                 ),
+              child: CarouselSlider.builder(
+                options: CarouselOptions(
+                  autoPlay: true,
+                  viewportFraction: 1,
+                  initialPage: imgPos,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      imgPos = index;
+                    });
+                  },
                 ),
-                child: CarouselSlider.builder(
-                  options: CarouselOptions(
-                    autoPlay: true,
-                    viewportFraction: 1,
-                    initialPage: imgPos,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        imgPos = index;
-                      });
-                    },
-                  ),
-                  itemCount: banners.length,
-                  itemBuilder: (context, index, realIndex) => Container(
-                    child: Image.asset(banners[index]),
-                  ),
+                itemCount: banners.length,
+                itemBuilder: (context, index, realIndex) => Container(
+                  child: Image.asset(banners[index]),
                 ),
               ),
-              SizedBox(height: 5,),
-              Text("${time}",
+            ),
+            SizedBox(height: 5,),
+            Text("${time}",
               style: TextStyle(
                 fontSize: 45,
                 color: Colors.green,
                 fontWeight: FontWeight.bold,
               ),
-              ),
-              SizedBox(height: 5,),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 200,
-                  padding: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                      style:BorderStyle.solid,
-                      width: 3,
-                    ),
-                  ),
-                  child: WebViewWidget(
-                    controller: controller,
+            ),
+            SizedBox(height: 5,),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 200,
+                padding: EdgeInsets.all(3),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey,
+                    style:BorderStyle.solid,
+                    width: 3,
                   ),
                 ),
+                child: WebViewWidget(
+                  controller: controller,
+                ),
               ),
-              SizedBox(height: 5,),
-              StreamBuilder(
-                stream: SanSnapShot.getAll(),
-                builder: (context, snapshot) {
-                  if(snapshot.hasError){
-                    print(snapshot.error);
-                    return Center(
-                      child: Text("Lỗi dữ liệu Firebase",
-                        style: TextStyle(
-                            color: Colors.red),
-                      ),
-                    );
-                  }
-                  else
-                  if(!snapshot.hasData){
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  else
-                  {
-                    var list = snapshot.data!;
-                    return ListView.separated(
-                      shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        separatorBuilder: (context, index) => SizedBox(height: 5,),
-                        itemBuilder: (context, index) => Container(
-                          child: Image.network("${list[index].san!.Anh}"),
-                        ),
-                        itemCount: list.length,
-                    );
-                    // return Container(
-                    //   child: Image.network("${list[0].san!.Anh}"),
-                    // );
-                  }
-                },
-              ),
-            ],
-          ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home,color: Colors.green,),
-                label: "Trang chủ",
             ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle,color: Colors.green),
-                label: "Tài khoản",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history_outlined,color: Colors.green),
-              label: "Lịch sử",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.newspaper,color: Colors.green),
-              label: "Tin tức",
+            SizedBox(height: 5,),
+            StreamBuilder(
+              stream: SanSnapShot.getAll(),
+              builder: (context, snapshot) {
+                if(snapshot.hasError){
+                  print(snapshot.error);
+                  return Center(
+                    child: Text("Lỗi dữ liệu Firebase",
+                      style: TextStyle(
+                          color: Colors.red),
+                    ),
+                  );
+                }
+                else
+                if(!snapshot.hasData){
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                else
+                {
+                  var list = snapshot.data!;
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    separatorBuilder: (context, index) => SizedBox(height: 5,),
+                    itemBuilder: (context, index) => Container(
+                      child: Image.network("${list[index].san!.Anh}"),
+                    ),
+                    itemCount: list.length,
+                  );
+                  // return Container(
+                  //   child: Image.network("${list[0].san!.Anh}"),
+                  // );
+                }
+              },
             ),
           ],
-          type: BottomNavigationBarType.shifting,
-          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-          selectedItemColor: Colors.green,
-          currentIndex: indexBar,
-          iconSize: 40,
-          onTap: (value) {
-            indexBar = value;
-            setState(() {
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home,color: Colors.green,),
+            label: "Trang chủ",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle,color: Colors.green),
+            label: "Tài khoản",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history_outlined,color: Colors.green),
+            label: "Lịch sử",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.newspaper,color: Colors.green),
+            label: "Tin tức",
+          ),
+        ],
+        type: BottomNavigationBarType.shifting,
+        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+        selectedItemColor: Colors.green,
+        currentIndex: indexBar,
+        iconSize: 40,
+        onTap: (value) {
+          indexBar = value;
+          setState(() {
 
-            });
-          },
+          });
+        },
       ),
     );
   }

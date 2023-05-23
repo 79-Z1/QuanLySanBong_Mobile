@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:quanlysanbong/Firebase/San_Data.dart';
 
-class ControllerFirebase extends GetxController{
+class SanController extends GetxController{
   final _listSanSN = <SanSnapShot>[].obs;
   List<SanSnapShot> get listSanSN => _listSanSN.value;
   @override
