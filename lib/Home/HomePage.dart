@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:quanlysanbong/Firebase/ChiTietSan.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
 import 'package:quanlysanbong/Firebase/San_Data.dart';
+import 'package:quanlysanbong/History/HistoryPage.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 List<String> banners = [
@@ -216,6 +217,16 @@ class _HomePageState extends State<HomePage> {
           setState(() {
 
           });
+          switch(value){
+            case 0: Navigator.push(context,
+                MaterialPageRoute(builder: (context) => PageHistory(),)); break;
+            case 1: Navigator.push(context,
+                MaterialPageRoute(builder: (context) => PageHistory(),)); break;
+            case 2: Navigator.push(context,
+                MaterialPageRoute(builder: (context) => PageHistory(),)); break;
+            case 3: Navigator.push(context,
+                MaterialPageRoute(builder: (context) => PageHistory(),)); break;
+          }
         },
       ),
     );
