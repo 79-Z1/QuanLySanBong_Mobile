@@ -1,37 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatSan {
-  String? MaCTS, MaDS, MaTK, NgayDenSan;
-  int GioBatDau, GioKetThuc;
+  String?  MaSan,MaTK, NgayDenSan,ViTriSan;
+  int? GioBatDau, GioKetThuc, TongTien;
 
   DatSan({
-    this.MaCTS,
-    this.MaDS,
+    this.MaSan,
     this.MaTK,
     this.NgayDenSan,
-    required this.GioBatDau,
-    required this.GioKetThuc,
+    this.ViTriSan,
+    this.GioBatDau,
+    this.GioKetThuc,
+    this.TongTien,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      'MaCTS': this.MaCTS,
-      'MaDS': this.MaDS,
+      'MaSan': this.MaSan,
       'MaTK': this.MaTK,
       'NgayDenSan': this.NgayDenSan,
+      'ViTriSan': this.ViTriSan,
       'GioBatDau': this.GioBatDau,
       'GioKetThuc': this.GioKetThuc,
+      'TongTien': this.TongTien,
     };
   }
 
-  factory DatSan.parseToObject(Map<String, dynamic> map) {
+  factory DatSan.fromJson(Map<String, dynamic> map) {
     return DatSan(
-      MaCTS: map['MaCTS'] as String,
-      MaDS: map['MaDS'] as String,
+      MaSan: map['MaSan'] as String,
       MaTK: map['MaTK'] as String,
       NgayDenSan: map['NgayDenSan'] as String,
+      ViTriSan: map['ViTriSan'] as String,
       GioBatDau: map['GioBatDau'] as int,
       GioKetThuc: map['GioKetThuc'] as int,
+      TongTien: map['TongTien'] as int,
     );
   }
 }
@@ -47,7 +50,7 @@ class DatSanSnapShot {
 
   factory DatSanSnapShot.fromSnapShot(DocumentSnapshot docSnapDatSan) {
     return DatSanSnapShot(
-        datSan:  DatSan.parseToObject(docSnapDatSan.data() as Map<String, dynamic>),
+        datSan:  DatSan.fromJson(docSnapDatSan.data() as Map<String, dynamic>),
         documentReference: docSnapDatSan.reference
     );
   }
