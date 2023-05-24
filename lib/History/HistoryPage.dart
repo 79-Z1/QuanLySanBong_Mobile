@@ -88,7 +88,7 @@ class _PageHistoryState extends State<PageHistory> {
                       color: Colors.black, thickness: 2,
                   ),
                   StreamBuilder<List<dynamic>>(
-                    stream: San_DatSan.joinChiTietSanAndDatSan(),
+                    stream: San_DatSan.joinChiTietSanVaDatSanVaSan(),
                     builder: (context, snapshot) {
                       if(snapshot.hasError) {
                         print("Lỗi nè");
@@ -105,7 +105,7 @@ class _PageHistoryState extends State<PageHistory> {
                         );
                       } else {
                         var list = snapshot.data!;
-                        print(list);
+                        print(list.length);
                         return Expanded(
                           child: ListView.separated(
                             itemBuilder: (context, index) => Container(

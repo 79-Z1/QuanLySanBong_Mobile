@@ -24,7 +24,7 @@ class DatSan {
     };
   }
 
-  factory DatSan.parseToObject(Map<String, dynamic> map) {
+  factory DatSan.fromJson(Map<String, dynamic> map) {
     return DatSan(
       MaCTS: map['MaCTS'] as String,
       MaDS: map['MaDS'] as String,
@@ -47,7 +47,7 @@ class DatSanSnapShot {
 
   factory DatSanSnapShot.fromSnapShot(DocumentSnapshot docSnapDatSan) {
     return DatSanSnapShot(
-        datSan:  DatSan.parseToObject(docSnapDatSan.data() as Map<String, dynamic>),
+        datSan:  DatSan.fromJson(docSnapDatSan.data() as Map<String, dynamic>),
         documentReference: docSnapDatSan.reference
     );
   }

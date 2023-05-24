@@ -13,7 +13,7 @@ class San_DatSan {
     var chiTietSanList = snapshots.docs.map((doc) => ChiTietSan.fromJson(doc.data())).toList();
 
     snapshots = await FirebaseFirestore.instance.collectionGroup('DatSan').get();
-    var datSanList = snapshots.docs.map((doc) => DatSan.parseToObject(doc.data())).toList();
+    var datSanList = snapshots.docs.map((doc) => DatSan.fromJson(doc.data())).toList();
 
     var joinList = <Map<String, dynamic>>[];
 
@@ -46,7 +46,7 @@ class San_DatSan {
           .get();
 
       for (var queryDoc in querySnapshot.docs) {
-        var datSan = DatSan.parseToObject(queryDoc.data()!);
+        var datSan = DatSan.fromJson(queryDoc.data()!);
 
         var data = {
           ...chiTietSan.toJson(),
@@ -60,8 +60,40 @@ class San_DatSan {
     yield results;
   }
 
+  static Stream<List<Map<dynamic, dynamic>>> joinChiTietSanVaDatSanVaSan() async* {
+    var db = FirebaseFirestore.instance;
 
-  // static Stream<List<dynamic>> joinCollectionsAsStream() {
+    var collection = db.collectionGroup('DatSan');
+    var snapshot = await collection.get();
+
+    var results = <Map<dynamic, dynamic>>[];
+
+    for (var doc in snapshot.docs) {
+      var datSan = DatSan.fromJson(doc.data()!);
+
+      var querySnapshot = await db
+          .collectionGroup('ChiTietSan')
+          .where('MaCTS', isEqualTo: datSan.MaCTS)
+          .get();
+
+      for (var queryDoc in querySnapshot.docs) {
+        var chiTietSan = ChiTietSan.fromJson(queryDoc.data()!);
+
+        var data = {
+          ...chiTietSan.toJson(),
+          ...datSan.toJson(),
+        };
+        print(data);
+        results.add(data);
+
+      }
+    }
+
+    yield results;
+  }
+
+
+// static Stream<List<dynamic>> joinCollectionsAsStream() {
   //   final sanCollection = FirebaseFirestore.instance.collection('San');
   //   final bangGiaSanCollection = FirebaseFirestore.instance.collection('BangGiaSan');
   //
