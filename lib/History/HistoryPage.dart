@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
+import 'package:get/get.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
 import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
 import 'package:quanlysanbong/Firebase/Test.dart';
@@ -44,7 +45,6 @@ class _PageHistoryState extends State<PageHistory> {
                 children: const [
                   SizedBox(width: 20, height: 20),
                   InkWell(
-
                     child: Icon(
                       CupertinoIcons.arrow_left_circle_fill,
                       color: Colors.white,
@@ -88,7 +88,7 @@ class _PageHistoryState extends State<PageHistory> {
                       color: Colors.black, thickness: 2,
                   ),
                   StreamBuilder<List<dynamic>>(
-                    stream: San_DatSan.joinChiTietSanVaDatSanVaSan(),
+                    stream: San_DatSan.joinDatSan_San("TK002"),
                     builder: (context, snapshot) {
                       if(snapshot.hasError) {
                         print("Lỗi nè");
@@ -105,7 +105,6 @@ class _PageHistoryState extends State<PageHistory> {
                         );
                       } else {
                         var list = snapshot.data!;
-                        print(list.length);
                         return Expanded(
                           child: ListView.separated(
                             itemBuilder: (context, index) => Container(
@@ -117,8 +116,8 @@ class _PageHistoryState extends State<PageHistory> {
                               child: Column(
                                 children: [
                                   Row(
-                                      children: const [
-                                        Text("Sân bóng đá sao việt", style: TextStyle(
+                                      children: [
+                                        Text("${list[index]['TenSan']}", style: TextStyle(
                                             fontSize: 23,
                                             fontWeight: FontWeight.bold
                                         )),
@@ -129,7 +128,7 @@ class _PageHistoryState extends State<PageHistory> {
                                   const SizedBox(height: 10),
                                   Row(
                                     children: [
-                                      Image.asset("", height: 100,width: 50),
+                                      // Image.asset("", height: 100,width: 50),
                                       const SizedBox(width: 10),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,6 +159,19 @@ class _PageHistoryState extends State<PageHistory> {
                                               )),
                                               SizedBox(width: 10,),
                                               Text("500.000đ", style:TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold
+                                              )),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: const [
+                                              Text("Ngày đặt:", style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold
+                                              )),
+                                              SizedBox(width: 10,),
+                                              Text("24/05/2023", style:TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold
                                               )),
