@@ -16,8 +16,8 @@ List<String> banners = [
   "asset/images/banner/banner5.png",
 ];
 
-class MyFirebaseHome extends StatelessWidget {
-  const MyFirebaseHome({Key? key}) : super(key: key);
+class FirebaseHome extends StatelessWidget {
+  const FirebaseHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -219,11 +219,11 @@ class _HomePageState extends State<HomePage> {
           });
           switch(value){
             case 0: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageHistory(),)); break;
+                MaterialPageRoute(builder: (context) => FirebaseHome(),)); break;
             case 1: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageHistory(),)); break;
+                MaterialPageRoute(builder: (context) => FireBaseHistory(),)); break;
             case 2: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageHistory(),)); break;
+                MaterialPageRoute(builder: (context) => FireBaseHistory(),)); break;
             case 3: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => PageHistory(),)); break;
           }
