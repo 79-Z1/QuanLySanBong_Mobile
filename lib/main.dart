@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: QuanLySanBongApp(),
+      home: PageRss(),
     );
   }
 }
