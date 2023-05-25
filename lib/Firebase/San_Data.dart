@@ -1,30 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class San{
-  String? Anh, DiaChi, MaSan, SoLuongSan, TenSan;
+  String? Anh, DiaChi, MaSan, TenSan;
+  List<dynamic>? SanCons;
+
   San({
-    required this.Anh,
-    required this.DiaChi,
-    required this.MaSan,
-    required this.SoLuongSan,
-    required this.TenSan,
+    this.Anh,
+    this.DiaChi,
+    this.MaSan,
+    this.TenSan,
+    this.SanCons,
   });
-  Map<String, dynamic> toJson(){
+
+  Map<String, dynamic> toJson() {
     return {
       'Anh': this.Anh,
       'DiaChi': this.DiaChi,
       'MaSan': this.MaSan,
-      'SoLuongSan': this.SoLuongSan,
       'TenSan': this.TenSan,
+      'SanCons': this.SanCons,
     };
   }
+
   factory San.fromJson(Map<String, dynamic> map) {
     return San(
       Anh: map['Anh'] as String,
       DiaChi: map['DiaChi'] as String,
       MaSan: map['MaSan'] as String,
-      SoLuongSan: map['SoLuongSan'] as String,
       TenSan: map['TenSan'] as String,
+      SanCons: map['SanCons'] as List<dynamic>,
     );
   }
 }
