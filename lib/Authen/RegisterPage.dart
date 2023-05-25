@@ -41,6 +41,7 @@ class PageRegister extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Form(
         key: formState,
         child: Stack(
@@ -109,7 +110,7 @@ class PageRegister extends StatelessWidget {
           password: txtmatkhau.text.trim()
       );
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection("TaiKhoan").get();
-      int documentCount = querySnapshot.size;
+      int documentCount = querySnapshot.size+1;
       String userId = 'TK${documentCount.toString().padLeft(3, '0')}';
       TaiKhoan tk = TaiKhoan(
           MaTK: userId,

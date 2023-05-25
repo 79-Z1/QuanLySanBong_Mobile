@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quanlysanbong/Firebase/ChiTietSan.dart';
 import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
 import 'package:quanlysanbong/Firebase/San_Data.dart';
+import 'package:quanlysanbong/Firebase/TaiKhoan_Data.dart';
 
 
 class JoinTable {
@@ -95,13 +96,30 @@ class JoinTable {
           ...san.toJson(),
           ...datSan.toJson(),
         };
-        print(data);
         results.add(data);
       }
     }
     yield results;
   }
+  static Stream<List<Map<dynamic, dynamic>>> TaiKhoanFromMaTK(
+      String maTK) async* {
+    var db = FirebaseFirestore.instance;
 
+    var collection = db.collectionGroup('TaiKhoan').where(
+        'MaTK', isEqualTo: maTK);
+    var snapshot = await collection.get();
+
+    var results = <Map<dynamic, dynamic>>[];
+
+    for (var doc in snapshot.docs) {
+      var taiKhoan = TaiKhoan.fromJson(doc.data()!);
+      var data = {
+        ...taiKhoan.toJson(),
+      };
+      results.add(data);
+    }
+    yield results;
+  }
   static Stream<List<Map<String, dynamic>>> joinTables() {
     final streamController = StreamController<List<Map<String, dynamic>>>();
 

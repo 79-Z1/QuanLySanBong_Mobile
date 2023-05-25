@@ -78,7 +78,7 @@ class PageLogin extends StatelessWidget {
                               email: txtTenTK.text.trim(),
                               password: txtMK.text.trim()
                           );
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(maTK: "TK003",)));
                         },
                         child: Text("Đăng nhập",style: TextStyle(fontSize: 20),)),
                   ),
