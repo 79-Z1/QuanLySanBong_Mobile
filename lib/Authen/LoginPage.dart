@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quanlysanbong/Authen/RegisterPage.dart';
@@ -21,7 +22,7 @@ class QuanLySanBongApp extends StatelessWidget {
 
 class PageLogin extends StatelessWidget {
   PageLogin({Key? key}) : super(key: key);
-  TextEditingController txtTenTK = TextEditingController();
+  TextEditingController txtemail = TextEditingController();
   TextEditingController txtMK = TextEditingController();
   GlobalKey<FormState> formState = GlobalKey<FormState>();
   Widget inputField(String text,Widget icon, TextEditingController txt, String displayText, bool typePassword){
@@ -67,7 +68,7 @@ class PageLogin extends StatelessWidget {
                 children: [
                   SizedBox(height: 100,),
                   Text("Đăng nhập",style: TextStyle(color: Colors.white,fontSize: 50),),
-                  inputField("Email",Icon(Icons.email),txtTenTK,"Chưa nhập email",false),
+                  inputField("Email",Icon(Icons.email),txtemail,"Chưa nhập email",false),
                   inputField("Mật khẩu",Icon(Icons.lock,),txtMK,"Chưa nhập mật khẩu",true),
                   Container(
                     height:50,
@@ -76,10 +77,15 @@ class PageLogin extends StatelessWidget {
                           ktform(context);
                           try{
                             await FirebaseAuth.instance.signInWithEmailAndPassword(
-                                email: txtTenTK.text.trim(),
+                                email: txtemail.text.trim(),
                                 password: txtMK.text.trim()
                             );
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
+                            FirebaseFirestore.instance.collection('TaiKhoan').where('Email', isEqualTo: txtemail.text.trim()).get().then((querySnapshot) {
+                              querySnapshot.docs.forEach((doc) {
+                                String maTK = doc['MaTK'];
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(maTK: maTK,)));
+                              });
+                            });
                           } on FirebaseAuthException catch(e){
                             if (e.code == 'user-not-found' || e.code == 'wrong-password') {
                               ShowDialog(context);

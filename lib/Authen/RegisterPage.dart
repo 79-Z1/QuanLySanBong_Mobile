@@ -161,4 +161,10 @@ class PageRegister extends StatelessWidget {
       showDialog(context: context, builder: (context) => dialog);
     }
   }
+  Stream<DocumentSnapshot> provideDocumentFieldStream() {
+    return FirebaseFirestore.instance
+        .collection('TaiKhoan')
+        .doc('MaTK')
+        .snapshots();
+  }
 }

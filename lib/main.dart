@@ -4,6 +4,7 @@ import 'package:quanlysanbong/Authen/LoginPage.dart';
 import 'package:quanlysanbong/Booking/BookingPage.dart';
 import 'package:quanlysanbong/History/HistoryPage.dart';
 import 'package:quanlysanbong/Home/HomePage.dart';
+import 'package:quanlysanbong/Rss/Page/PageRss.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: QuanLySanBongApp()
+      home: QuanLySanBongApp(),
     );
   }
 }

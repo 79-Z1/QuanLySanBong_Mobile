@@ -54,7 +54,7 @@ class _PageHistoryState extends State<PageHistory> {
                       size: 40,
                     ),
                     onTap: () {
-                      Get.to(const MyFirebaseHome());
+                      Get.to(FirebaseHome(maTK: 'TK004',));
                     },
                   ),
                   const Spacer(),
