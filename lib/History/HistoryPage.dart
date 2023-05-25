@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
 import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
-import 'package:quanlysanbong/Firebase/Test.dart';
+import 'package:quanlysanbong/Firebase/JoinTable.dart';
+import 'package:quanlysanbong/Home/HomePage.dart';
+import 'package:quanlysanbong/Utils/Utils.dart';
 
 class FireBaseHistory extends StatelessWidget {
   const FireBaseHistory({Key? key}) : super(key: key);
@@ -12,7 +15,7 @@ class FireBaseHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MyFirebaseConnect(
-        builder: (context) => PageHistory(),
+        builder: (context) => const PageHistory(),
         errorMessage: "Lỗi kết nối với firebase!",
         connectingMessage: "Vui lòng đợi kết nối!"
     );
@@ -42,18 +45,20 @@ class _PageHistoryState extends State<PageHistory> {
               color: Colors.green,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  SizedBox(width: 20, height: 20),
+                children: [
+                  const SizedBox(width: 20, height: 20),
                   InkWell(
-                    child: Icon(
+                    child: const Icon(
                       CupertinoIcons.arrow_left_circle_fill,
                       color: Colors.white,
                       size: 40,
-                    )
+                    ),
+                    onTap: () {
+                      Get.to(const MyFirebaseHome());
+                    },
                   ),
-/*                  Spacer(),*/
-                SizedBox(width: 103,),
-                  Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
+                  const Spacer(),
+                  const Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
                 ],
               ),
             ),
@@ -74,7 +79,7 @@ class _PageHistoryState extends State<PageHistory> {
 
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.lightGreen,
+                      backgroundColor: Colors.green[400],
                       padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
                       shape: const StadiumBorder(
                         side: BorderSide(
@@ -89,15 +94,14 @@ class _PageHistoryState extends State<PageHistory> {
                       color: Colors.black, thickness: 2,
                   ),
                   StreamBuilder<List<dynamic>>(
-                    stream: San_DatSan.joinDatSan_San("TK002"),
+                    stream: JoinTable.joinDatSan_San("TK002"),
                     builder: (context, snapshot) {
                       if(snapshot.hasError) {
                         print("Lỗi nè");
                         print(snapshot.error);
                         return const Center(
                           child: Text("Lỗi dữ liệu Firebase",
-                            style: TextStyle(
-                                color: Colors.red),
+                            style: TextStyle(color: Colors.red),
                           ),
                         );
                       } else if(!snapshot.hasData) {
@@ -118,61 +122,66 @@ class _PageHistoryState extends State<PageHistory> {
                                 children: [
                                   Row(
                                       children: [
-                                        Text("${list[index]['TenSan']}", style: TextStyle(
+                                        Text("${list[index]['TenSan']}", style: const TextStyle(
                                             fontSize: 23,
                                             fontWeight: FontWeight.bold
                                         )),
-                                        Spacer(),
-                                        Text("Đang đặt", style: TextStyle(color: Colors.green))
+                                        const Spacer(),
+
+                                        DateTime.parse(list[index]['NgayDenSan']).compareDate(DateTime.now()) ?
+                                         const Text("Đang đặt", style: TextStyle(color: Colors.green))
+                                            :
+                                         const Text("Đã xong", style: TextStyle(color: Colors.red))
+
                                       ]
                                   ),
                                   const SizedBox(height: 10),
                                   Row(
                                     children: [
-                                      // Image.asset("", height: 100,width: 50),
+                                      Expanded(child: Image.network("${list[index]['Anh']}", height: 100,width: 50)),
                                       const SizedBox(width: 10),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
-                                          const Text("Sân 1", style: TextStyle(
+                                           Text("${list[index]['ViTriSan']}", style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold
                                           )),
                                           Row(
-                                            children: const [
-                                              Text("Khung giờ:", style: TextStyle(
+                                            children: [
+                                              const Text("Khung giờ:", style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold
                                               )),
-                                              SizedBox(width: 10,),
-                                              Text("12h - 15h", style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold
-                                              )),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: const [
-                                              Text("Thành tiền:", style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold
-                                              )),
-                                              SizedBox(width: 10,),
-                                              Text("500.000đ", style:TextStyle(
+                                              const SizedBox(width: 10,),
+                                              Text("${list[index]['GioBatDau']}h - ${list[index]['GioKetThuc']}h ", style: const TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold
                                               )),
                                             ],
                                           ),
                                           Row(
-                                            children: const [
-                                              Text("Ngày đặt:", style: TextStyle(
+                                            children: [
+                                              const Text("Thành tiền:", style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold
                                               )),
-                                              SizedBox(width: 10,),
-                                              Text("24/05/2023", style:TextStyle(
+                                              const SizedBox(width: 10,),
+                                              Text("${list[index]['TongTien']}đ", style:const TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold
+                                              )),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text("Ngày đặt:", style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold
+                                              )),
+                                              const SizedBox(width: 10,),
+                                              Text("${list[index]['NgayDenSan']}", style:const TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold
                                               )),
@@ -183,6 +192,7 @@ class _PageHistoryState extends State<PageHistory> {
                                     ],
                                   ),
                                   const SizedBox(height: 10),
+                                  DateTime.parse(list[index]['NgayDenSan']).compareDate(DateTime.now()) ?
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
@@ -223,8 +233,32 @@ class _PageHistoryState extends State<PageHistory> {
                                               fontSize: 15
                                           ))
                                       )
-                                    ],
+                                    ]
                                   )
+                                      :
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      ElevatedButton(
+                                          onPressed: () {
+
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.green,
+                                              padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
+                                              shape: const RoundedRectangleBorder(
+                                                  side: BorderSide(
+                                                      color: Colors.black
+                                                  )
+                                              )
+                                          ),
+                                          child: const Text("Đặt lại", style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15
+                                          ))
+                                      ),
+                                    ]
+                                  ),
                                 ],
                               )
                             ),
@@ -239,37 +273,51 @@ class _PageHistoryState extends State<PageHistory> {
             )
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home,color: Colors.grey,),
-              label: "Trang chủ",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle,color: Colors.grey),
-              label: "Tài khoản",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history_outlined,color: Colors.grey),
-              label: "Lịch sử",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.newspaper,color: Colors.grey),
-              label: "Tin tức",
-            ),
-          ],
-          type: BottomNavigationBarType.shifting,
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-          selectedItemColor: Colors.green,
-          currentIndex: indexBar,
-          iconSize: 40,
-          onTap: (value) {
-            indexBar = value;
-            setState(() {
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home,color: Colors.green,),
+            label: "Trang chủ",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle,color: Colors.green),
+            label: "Tài khoản",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history_outlined,color: Colors.green),
+            label: "Lịch sử",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.newspaper,color: Colors.green),
+            label: "Tin tức",
+          ),
+        ],
+        type: BottomNavigationBarType.shifting,
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        selectedItemColor: Colors.green,
+        currentIndex: indexBar,
+        iconSize: 40,
+        onTap: (value) {
+          indexBar = value;
+          setState(() {
 
-            });
-          },
-        ),
+          });
+          switch(value){
+            case 0: Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+            case 1: Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+            case 2: Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+            case 3: Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+          }
+        },
+      ),
     );
   }
 }
+
+
+
+
