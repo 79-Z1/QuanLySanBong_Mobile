@@ -79,7 +79,7 @@ class _PageHistoryState extends State<PageHistory> {
 
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green[400],
+                      backgroundColor: Colors.green[300],
                       padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
                       shape: const StadiumBorder(
                         side: BorderSide(
@@ -241,7 +241,6 @@ class _PageHistoryState extends State<PageHistory> {
                                     children: [
                                       ElevatedButton(
                                           onPressed: () {
-
                                           },
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.green,
@@ -253,7 +252,7 @@ class _PageHistoryState extends State<PageHistory> {
                                               )
                                           ),
                                           child: const Text("Đặt lại", style: TextStyle(
-                                              color: Colors.black,
+                                              color: Colors.white,
                                               fontSize: 15
                                           ))
                                       ),
