@@ -74,11 +74,17 @@ class PageLogin extends StatelessWidget {
                     child: ElevatedButton(
                         onPressed: () async{
                           ktform(context);
-                          await FirebaseAuth.instance.signInWithEmailAndPassword(
-                              email: txtTenTK.text.trim(),
-                              password: txtMK.text.trim()
-                          );
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
+                          try{
+                            await FirebaseAuth.instance.signInWithEmailAndPassword(
+                                email: txtTenTK.text.trim(),
+                                password: txtMK.text.trim()
+                            );
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
+                          } on FirebaseAuthException catch(e){
+                            if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+                              ShowDialog(context);
+                            }
+                          }
                         },
                         child: Text("Đăng nhập",style: TextStyle(fontSize: 20),)),
                   ),
@@ -87,18 +93,6 @@ class PageLogin extends StatelessWidget {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => PageRegister()));
                   }, child: Text("Chưa có tài khoản?",style: TextStyle(fontSize: 20,color: Colors.white),)
                   ),
-                  Container(
-                    height: 70,
-                    padding: EdgeInsets.symmetric(horizontal: 30,vertical: 8),
-                    child: ElevatedButton(onPressed: () {
-                    },child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(Icons.tiktok),
-                        SizedBox(width: 40),
-                        Text(("Tiếp tục với Google"),style: TextStyle(fontSize: 22),)
-                      ],
-                    )),),
                 ],
               ),
             )
@@ -114,6 +108,24 @@ class PageLogin extends StatelessWidget {
     if(formState.currentState?.validate() == true){
       formState.currentState?.save();
     }
+  }
+  void ShowDialog(BuildContext context){
+    var dialog = AlertDialog(
+      title: Text("Thông báo"),
+      content: Container(
+        child: Text("Sai thông tin đăng nhập"),
+
+      ),
+      actions: [
+        ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop(MaterialPageRoute(builder: (context) => PageLogin()));
+            },
+            child: Text("Nhập lại")
+        )
+      ],
+    );
+    showDialog(context: context, builder: (context) => dialog);
   }
 }
 
