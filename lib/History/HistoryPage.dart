@@ -51,7 +51,8 @@ class _PageHistoryState extends State<PageHistory> {
                       size: 40,
                     )
                   ),
-                  Spacer(),
+/*                  Spacer(),*/
+                SizedBox(width: 103,),
                   Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
                 ],
               ),
