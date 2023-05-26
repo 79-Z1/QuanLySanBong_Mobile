@@ -5,12 +5,20 @@ import 'package:quanlysanbong/Home/HomePage.dart';
 import 'package:quanlysanbong/Rss/Controller/RssController.dart';
 import 'package:quanlysanbong/Rss/Page/WebView.dart';
 
-class PageRss extends StatelessWidget {
+import '../../History/HistoryPage.dart';
+
+class PageRss extends StatefulWidget {
   const PageRss({Key? key}) : super(key: key);
 
   @override
+  State<PageRss> createState() => _PageRssState();
+}
+
+class _PageRssState extends State<PageRss> {
+  @override
   Widget build(BuildContext context) {
     var controller = Get.put(ControllerRss());
+    int indexBar = 0;
     return Scaffold(
       body: Stack(
         children: [
@@ -34,7 +42,7 @@ class PageRss extends StatelessWidget {
                       },
                     ),
                     SizedBox(width: 103,),
-                    Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
+                    Text("Tin tức", style: TextStyle(fontSize: 30, color: Colors.white))
                   ],
                 ),
               ]
@@ -63,20 +71,24 @@ class PageRss extends StatelessWidget {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.green,width: 4),
-
+                                border: Border.all(color: Colors.green,width: 2),
                               ),
                               child: GestureDetector(
                                 onTap: () => Get.to(MyWebPage(url: "${listRSS[index].link}")),
                                 child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Column(
+                                  padding: EdgeInsets.all(7),
+                                  child: Row(
                                     children: [
-                                      Text("${listRSS[index].title}",style: TextStyle(fontSize: 20,color: Colors.blue)),
-                                      SizedBox(height: 10,),
                                       _getImage(listRSS[index].imageUrl),
-                                      SizedBox(height: 10,),
-                                      Text("${listRSS[index].description}")
+                                      SizedBox(width:10,),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            Text("${listRSS[index].title}",style: TextStyle(fontSize: 16,color: Colors.blue)),
+                                            Text("${listRSS[index].description}",style: TextStyle(fontSize: 13),)
+                                          ],
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -94,11 +106,53 @@ class PageRss extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home,color: Colors.green,),
+            label: "Trang chủ",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle,color: Colors.green),
+            label: "Tài khoản",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history_outlined,color: Colors.green),
+            label: "Lịch sử",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.newspaper,color: Colors.green),
+            label: "Tin tức",
+          ),
+        ],
+        type: BottomNavigationBarType.shifting,
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        selectedItemColor: Colors.green,
+        currentIndex: indexBar,
+        iconSize: 40,
+        onTap: (value) {
+          indexBar = value;
+          setState(() {
+
+          });
+          switch(value){
+            case 0: Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+            case 1: Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+            case 2: Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+            case 3: Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+          }
+        },
+      ),
     );
   }
+
   Widget _getImage(String? url){
     if(url != null)
-      return Image.network(url, fit: BoxFit.fitWidth);
+      return Image.network(url, fit: BoxFit.fitWidth,height: 100,);
     return Center(
       child: Column(
         children: [
