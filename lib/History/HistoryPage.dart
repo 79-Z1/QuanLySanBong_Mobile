@@ -57,7 +57,7 @@ class _PageHistoryState extends State<PageHistory> {
                       Get.to(FirebaseHome(maTK: 'TK004',));
                     },
                   ),
-                  const Spacer(),
+                  SizedBox(width: 103,),
                   const Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
                 ],
               ),
