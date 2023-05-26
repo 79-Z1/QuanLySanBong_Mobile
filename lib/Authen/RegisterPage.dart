@@ -69,15 +69,14 @@ class PageRegister extends StatelessWidget {
                   Container(
                     height:50,
                     child: ElevatedButton(onPressed:() {
-                       ktform(context);
-                       signUp();
-                       Navigator.of(context).pop(MaterialPageRoute(builder: (context) => PageLogin()));
+                      ktform(context);
+                      DiaLogDangKi(context);
                     },
                         child: Text("Đăng Ký",style: TextStyle(fontSize: 20),)),
                   ),
                   Spacer(),
                   TextButton(onPressed: () async{
-                    Navigator.of(context).pop(MaterialPageRoute(builder: (context) => PageLogin()));
+                    Navigator.pop(context);
                   }, child: Text("Đã có tài khoản?",style: TextStyle(fontSize: 20,color: Colors.white),)
                   ),
                 ],
@@ -102,15 +101,34 @@ class PageRegister extends StatelessWidget {
       formState.currentState?.save();
     }
   }
-  Future signUp() async{
-    if(passwordConfirmed()){
-      //create user
+  _DkTaiKhoan(TaiKhoan tk){
+    TaiKhoanSnapShot.themMoi(tk);
+  }
+
+  Future DiaLogDangKi(BuildContext context) async{
+    if(passwordConfirmed() == false){
+      var dialog = AlertDialog(
+        title: Text("Thông báo"),
+        content: Container(
+          child: Text("Xác nhận mật khẩu không đúng"),
+        ),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Nhập lại")
+          )
+        ],
+      );
+      showDialog(context: context, builder: (context) => dialog);
+    }else{
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: txtemail.text.trim(),
           password: txtmatkhau.text.trim()
       );
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection("TaiKhoan").get();
-      int documentCount = querySnapshot.size+1;
+      int documentCount = querySnapshot.size + 1;
       String userId = 'TK${documentCount.toString().padLeft(3, '0')}';
       TaiKhoan tk = TaiKhoan(
           MaTK: userId,
@@ -125,10 +143,28 @@ class PageRegister extends StatelessWidget {
           Vip: false
       );
       _DkTaiKhoan(tk);
+      var dialog = AlertDialog(
+        title: Text("Thông báo"),
+        content: Container(
+          child: Text("Bạn đã đăng kí thành công"),
+
+        ),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Ok")
+          )
+        ],
+      );
+      showDialog(context: context, builder: (context) => dialog);
     }
   }
-  _DkTaiKhoan(TaiKhoan tk){
-    TaiKhoanSnapShot.themMoi(tk);
+  Stream<DocumentSnapshot> provideDocumentFieldStream() {
+    return FirebaseFirestore.instance
+        .collection('TaiKhoan')
+        .doc('MaTK')
+        .snapshots();
   }
-
 }

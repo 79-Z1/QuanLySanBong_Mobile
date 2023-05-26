@@ -5,16 +5,18 @@ import 'package:quanlysanbong/Home/HomePage.dart';
 import 'package:quanlysanbong/Rss/Controller/RssController.dart';
 import 'package:quanlysanbong/Rss/Page/WebView.dart';
 
+import '../../Account/AccountPage.dart';
 import '../../History/HistoryPage.dart';
 
 class PageRss extends StatefulWidget {
-  const PageRss({Key? key}) : super(key: key);
+  PageRss({Key? key}) : super(key: key);
 
   @override
   State<PageRss> createState() => _PageRssState();
 }
 
 class _PageRssState extends State<PageRss> {
+  String? maTK;
   @override
   Widget build(BuildContext context) {
     var controller = Get.put(ControllerRss());
@@ -38,7 +40,7 @@ class _PageRssState extends State<PageRss> {
                         size: 40,
                       ),
                       onTap: () {
-                        Get.to(FirebaseHome(maTK: 'TK004',));
+                        Get.to(FirebaseHome(maTK: maTK,));
                       },
                     ),
                     SizedBox(width: 103,),
@@ -137,13 +139,13 @@ class _PageRssState extends State<PageRss> {
           });
           switch(value){
             case 0: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PageRss(),)); break;
+                MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)); break;
             case 1: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PageRss(),)); break;
+                MaterialPageRoute(builder: (context) => FireBaseAccount(maTK: maTK),)); break;
             case 2: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PageRss(),)); break;
+                MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
             case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PageRss(),)); break;
+                MaterialPageRoute(builder: (context) => PageRss(),)); break;
           }
         },
       ),
