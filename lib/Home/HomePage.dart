@@ -2,8 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
+import 'package:quanlysanbong/Firebase/ChiTietSan.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
-import 'package:quanlysanbong/Firebase/JoinTable.dart';
 import 'package:quanlysanbong/Firebase/San_Data.dart';
 import 'package:quanlysanbong/History/HistoryPage.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -17,13 +17,12 @@ List<String> banners = [
 ];
 
 class FirebaseHome extends StatelessWidget {
-  String? maTK;
-  FirebaseHome({Key? key, required this.maTK}) : super(key: key);
+  const FirebaseHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MyFirebaseConnect(
-        builder: (context) => HomePage(maTK: this.maTK),
+        builder: (context) => HomePage(),
         errorMessage: "Lỗi kết nối với Firebase!",
         connectingMessage: "Vui lòng đợi kết nối!"
     );
@@ -31,15 +30,13 @@ class FirebaseHome extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  String? maTK;
-  HomePage({Key? key, required this.maTK}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  String? maTK;
   int indexBar = 0;
   int imgPos = 0;
   String userName = "Trương Khánh Hòa";
@@ -87,35 +84,11 @@ class _HomePageState extends State<HomePage> {
                             color: Colors.white
                         ),
                       ),
-                      StreamBuilder(
-                        stream: JoinTable.TaiKhoanFromMaTK(maTK!),
-                        builder: (context, snapshot) {
-                          if(snapshot.hasError){
-                            print(snapshot.error);
-                            return Center(
-                              child: Text("Lỗi dữ liệu Firebase",
-                                style: TextStyle(
-                                    color: Colors.red),
-                              ),
-                            );
-                          }
-                          else
-                          if(!snapshot.hasData){
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          else
-                          {
-                            var list = snapshot.data!;
-                            return Text("${list[0]['HoTen']}",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)
-                            );
-                          }
-                        },
+                      Text("${userName}",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)
                       ),
                     ],
                   )
@@ -246,7 +219,7 @@ class _HomePageState extends State<HomePage> {
           });
           switch(value){
             case 0: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)); break;
+                MaterialPageRoute(builder: (context) => FirebaseHome(),)); break;
             case 1: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseHistory(),)); break;
             case 2: Navigator.push(context,
@@ -262,7 +235,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    maTK = widget.maTK;
     startTimer();
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
