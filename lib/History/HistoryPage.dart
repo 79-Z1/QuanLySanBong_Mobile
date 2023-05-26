@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
-import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
 import 'package:quanlysanbong/Firebase/JoinTable.dart';
 import 'package:quanlysanbong/Home/HomePage.dart';
 import 'package:quanlysanbong/Utils/Utils.dart';
@@ -54,10 +51,10 @@ class _PageHistoryState extends State<PageHistory> {
                       size: 40,
                     ),
                     onTap: () {
-                      Get.to(const MyFirebaseHome());
+                      Get.to(const FirebaseHome());
                     },
                   ),
-                  const Spacer(),
+                  const SizedBox(width: 103),
                   const Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
                 ],
               ),
