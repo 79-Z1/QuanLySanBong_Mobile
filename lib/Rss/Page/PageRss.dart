@@ -12,23 +12,17 @@ class PageRss extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.put(ControllerRss());
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
-            ),
-            padding: const EdgeInsets.only(top: 15),
+            padding: const EdgeInsets.only(top: 30),
+            color: Colors.green,
             child: Column(
               children:[
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(width: 20, height: 20),
+                    SizedBox(width: 20, height: 20),
                     InkWell(
                       child: const Icon(
                         CupertinoIcons.arrow_left_circle_fill,
@@ -39,15 +33,23 @@ class PageRss extends StatelessWidget {
                         Get.to(FirebaseHome(maTK: 'TK004',));
                       },
                     ),
-                    SizedBox(width: 100,),
-                    const Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
+                    SizedBox(width: 103,),
+                    Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
                   ],
                 ),
-                SizedBox(height: 20,)
               ]
             ),
           ),
-          Expanded(
+          Container(
+            margin: const EdgeInsets.only(top: 80),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+            ),
+            // color: Colors.red,
             child: RefreshIndicator(
               onRefresh: () => controller.readRss(),
               child: GetX<ControllerRss>(
