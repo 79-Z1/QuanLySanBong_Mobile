@@ -137,13 +137,13 @@ class _PageRssState extends State<PageRss> {
           });
           switch(value){
             case 0: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+                MaterialPageRoute(builder: (context) => const PageRss(),)); break;
             case 1: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+                MaterialPageRoute(builder: (context) => const PageRss(),)); break;
             case 2: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+                MaterialPageRoute(builder: (context) => const PageRss(),)); break;
             case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+                MaterialPageRoute(builder: (context) => const PageRss(),)); break;
           }
         },
       ),
