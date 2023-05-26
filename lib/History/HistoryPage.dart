@@ -3,19 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:quanlysanbong/Account/AccountPage.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
 import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
 import 'package:quanlysanbong/Firebase/JoinTable.dart';
 import 'package:quanlysanbong/Home/HomePage.dart';
+import 'package:quanlysanbong/Rss/Page/PageRss.dart';
 import 'package:quanlysanbong/Utils/Utils.dart';
 
 class FireBaseHistory extends StatelessWidget {
-  const FireBaseHistory({Key? key}) : super(key: key);
+  String? maTK;
+  FireBaseHistory({Key? key, required this.maTK}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MyFirebaseConnect(
-        builder: (context) => const PageHistory(),
+        builder: (context) => PageHistory(maTK: this.maTK),
         errorMessage: "Lỗi kết nối với firebase!",
         connectingMessage: "Vui lòng đợi kết nối!"
     );
@@ -23,13 +26,15 @@ class FireBaseHistory extends StatelessWidget {
 }
 
 class PageHistory extends StatefulWidget {
-  const PageHistory({Key? key}) : super(key: key);
+  String? maTK;
+  PageHistory({Key? key, required this.maTK}) : super(key: key);
 
   @override
   State<PageHistory> createState() => _PageHistoryState();
 }
 
 class _PageHistoryState extends State<PageHistory> {
+  String? maTK;
   @override
   Widget build(BuildContext context) {
     int indexBar = 0;
@@ -54,7 +59,7 @@ class _PageHistoryState extends State<PageHistory> {
                       size: 40,
                     ),
                     onTap: () {
-                      Get.to(FirebaseHome(maTK: 'TK004',));
+                      Get.to( FirebaseHome(maTK: maTK,));
                     },
                   ),
                   SizedBox(width: 103,),
@@ -94,7 +99,7 @@ class _PageHistoryState extends State<PageHistory> {
                       color: Colors.black, thickness: 2,
                   ),
                   StreamBuilder<List<dynamic>>(
-                    stream: JoinTable.joinDatSan_San("TK002"),
+                    stream: JoinTable.joinDatSan_San(maTK!),
                     builder: (context, snapshot) {
                       if(snapshot.hasError) {
                         print("Lỗi nè");
@@ -295,7 +300,7 @@ class _PageHistoryState extends State<PageHistory> {
         type: BottomNavigationBarType.shifting,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         selectedItemColor: Colors.green,
-        currentIndex: indexBar,
+        currentIndex: 2,
         iconSize: 40,
         onTap: (value) {
           indexBar = value;
@@ -304,17 +309,23 @@ class _PageHistoryState extends State<PageHistory> {
           });
           switch(value){
             case 0: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+                MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)); break;
             case 1: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+                MaterialPageRoute(builder: (context) => FireBaseAccount(maTK: maTK),)); break;
             case 2: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+                MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
             case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PageHistory(),)); break;
+                MaterialPageRoute(builder: (context) => PageRss(),)); break;
           }
         },
       ),
     );
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    maTK = widget.maTK;
   }
 }
 

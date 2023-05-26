@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quanlysanbong/Authen/RegisterPage.dart';
@@ -22,7 +21,7 @@ class QuanLySanBongApp extends StatelessWidget {
 
 class PageLogin extends StatelessWidget {
   PageLogin({Key? key}) : super(key: key);
-  TextEditingController txtemail = TextEditingController();
+  TextEditingController txtTenTK = TextEditingController();
   TextEditingController txtMK = TextEditingController();
   GlobalKey<FormState> formState = GlobalKey<FormState>();
   Widget inputField(String text,Widget icon, TextEditingController txt, String displayText, bool typePassword){
@@ -68,29 +67,18 @@ class PageLogin extends StatelessWidget {
                 children: [
                   SizedBox(height: 100,),
                   Text("Đăng nhập",style: TextStyle(color: Colors.white,fontSize: 50),),
-                  inputField("Email",Icon(Icons.email),txtemail,"Chưa nhập email",false),
+                  inputField("Email",Icon(Icons.email),txtTenTK,"Chưa nhập email",false),
                   inputField("Mật khẩu",Icon(Icons.lock,),txtMK,"Chưa nhập mật khẩu",true),
                   Container(
                     height:50,
                     child: ElevatedButton(
                         onPressed: () async{
                           ktform(context);
-                          try{
-                            await FirebaseAuth.instance.signInWithEmailAndPassword(
-                                email: txtemail.text.trim(),
-                                password: txtMK.text.trim()
-                            );
-                            FirebaseFirestore.instance.collection('TaiKhoan').where('Email', isEqualTo: txtemail.text.trim()).get().then((querySnapshot) {
-                              querySnapshot.docs.forEach((doc) {
-                                String maTK = doc['MaTK'];
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(maTK: maTK,)));
-                              });
-                            });
-                          } on FirebaseAuthException catch(e){
-                            if (e.code == 'user-not-found' || e.code == 'wrong-password') {
-                              ShowDialog(context);
-                            }
-                          }
+                          await FirebaseAuth.instance.signInWithEmailAndPassword(
+                              email: txtTenTK.text.trim(),
+                              password: txtMK.text.trim()
+                          );
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(maTK: "TK003",)));
                         },
                         child: Text("Đăng nhập",style: TextStyle(fontSize: 20),)),
                   ),
@@ -99,6 +87,18 @@ class PageLogin extends StatelessWidget {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => PageRegister()));
                   }, child: Text("Chưa có tài khoản?",style: TextStyle(fontSize: 20,color: Colors.white),)
                   ),
+                  Container(
+                    height: 70,
+                    padding: EdgeInsets.symmetric(horizontal: 30,vertical: 8),
+                    child: ElevatedButton(onPressed: () {
+                    },child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(Icons.tiktok),
+                        SizedBox(width: 40),
+                        Text(("Tiếp tục với Google"),style: TextStyle(fontSize: 22),)
+                      ],
+                    )),),
                 ],
               ),
             )
@@ -114,24 +114,6 @@ class PageLogin extends StatelessWidget {
     if(formState.currentState?.validate() == true){
       formState.currentState?.save();
     }
-  }
-  void ShowDialog(BuildContext context){
-    var dialog = AlertDialog(
-      title: Text("Thông báo"),
-      content: Container(
-        child: Text("Sai thông tin đăng nhập"),
-
-      ),
-      actions: [
-        ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop(MaterialPageRoute(builder: (context) => PageLogin()));
-            },
-            child: Text("Nhập lại")
-        )
-      ],
-    );
-    showDialog(context: context, builder: (context) => dialog);
   }
 }
 

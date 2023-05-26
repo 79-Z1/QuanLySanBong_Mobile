@@ -96,13 +96,11 @@ class JoinTable {
           ...san.toJson(),
           ...datSan.toJson(),
         };
-        print(data);
         results.add(data);
       }
     }
     yield results;
   }
-
   static Stream<List<Map<dynamic, dynamic>>> TaiKhoanFromMaTK(
       String maTK) async* {
     var db = FirebaseFirestore.instance;
@@ -118,12 +116,10 @@ class JoinTable {
       var data = {
         ...taiKhoan.toJson(),
       };
-      print(data);
       results.add(data);
     }
     yield results;
   }
-
   static Stream<List<Map<String, dynamic>>> joinTables() {
     final streamController = StreamController<List<Map<String, dynamic>>>();
 
