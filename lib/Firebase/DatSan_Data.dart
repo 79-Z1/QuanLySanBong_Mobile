@@ -63,6 +63,17 @@ class DatSanSnapShot {
     return documentReference!.delete();
   }
 
+  static Future<void> xoaByMaTK_NgayDat_GioDat(String maTK, String ngayDat, int gioBatDau) async{
+    var db = FirebaseFirestore.instance;
+
+    var datSanSnapshot = await db.collection('DatSan')
+        .where('MaTK', isEqualTo: maTK)
+        .where('NgayDenSan', isEqualTo: ngayDat)
+        .where('GioBatDau', isEqualTo: gioBatDau)
+        .get();
+    datSanSnapshot.docs.first.reference.delete();
+  }
+
   static Future<DocumentReference> themMoi(DatSan datSan) async{
     return FirebaseFirestore.instance.collection("DatSan").add(datSan.toJson());
   }

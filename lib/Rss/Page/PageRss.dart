@@ -131,7 +131,7 @@ class _PageRssState extends State<PageRss> {
         type: BottomNavigationBarType.shifting,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         selectedItemColor: Colors.green,
-        currentIndex: indexBar,
+        currentIndex: 3,
         iconSize: 40,
         onTap: (value) {
           indexBar = value;

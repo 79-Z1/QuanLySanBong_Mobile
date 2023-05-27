@@ -4,6 +4,7 @@ import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:quanlysanbong/Account/AccountPage.dart';
+import 'package:quanlysanbong/Booking/EditDetailsBooKingPage.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
 import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
 import 'package:quanlysanbong/Firebase/JoinTable.dart';
@@ -35,6 +36,8 @@ class PageHistory extends StatefulWidget {
 
 class _PageHistoryState extends State<PageHistory> {
   String? maTK;
+  final NumberFormat usCurrency = NumberFormat('#,##0', 'en_US');
+
   @override
   Widget build(BuildContext context) {
     int indexBar = 0;
@@ -62,7 +65,7 @@ class _PageHistoryState extends State<PageHistory> {
                       Get.to( FirebaseHome(maTK: maTK,));
                     },
                   ),
-                  SizedBox(width: 103,),
+                  const SizedBox(width: 103,),
                   const Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
                 ],
               ),
@@ -172,11 +175,12 @@ class _PageHistoryState extends State<PageHistory> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold
                                               )),
-                                              const SizedBox(width: 10,),
-                                              Text("${list[index]['TongTien']}đ", style:const TextStyle(
+                                              const SizedBox(width: 10),
+                                              Text("${usCurrency.format(list[index]['TongTien'])}đ", style:
+                                                const TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold
-                                              )),
+                                                )),
                                             ],
                                           ),
                                           Row(
@@ -202,27 +206,43 @@ class _PageHistoryState extends State<PageHistory> {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       ElevatedButton(
-                                          onPressed: () {
-
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.yellow,
-                                              padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
-                                              shape: const RoundedRectangleBorder(
-                                                  side: BorderSide(
-                                                      color: Colors.black
-                                                  )
+                                        onPressed: () {
+                                          Navigator.push(context,
+                                            MaterialPageRoute(
+                                              builder: (context) => FirePaseSeeDetailsBooking(
+                                                maTK: maTK,
+                                                gioBatDau: "${list[index]['GioBatDau']}",
+                                                gioKetThuc: "${list[index]['GioKetThuc']}",
+                                                ngayDat: list[index]['NgayDenSan'],
+                                                maSan: list[index]['MaSan'],
+                                                tenSan: list[index]['TenSan'],
+                                                viTriSan: list[index]['ViTriSan'],
+                                                thanhTien: "${list[index]['TongTien']}",
+                                                diaChi: list[index]['DiaChi'],
                                               )
-                                          ),
-                                          child: const Text("Chỉnh sửa", style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 15
-                                          ))
+                                            )
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.yellow,
+                                            padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
+                                            shape: const RoundedRectangleBorder(
+                                                side: BorderSide(
+                                                    color: Colors.black
+                                                )
+                                            )
+                                        ),
+                                        child: const Text("Xem chi tiết", style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15
+                                        ))
                                       ),
                                       const SizedBox(width: 10),
                                       ElevatedButton(
-                                          onPressed: () {
-
+                                          onPressed: () async {
+                                            await DatSanSnapShot.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
+                                            setState(() {
+                                            });
                                           },
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.red,
@@ -262,6 +282,27 @@ class _PageHistoryState extends State<PageHistory> {
                                               fontSize: 15
                                           ))
                                       ),
+                                      const SizedBox(width: 10),
+                                      ElevatedButton(
+                                          onPressed: () async {
+                                            await DatSanSnapShot.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
+                                            setState(() {
+                                            });
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.red,
+                                              padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
+                                              shape: const RoundedRectangleBorder(
+                                                  side: BorderSide(
+                                                      color: Colors.black
+                                                  )
+                                              )
+                                          ),
+                                          child: const Text("Xóa", style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15
+                                          ))
+                                      )
                                     ]
                                   ),
                                 ],

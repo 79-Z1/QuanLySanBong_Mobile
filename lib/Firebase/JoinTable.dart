@@ -90,9 +90,11 @@ class JoinTable {
     }
     yield results;
   }
+
   static Stream<List<Map<dynamic, dynamic>>> getTinhTrangSanCon(String maSan,String ngayDat, int gioDat) async* {
     var db = FirebaseFirestore.instance;
     var results = <Map<dynamic, dynamic>>[];
+    var sanConDaDuocDats = <String>[];
 
     var sanSnapshot = await db.collection('San')
         .where('MaSan', isEqualTo: maSan)
@@ -102,29 +104,35 @@ class JoinTable {
         .where('MaSan', isEqualTo: maSan)
         .where('NgayDenSan', isEqualTo: ngayDat)
         .where('GioBatDau', isEqualTo: gioDat)
+        .where('MaTK', isEqualTo: "HideBooking")
         .get();
 
     var san = San.fromJson(sanSnapshot.docs.first.data()!);
+
     if (datSanSnapshot.docs.isNotEmpty) {
       for (var datSanDoc in datSanSnapshot.docs) {
         var datSan = DatSan.fromJson(datSanDoc.data()!);
 
         for (var sancon in san.SanCons!) {
           if (sancon == datSan.ViTriSan) {
+            sanConDaDuocDats.add(sancon);
             var data = {
               'TenSan': san.TenSan,
               'TenSanCon': sancon,
               'TinhTrang': 'Đang được đặt',
             };
             results.add(data);
-          } else {
-            var data = {
-              'TenSan': san.TenSan,
-              'TenSanCon': sancon,
-              'TinhTrang': 'Còn Trống',
-            };
-            results.add(data);
           }
+        }
+      }
+      for (var sancon in san.SanCons!) {
+        if (!sanConDaDuocDats.contains(sancon)) {
+          var data = {
+            'TenSan': san.TenSan,
+            'TenSanCon': sancon,
+            'TinhTrang': 'Còn Trống',
+          };
+          results.add(data);
         }
       }
     } else {
@@ -140,73 +148,12 @@ class JoinTable {
     yield results;
   }
 
-  static Stream<List<dynamic>> joinChiTietSanAndDatSan() async* {
-    var datSanCollection = FirebaseFirestore.instance.collection('DatSan');
-    var chitietSanCollection = FirebaseFirestore.instance.collection(
-        'ChiTietSan');
-
-    var snapshots = await FirebaseFirestore.instance.collectionGroup(
-        'ChiTietSan').get();
-    var chiTietSanList = snapshots.docs.map((doc) =>
-        ChiTietSan.fromJson(doc.data())).toList();
-
-    snapshots =
-    await FirebaseFirestore.instance.collectionGroup('DatSan').get();
-    var datSanList = snapshots.docs.map((doc) => DatSan.fromJson(doc.data()))
-        .toList();
-
-    var joinList = <Map<String, dynamic>>[];
-
-    for (var chiTietSan in chiTietSanList) {
-      var datSanDocs = await datSanCollection.where(
-          'MaCTS', isEqualTo: chiTietSan.MaCTS).get();
-      datSanDocs.docs.forEach((doc) {
-        joinList.add({...chiTietSan.toJson(), ...doc.data()});
-      });
-    }
-
-    yield joinList;
-  }
-
-
-  static Stream<List<Map<dynamic, dynamic>>> joinChiTietSanVaDatSan() async* {
-    var db = FirebaseFirestore.instance;
-
-    var collection = db.collectionGroup('ChiTietSan');
-    var snapshot = await collection.get();
-
-    var results = <Map<dynamic, dynamic>>[];
-
-    for (var doc in snapshot.docs) {
-      var chiTietSan = ChiTietSan.fromJson(doc.data()!);
-
-      var querySnapshotDS = await db
-          .collectionGroup('DatSan')
-          .where('MaCTS', isEqualTo: chiTietSan.MaCTS)
-          .get();
-
-
-      for (var queryDoc in querySnapshotDS.docs) {
-        var datSan = DatSan.fromJson(queryDoc.data()!);
-
-        var data = {
-          ...chiTietSan.toJson(),
-          ...datSan.toJson(),
-        };
-
-        results.add(data);
-      }
-    }
-    yield results;
-  }
-
-
   static Stream<List<Map<dynamic, dynamic>>> joinDatSan_San(
       String maTK) async* {
     var db = FirebaseFirestore.instance;
 
-    var collection = db.collectionGroup('DatSan').where(
-        'MaTK', isEqualTo: maTK);
+    var collection = db.collectionGroup('DatSan').
+    where('MaTK', isEqualTo: maTK);
     var snapshot = await collection.get();
 
     var results = <Map<dynamic, dynamic>>[];
@@ -232,6 +179,58 @@ class JoinTable {
     }
     yield results;
   }
+
+  // static Stream<List<Map<dynamic, dynamic>>> getTinhTrangSanCon(String maSan,String ngayDat, int gioDat) async* {
+  //   var db = FirebaseFirestore.instance;
+  //   var results = <Map<dynamic, dynamic>>[];
+  //   var sanConDaDuocDats = <String>[];
+  //   int soSanConConLai;
+  //
+  //   var sanSnapshot = await db.collection('San')
+  //       .where('MaSan', isEqualTo: maSan)
+  //       .get();
+  //
+  //   var datSanSnapshot = await db.collection('DatSan')
+  //       .where('MaSan', isEqualTo: maSan)
+  //       .where('NgayDenSan', isEqualTo: ngayDat)
+  //       .where('GioBatDau', isEqualTo: gioDat)
+  //       .get();
+  //
+  //   var san = San.fromJson(sanSnapshot.docs.first.data()!);
+  //   if (datSanSnapshot.docs.isNotEmpty) {
+  //     for (var datSanDoc in datSanSnapshot.docs) {
+  //       var datSan = DatSan.fromJson(datSanDoc.data()!);
+  //
+  //       for (var sancon in san.SanCons!) {
+  //         if (sancon == datSan.ViTriSan) {
+  //           var data = {
+  //             'TenSan': san.TenSan,
+  //             'TenSanCon': sancon,
+  //             'TinhTrang': 'Đang được đặt',
+  //           };
+  //           results.add(data);
+  //         } else {
+  //           var data = {
+  //             'TenSan': san.TenSan,
+  //             'TenSanCon': sancon,
+  //             'TinhTrang': 'Còn Trống',
+  //           };
+  //           results.add(data);
+  //         }
+  //       }
+  //     }
+  //   } else {
+  //     for (var sancon in san.SanCons!) {
+  //       var data = {
+  //         'TenSan': san.TenSan,
+  //         'TenSanCon': sancon,
+  //         'TinhTrang': 'Còn Trống',
+  //       };
+  //       results.add(data);
+  //     }
+  //   }
+  //   yield results;
+  // }
 
   static Stream<List<Map<String, dynamic>>> joinTables() {
     final streamController = StreamController<List<Map<String, dynamic>>>();
