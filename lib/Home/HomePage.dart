@@ -202,9 +202,65 @@ class _HomePageState extends State<HomePage> {
                   return ListView.separated(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) => SizedBox(height: 5,),
-                    itemBuilder: (context, index) => Container(
-                      child: Image.network("${list[index].san!.Anh}"),
+                    separatorBuilder: (context, index) => SizedBox(height: 10,),
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 2,
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                          ),
+                        ),
+                        child: Stack(
+                          children: [
+                            Image.network("${list[index].san!.Anh}"),
+                            Container(
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 150,),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 10,),
+                                      Icon(Icons.location_on,color: Colors.white,),
+                                      Container(
+                                        width: 220,
+                                          child: Text("${list[index].san!.DiaChi}",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold
+                                              ),
+                                          ),
+                                      ),
+                                      SizedBox(width: 10,),
+                                      ElevatedButton(
+                                          onPressed: () {
+
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.green,
+                                              padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
+                                              shape: const RoundedRectangleBorder(
+                                                  side: BorderSide(
+                                                    width: 2,
+                                                      color: Colors.black
+                                                  )
+                                              )
+                                          ),
+                                          child: const Text("Đặt sân ngay", style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15
+                                          ))
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     itemCount: list.length,
                   );
@@ -254,7 +310,7 @@ class _HomePageState extends State<HomePage> {
             case 2: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
             case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageRss(),)); break;
+                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK),)); break;
           }
         },
       ),

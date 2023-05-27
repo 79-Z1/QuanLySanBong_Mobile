@@ -9,7 +9,8 @@ import '../../Account/AccountPage.dart';
 import '../../History/HistoryPage.dart';
 
 class PageRss extends StatefulWidget {
-  PageRss({Key? key}) : super(key: key);
+  String? maTK;
+  PageRss({Key? key , required this.maTK}) : super(key: key);
 
   @override
   State<PageRss> createState() => _PageRssState();
@@ -145,7 +146,7 @@ class _PageRssState extends State<PageRss> {
             case 2: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
             case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageRss(),)); break;
+                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK),)); break;
           }
         },
       ),
@@ -163,5 +164,11 @@ class _PageRssState extends State<PageRss> {
         ],
       ),
     );
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    maTK = widget.maTK;
   }
 }
