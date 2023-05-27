@@ -1,50 +1,54 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:quanlysanbong/Account/EditAccountPage.dart';
-import 'package:quanlysanbong/Authen/LoginPage.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
-import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
 import 'package:quanlysanbong/Firebase/JoinTable.dart';
+import 'package:quanlysanbong/Firebase/TaiKhoan_Data.dart';
 import 'package:quanlysanbong/History/HistoryPage.dart';
 import 'package:quanlysanbong/Home/HomePage.dart';
 import 'package:quanlysanbong/Rss/Page/PageRss.dart';
-import 'package:quanlysanbong/Utils/Utils.dart';
 
-class FireBaseAccount extends StatelessWidget {
+import 'AccountPage.dart';
+
+class FireBaseEditAccount extends StatefulWidget {
   String? maTK;
-  FireBaseAccount({Key? key, required this.maTK}) : super(key: key);
+  FireBaseEditAccount({Key? key, required this.maTK}) : super(key: key);
+  @override
+  State<FireBaseEditAccount> createState() => _FireBaseEditAccountState();
+}
 
+class _FireBaseEditAccountState extends State<FireBaseEditAccount> {
   @override
   Widget build(BuildContext context) {
     return MyFirebaseConnect(
-        builder: (context) => PageAccount(maTK: this.maTK),
+        builder: (context) => PageEditAccount(maTK: this.widget.maTK),
         errorMessage: "Lỗi kết nối với firebase!",
         connectingMessage: "Vui lòng đợi kết nối!"
     );
   }
 }
 
-class PageAccount extends StatefulWidget {
+class PageEditAccount extends StatefulWidget {
   String? maTK;
-  PageAccount({Key? key , required this.maTK}) : super(key: key);
-
+  PageEditAccount({Key? key , required this.maTK}) : super(key: key);
   @override
-  State<PageAccount> createState() => _PageAccountState();
+  State<PageEditAccount> createState() => _PageEditAccountState();
 }
 
-class _PageAccountState extends State<PageAccount> {
+class _PageEditAccountState extends State<PageEditAccount> {
   String? maTK;
   int indexBar = 1;
   @override
+  TextEditingController txtsdt = TextEditingController();
+  TextEditingController txtname = TextEditingController();
+  TextEditingController txtdiachi = TextEditingController();
   Widget build(BuildContext context) {
     int indexBar = 0;
     // var screenHeight = MediaQuery.of(context).size.height;
     // var screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -113,26 +117,27 @@ class _PageAccountState extends State<PageAccount> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                    Text("Số điện thoại",
-                                      style: TextStyle(
+                                  SizedBox(height: 13,),
+                                  Text("Số điện thoại",
+                                    style: TextStyle(
                                       fontSize: 20,
-                                        fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.bold,
                                     ),
+                                  ),
+                                  SizedBox(height: 37,),
+                                  Text("Họ tên",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
                                     ),
+                                  ),
                                   SizedBox(height: 50,),
-                                    Text("Họ tên",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                  Text("Địa chỉ",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                  SizedBox(height: 50,),
-                                    Text("Địa chỉ",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                  ),
                                   SizedBox(height: 50,),
                                   Text("Email",
                                     style: TextStyle(
@@ -141,68 +146,65 @@ class _PageAccountState extends State<PageAccount> {
                                     ),
                                   ),
                                   SizedBox(height: 50,),
-                                    Text("Thành viên",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                  Text("Thành viên",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
                                     ),
+                                  ),
                                   SizedBox(height: 50,),
-                                    Text("Điểm tích",
+                                  Text("Điểm tích",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 1,),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextField(
+                                      controller: txtsdt,
+                                      keyboardType: TextInputType.number,
+                                    ),
+                                    SizedBox(height: 13,),
+                                    TextField(
+                                      controller: txtname,
+                                      keyboardType: TextInputType.text,
+                                    ),
+                                    SizedBox(height: 13,),
+                                    TextField(
+                                      controller: txtdiachi,
+                                      keyboardType: TextInputType.text,
+                                    ),
+                                    SizedBox(height: 50,),
+                                    Text("${list[0]['Email']}",
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                ],
+                                    SizedBox(height: 50,),
+                                    Text("${list[0]['Vip']==true?'VIP':'Thường'}",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(height: 50,),
+                                    Text("${list[0]['DiemTich']}",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                               SizedBox(width: 20,),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("${list[0]['SDT']}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 50,),
-                                  Text("${list[0]['HoTen']}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 50,),
-                                  Text("${list[0]['DiaChi']}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 50,),
-                                  Text("${list[0]['Email']}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 50,),
-                                  Text("${list[0]['Vip']==true?'VIP':'Thường'}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 50,),
-                                  Text("${list[0]['DiemTich']}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ],
                           ),
                           SizedBox(height: 40,),
@@ -218,34 +220,14 @@ class _PageAccountState extends State<PageAccount> {
                             ),
                             child: Column(
                               children: [
-                                SizedBox(height: 20,),
+                                SizedBox(height: 55,),
                                 ElevatedButton(
                                     onPressed: () {
-                                      Get.to(FireBaseEditAccount(maTK: maTK));
+                                      _capNhat(context);
                                     },
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.green,
                                         padding: const EdgeInsets.only(right: 103, left: 103, top: 20, bottom: 20),
-                                        shape: const RoundedRectangleBorder(
-                                            side: BorderSide(
-                                                color: Colors.black,
-                                              width: 2,
-                                            )
-                                        )
-                                    ),
-                                    child: const Text("Cập nhật thông tin", style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20
-                                    ))
-                                ),
-                                SizedBox(height: 20,),
-                                ElevatedButton(
-                                    onPressed: () {
-                                        Get.to(QuanLySanBongApp());
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white,
-                                        padding: const EdgeInsets.only(right: 140, left: 140, top: 10, bottom: 10),
                                         shape: const RoundedRectangleBorder(
                                             side: BorderSide(
                                               color: Colors.black,
@@ -253,11 +235,12 @@ class _PageAccountState extends State<PageAccount> {
                                             )
                                         )
                                     ),
-                                    child: const Text("Đăng xuất", style: TextStyle(
-                                        color: Colors.black,
+                                    child: const Text("Lưu", style: TextStyle(
+                                        color: Colors.white,
                                         fontSize: 20
                                     ))
                                 ),
+                                SizedBox(height: 20,),
                               ],
                             ),
                           ),
@@ -319,6 +302,52 @@ class _PageAccountState extends State<PageAccount> {
     // TODO: implement initState
     super.initState();
     maTK = widget.maTK;
+    FirebaseFirestore.instance.collection('TaiKhoan').where('MaTK', isEqualTo: maTK).get().then((querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        txtsdt.text = doc["SDT"];
+        txtname.text = doc["HoTen"];
+        txtdiachi.text = doc["DiaChi"];
+      });
+    });
+  }
+  _capNhat(BuildContext context) async{
+    showSnackbar(context, "Đang cập nhật dữ liệu....");
+    TaiKhoan sv = TaiKhoan.update(
+      SDT: txtsdt.text.trim(),
+      HoTen: txtname.text.trim(),
+      DiaChi: txtdiachi.text.trim()
+    );
+    _capNhatTaikhoan(sv);
+  }
+  _capNhatTaikhoan(TaiKhoan tk) async{
+    TaiKhoan tk = TaiKhoan.update(
+        SDT: txtsdt.text.trim(),
+        DiaChi: txtdiachi.text.trim(),
+        HoTen: txtname.text.trim()
+    );
+    FirebaseFirestore.instance
+        .collection('TaiKhoan')
+        .where('MaTK', isEqualTo: maTK) // MaTK là giá trị cụ thể của MaTK mà bạn muốn cập nhật
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((documentSnapshot) {
+        documentSnapshot.reference.update({
+          'SDT': txtsdt.text,
+          'HoTen': txtname.text,
+          'DiaChi': txtdiachi.text,
+        }).whenComplete(() => showSnackbar(context,"Cập nhật dữ liệu thành công"))
+            .onError((error, stackTrace) => showSnackbar(context,"Cập nhật dữ liệu không thành công"));
+      });
+    });
+  }
+  void showSnackbar(BuildContext context,  String message){
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          duration: Duration(seconds: 2),
+        )
+    );
   }
 }
 

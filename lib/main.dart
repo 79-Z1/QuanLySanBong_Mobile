@@ -5,6 +5,8 @@ import 'package:quanlysanbong/Booking/BookingPage.dart';
 import 'package:quanlysanbong/History/HistoryPage.dart';
 import 'package:quanlysanbong/Home/HomePage.dart';
 
+import 'Account/AccountPage.dart';
+
 void main() {
   runApp(const MyApp());
 }
