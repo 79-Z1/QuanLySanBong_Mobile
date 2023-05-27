@@ -35,6 +35,7 @@ class PageHistory extends StatefulWidget {
 
 class _PageHistoryState extends State<PageHistory> {
   String? maTK;
+  final NumberFormat usCurrency = NumberFormat('#,##0', 'en_US');
   @override
   Widget build(BuildContext context) {
     int indexBar = 0;
@@ -173,10 +174,11 @@ class _PageHistoryState extends State<PageHistory> {
                                                   fontWeight: FontWeight.bold
                                               )),
                                               const SizedBox(width: 10,),
-                                              Text("${list[index]['TongTien']}đ", style:const TextStyle(
+                                              Text("${usCurrency.format(list[index]['TongTien'])}đ", style:const TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold
-                                              )),
+                                              ),
+                                              ),
                                             ],
                                           ),
                                           Row(

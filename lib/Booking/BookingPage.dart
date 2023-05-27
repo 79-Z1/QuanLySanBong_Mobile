@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:quanlysanbong/Booking/CostTablePage.dart';
 import 'package:quanlysanbong/Booking/DetailsBookingPage.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
 import 'package:quanlysanbong/Firebase/JoinTable.dart';
@@ -67,6 +68,7 @@ class _PageBookingState extends State<PageBooking> {
       body: Padding(
         padding: const EdgeInsets.only(left: 10,right: 10),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 30),
             Container(
@@ -135,7 +137,32 @@ class _PageBookingState extends State<PageBooking> {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                SizedBox(width: 10,),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => FireBaseCostTable(maSan: maSan),));
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[300],
+                        padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
+                        shape: const RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: Colors.black
+                            )
+                        )
+                    ),
+                    child: const Text("Xem bảng giá", style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15
+                    ))
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
             StreamBuilder<List<dynamic>>(
               stream: JoinTable.getTinhTrangSanCon(maSan!, txtDateInput.text, int.parse(txtGioDatInput.text)),
               builder: (context, snapshot) {
@@ -208,7 +235,7 @@ class _PageBookingState extends State<PageBooking> {
                   ));
                 }
               },
-            )
+            ),
           ],
         ),
       ),

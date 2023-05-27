@@ -1,11 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
+import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
 import 'package:quanlysanbong/Firebase/JoinTable.dart';
 import 'package:quanlysanbong/Firebase/San_Data.dart';
+import 'package:quanlysanbong/Firebase/TaiKhoan_Data.dart';
 import 'package:quanlysanbong/Helpers/WidgetHelper.dart';
+import 'package:quanlysanbong/History/HistoryPage.dart';
+import 'package:quanlysanbong/Home/HomePage.dart';
 import 'package:quanlysanbong/Utils/Utils.dart';
 
 class FireBaseDetailsBooking extends StatelessWidget {
@@ -42,8 +47,6 @@ class FireBaseDetailsBooking extends StatelessWidget {
   }
 }
 
-
-
 class PageDetailsBooking extends StatefulWidget {
   String? ngayDat;
   String? gioDat;
@@ -76,6 +79,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
 
   int? gioKetThuc;
   double? tongTien;
+  final NumberFormat usCurrency = NumberFormat('#,##0', 'en_US');
 
   @override
   void initState() {
@@ -144,7 +148,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 40,),
+                      SizedBox(height: 30,),
                       Container(
                         width: 150,
                         height: 55,
@@ -155,7 +159,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 40,),
+                      SizedBox(height: 30,),
                       Container(
                         width: 150,
                         height: 55,
@@ -166,7 +170,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 40,),
+                      SizedBox(height: 30,),
                       Container(
                         width: 150,
                         height: 55,
@@ -177,7 +181,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 40,),
+                      SizedBox(height: 30,),
                       Container(
                         width: 150,
                         height: 55,
@@ -188,7 +192,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 40,),
+                      SizedBox(height: 30,),
                       Container(
                         width: 150,
                         height: 55,
@@ -199,7 +203,18 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 40,),
+                      SizedBox(height: 30,),
+                      Container(
+                        width: 150,
+                        height: 55,
+                        child: Text("Giảm giá",
+                          style: TextStyle(
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 30,),
                       Container(
                         width: 150,
                         height: 55,
@@ -226,7 +241,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 40,),
+                      SizedBox(height: 30,),
                       Container(
                         width: 150,
                         height: 55,
@@ -237,7 +252,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 30,),
+                      SizedBox(height: 20,),
                       Container(
                         width: 30,
                         height: 55,
@@ -261,7 +276,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                           },
                         ),
                       ),
-                      SizedBox(height: 50,),
+                      SizedBox(height: 40,),
                       Container(
                         width: 150,
                         height: 55,
@@ -272,7 +287,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 40,),
+                      SizedBox(height: 30,),
                       Container(
                         width: 150,
                         height: 55,
@@ -283,7 +298,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 40,),
+                      SizedBox(height: 30,),
                       Container(
                         width: 150,
                         height: 55,
@@ -294,17 +309,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 40,),
-                      // Container(
-                      //   width: 150,
-                      //   height: 55,
-                      //   child: Text("${JoinTable.tinhTienSan(maTK!, maSan!, int.parse(gioDat.toString()), gioKetThuc!)} vnđ",
-                      //     style: TextStyle(
-                      //       fontSize: 23,
-                      //       fontWeight: FontWeight.bold,
-                      //     ),
-                      //   ),
-                      // ),
+                      SizedBox(height: 30,),
                       StreamBuilder(
                           stream: JoinTable.tinhTienSan(maTK!, maSan!, int.parse(gioDat.toString()), gioKetThuc!),
                           builder: (context, snapshot) {
@@ -322,16 +327,32 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                               );
                             }else {
                               var list = snapshot.data!;
-                              return Container(
+                              tongTien = list[0]['TongTien'];
+                              return Column(
+                                children: [
+                                  Container(
+                                        width: 150,
+                                        height: 55,
+                                        child: Text("${usCurrency.format(list[0]['SoTienGiam'])} vnđ",
+                                          style: TextStyle(
+                                            fontSize: 23,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                  SizedBox(height: 30,),
+                                  Container(
                                     width: 150,
                                     height: 55,
-                                    child: Text("${list[0]['TongTien']} vnđ",
+                                    child: Text("${usCurrency.format(list[0]['TongTien'])} vnđ",
                                       style: TextStyle(
                                         fontSize: 23,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  );
+                                  ),
+                                ],
+                              );
                             }
                           },
                       ),
@@ -342,7 +363,47 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
               SizedBox(height: 50,),
               ElevatedButton(
                   onPressed: () {
-
+                      FirebaseFirestore.instance
+                          .collection('TaiKhoan')
+                          .where('MaTK', isEqualTo: maTK) // MaTK là giá trị cụ thể của MaTK mà bạn muốn cập nhật
+                          .get()
+                          .then((querySnapshot) {
+                        querySnapshot.docs.forEach((documentSnapshot) {
+                          var taiKhoan = TaiKhoan.fromJson(documentSnapshot.data()!);
+                          int diem = taiKhoan.DiemTich! + (gioKetThuc! - int.parse(gioDat.toString()))*10;
+                          documentSnapshot.reference.update({
+                            'DiemTich':  diem,
+                          });
+                        });
+                      });
+                      for(int i = int.parse(gioDat.toString()); i < gioKetThuc!; i++){
+                        DatSan datSan = new DatSan(
+                          MaSan: maSan,
+                          MaTK: "HideBooking",
+                          ViTriSan: viTriSan,
+                          NgayDenSan: ngayDat,
+                          GioBatDau: i,
+                          GioKetThuc: i+1,
+                          TongTien: tongTien!.toInt(),
+                        );
+                        DatSanSnapShot.themMoi(datSan);
+                      }
+                      DatSan datSan = new DatSan(
+                        MaSan: maSan,
+                        MaTK: maTK,
+                        ViTriSan: viTriSan,
+                        NgayDenSan: ngayDat,
+                        GioBatDau: int.parse(gioDat.toString()),
+                        GioKetThuc: gioKetThuc,
+                        TongTien: tongTien!.toInt(),
+                      );
+                      DatSanSnapShot.themMoi(datSan).whenComplete(()
+                      {
+                        showSnackbar(context, "Đã đặt sân thành công, bạn có thể kiểm tra trong lịch sử");
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),));
+                      }
+                      );
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
@@ -366,3 +427,13 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
     );
   }
 }
+void showSnackbar(BuildContext context,  String message){
+  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+  ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: Duration(seconds: 3),
+      )
+  );
+}
+
