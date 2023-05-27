@@ -43,7 +43,6 @@ class _PageAccountState extends State<PageAccount> {
     int indexBar = 0;
     // var screenHeight = MediaQuery.of(context).size.height;
     // var screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -62,7 +61,9 @@ class _PageAccountState extends State<PageAccount> {
                     size: 40,
                   ),
                   onTap: () {
-                    Get.to( FirebaseHome(maTK: maTK!));
+                    Navigator.pop(context,
+                      //MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)
+                    );
                   },
                 ),
                 const SizedBox(width: 30,),
@@ -115,93 +116,95 @@ class _PageAccountState extends State<PageAccount> {
                                 children: [
                                     Text("Số điện thoại",
                                       style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                     ),
                                     ),
-                                  SizedBox(height: 50,),
+                                  SizedBox(height: 30,),
                                     Text("Họ tên",
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  SizedBox(height: 50,),
+                                  SizedBox(height: 30,),
                                     Text("Địa chỉ",
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  SizedBox(height: 50,),
+                                  SizedBox(height: 30,),
                                   Text("Email",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 50,),
+                                  SizedBox(height: 30,),
                                     Text("Thành viên",
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  SizedBox(height: 50,),
+                                  SizedBox(height: 30,),
                                     Text("Điểm tích",
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                 ],
                               ),
                               SizedBox(width: 20,),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("${list[0]['SDT']}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("${list[0]['SDT']}",
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 50,),
-                                  Text("${list[0]['HoTen']}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                    SizedBox(height: 30,),
+                                    Text("${list[0]['HoTen']}",
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 50,),
-                                  Text("${list[0]['DiaChi']}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                    SizedBox(height: 30,),
+                                    Text("${list[0]['DiaChi']}",
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 50,),
-                                  Text("${list[0]['Email']}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                    SizedBox(height: 30,),
+                                    Text("${list[0]['Email']}",
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 50,),
-                                  Text("${list[0]['Vip']==true?'VIP':'Thường'}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                    SizedBox(height: 30,),
+                                    Text("${list[0]['Vip']==true?'VIP':'Thường'}",
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 50,),
-                                  Text("${list[0]['DiemTich']}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                    SizedBox(height: 30,),
+                                    Text("${list[0]['DiemTich']}",
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -241,7 +244,8 @@ class _PageAccountState extends State<PageAccount> {
                                 SizedBox(height: 20,),
                                 ElevatedButton(
                                     onPressed: () {
-                                        Get.to(QuanLySanBongApp());
+                                      Navigator.pushAndRemoveUntil(context,
+                                          MaterialPageRoute(builder: (context) => QuanLySanBongApp()),(route) => false,);
                                     },
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.white,
@@ -301,14 +305,15 @@ class _PageAccountState extends State<PageAccount> {
 
           });
           switch(value){
-            case 0: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)); break;
+            case 0: Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),),(route) => false,
+            ); break;
             case 1: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseAccount(maTK: maTK),)); break;
             case 2: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
             case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageRss(),)); break;
+                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK,),)); break;
           }
         },
       ),

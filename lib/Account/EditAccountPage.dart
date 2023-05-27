@@ -11,24 +11,18 @@ import 'package:quanlysanbong/Rss/Page/PageRss.dart';
 
 import 'AccountPage.dart';
 
-class FireBaseEditAccount extends StatefulWidget {
+class FireBaseEditAccount extends StatelessWidget {
   String? maTK;
   FireBaseEditAccount({Key? key, required this.maTK}) : super(key: key);
   @override
-  State<FireBaseEditAccount> createState() => _FireBaseEditAccountState();
-}
-
-class _FireBaseEditAccountState extends State<FireBaseEditAccount> {
-  @override
   Widget build(BuildContext context) {
     return MyFirebaseConnect(
-        builder: (context) => PageEditAccount(maTK: this.widget.maTK),
+        builder: (context) => PageEditAccount(maTK: this.maTK),
         errorMessage: "Lỗi kết nối với firebase!",
         connectingMessage: "Vui lòng đợi kết nối!"
     );
   }
 }
-
 class PageEditAccount extends StatefulWidget {
   String? maTK;
   PageEditAccount({Key? key , required this.maTK}) : super(key: key);
@@ -66,7 +60,11 @@ class _PageEditAccountState extends State<PageEditAccount> {
                     size: 40,
                   ),
                   onTap: () {
-                    Get.to( FirebaseHome(maTK: maTK!));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => FireBaseAccount(maTK: maTK),));
+                    setState(() {
+
+                    });
                   },
                 ),
                 const SizedBox(width: 30,),
@@ -110,94 +108,118 @@ class _PageEditAccountState extends State<PageEditAccount> {
                       var list = snapshot.data!;
                       return Column(
                         children: [
-                          SizedBox(height: 40,),
                           Row(
                             children: [
                               SizedBox(width: 20,),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(height: 13,),
+                                  SizedBox(height: 35,),
                                   Text("Số điện thoại",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 37,),
+                                  SizedBox(height: 35,),
                                   Text("Họ tên",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 50,),
+                                  SizedBox(height: 35,),
                                   Text("Địa chỉ",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 50,),
+                                  SizedBox(height: 35,),
                                   Text("Email",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 50,),
+                                  SizedBox(height: 35,),
                                   Text("Thành viên",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 50,),
+                                  SizedBox(height: 35,),
                                   Text("Điểm tích",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(width: 1,),
+                              SizedBox(width: 10,),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    TextField(
-                                      controller: txtsdt,
-                                      keyboardType: TextInputType.number,
+                                    SizedBox(height: 25,),
+                                    SizedBox(
+                                      height: 30,
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 5)
+                                        ),
+                                        controller: txtsdt,
+                                        keyboardType: TextInputType.number,
+                                        style: TextStyle(fontSize: 17),
+                                      ),
                                     ),
-                                    SizedBox(height: 13,),
-                                    TextField(
-                                      controller: txtname,
-                                      keyboardType: TextInputType.text,
+                                    SizedBox(height: 25,),
+                                    SizedBox(
+                                      height: 30,
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 5)
+                                        ),
+                                        controller: txtname,
+                                        keyboardType: TextInputType.text,
+                                        style: TextStyle(fontSize: 17),
+                                      ),
                                     ),
-                                    SizedBox(height: 13,),
-                                    TextField(
-                                      controller: txtdiachi,
-                                      keyboardType: TextInputType.text,
+                                    SizedBox(height: 27,),
+                                    SizedBox(
+                                      height: 30,
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 5)
+                                        ),
+                                        controller: txtdiachi,
+                                        keyboardType: TextInputType.text,
+                                        style: TextStyle(fontSize: 17),
+                                      ),
                                     ),
-                                    SizedBox(height: 50,),
+                                    SizedBox(height: 30,),
                                     Text("${list[0]['Email']}",
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    SizedBox(height: 50,),
+                                    SizedBox(height: 35,),
                                     Text("${list[0]['Vip']==true?'VIP':'Thường'}",
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    SizedBox(height: 50,),
+                                    SizedBox(height: 35,),
                                     Text("${list[0]['DiemTich']}",
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -209,7 +231,7 @@ class _PageEditAccountState extends State<PageEditAccount> {
                           ),
                           SizedBox(height: 40,),
                           Container(
-                            height: 177,
+                            height: 160,
                             width: 421,
                             decoration: BoxDecoration(
                               color: Colors.grey,
@@ -291,7 +313,7 @@ class _PageEditAccountState extends State<PageEditAccount> {
             case 2: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
             case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageRss(),)); break;
+                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK),)); break;
           }
         },
       ),
@@ -327,7 +349,7 @@ class _PageEditAccountState extends State<PageEditAccount> {
     );
     FirebaseFirestore.instance
         .collection('TaiKhoan')
-        .where('MaTK', isEqualTo: maTK) // MaTK là giá trị cụ thể của MaTK mà bạn muốn cập nhật
+        .where('MaTK', isEqualTo: maTK)
         .get()
         .then((querySnapshot) {
       querySnapshot.docs.forEach((documentSnapshot) {

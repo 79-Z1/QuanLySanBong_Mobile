@@ -59,11 +59,13 @@ class _PageHistoryState extends State<PageHistory> {
                       size: 40,
                     ),
                     onTap: () {
-                      Get.to( FirebaseHome(maTK: maTK,));
+                      Navigator.pop(context,
+                        //MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)
+                      );
                     },
                   ),
                   SizedBox(width: 103,),
-                  const Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
+                  const Text("Lịch sử", style: TextStyle(fontSize: 25, color: Colors.white))
                 ],
               ),
             ),
@@ -308,14 +310,15 @@ class _PageHistoryState extends State<PageHistory> {
 
           });
           switch(value){
-            case 0: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)); break;
+            case 0: Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),),(route) => false,
+            ); break;
             case 1: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseAccount(maTK: maTK),)); break;
             case 2: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
             case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageRss(),)); break;
+                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK,),)); break;
           }
         },
       ),
