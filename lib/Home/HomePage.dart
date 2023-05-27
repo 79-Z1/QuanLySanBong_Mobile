@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> {
     countdownTimer =
         Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
   }
+
   void setCountDown() {
     setState(() {
       time = DateFormat("HH:mm:ss").format(DateTime.now());
