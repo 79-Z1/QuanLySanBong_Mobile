@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quanlysanbong/Authen/LoginPage.dart';
-import 'package:quanlysanbong/Authen/RegisterPage.dart';
 import 'package:quanlysanbong/Booking/BookingPage.dart';
 import 'package:quanlysanbong/History/HistoryPage.dart';
 import 'package:quanlysanbong/Home/HomePage.dart';
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: FireBaseBooking()
+      home: QuanLySanBongApp()
     );
   }
 }

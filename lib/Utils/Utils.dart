@@ -1,3 +1,5 @@
+import 'package:quanlysanbong/Firebase/JoinTable.dart';
+
 extension DateOnlyCompare on DateTime {
   bool compareDate(DateTime other) {
     if(year >= other.year && month > other.month) {
@@ -8,3 +10,16 @@ extension DateOnlyCompare on DateTime {
     } else return false;
   }
 }
+
+String _layTenNguoiDungTuMaTK(String maTK){
+  Stream<List<Map<dynamic, dynamic>>>? taiKhoan = JoinTable.TaiKhoanFromMaTK(maTK);
+
+  return "â";
+}
+
+
+
+
+
+
+
