@@ -115,7 +115,7 @@ class _PageBookingState extends State<PageBooking> {
             ),
             const SizedBox(height: 30),
             StreamBuilder<List<dynamic>>(
-              stream: JoinTable.getTinhTrangSanCon2('TT', txtDateInput.text, int.parse(txtGioDatInput.text)),
+              stream: JoinTable.getTinhTrangSanCon('TT', txtDateInput.text, int.parse(txtGioDatInput.text)),
               builder: (context, snapshot) {
                 if(snapshot.hasError) {
                   print("Lỗi nè");
