@@ -91,34 +91,34 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       StreamBuilder(
-                        stream: JoinTable.TaiKhoanFromMaTK(maTK!),
-                        builder: (context, snapshot) {
-                          if(snapshot.hasError){
-                            print(snapshot.error);
-                            return Center(
-                              child: Text("Lỗi dữ liệu Firebase",
-                                style: TextStyle(
-                                    color: Colors.red),
-                              ),
-                            );
-                          }
-                          else
-                          if(!snapshot.hasData){
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          else
-                          {
-                            var list = snapshot.data!;
-                            return Text("${list[0]['HoTen']}",
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)
-                            );
-                          }
-                        },
+                          stream: JoinTable.TaiKhoanFromMaTK(maTK!),
+                          builder: (context, snapshot) {
+                              if(snapshot.hasError){
+                                print(snapshot.error);
+                                return Center(
+                                  child: Text("Lỗi dữ liệu Firebase",
+                                    style: TextStyle(
+                                        color: Colors.red),
+                                  ),
+                                );
+                              }
+                              else
+                              if(!snapshot.hasData){
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              else
+                              {
+                                var list = snapshot.data!;
+                                return Text("${list[0]['HoTen']}",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white)
+                                );
+                              }
+                            },
                       ),
                     ],
                   )
@@ -228,12 +228,12 @@ class _HomePageState extends State<HomePage> {
                                       Icon(Icons.location_on,color: Colors.white,),
                                       Container(
                                         width: 220,
-                                        child: Text("${list[index].san!.DiaChi}",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold
+                                          child: Text("${list[index].san!.DiaChi}",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold
+                                              ),
                                           ),
-                                        ),
                                       ),
                                       SizedBox(width: 10,),
                                       ElevatedButton(
@@ -245,7 +245,7 @@ class _HomePageState extends State<HomePage> {
                                               padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
                                               shape: const RoundedRectangleBorder(
                                                   side: BorderSide(
-                                                      width: 2,
+                                                    width: 2,
                                                       color: Colors.black
                                                   )
                                               )
