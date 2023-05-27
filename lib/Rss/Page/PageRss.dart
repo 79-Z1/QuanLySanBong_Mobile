@@ -9,7 +9,8 @@ import '../../Account/AccountPage.dart';
 import '../../History/HistoryPage.dart';
 
 class PageRss extends StatefulWidget {
-  PageRss({Key? key}) : super(key: key);
+  String? maTK;
+  PageRss({Key? key , required this.maTK}) : super(key: key);
 
   @override
   State<PageRss> createState() => _PageRssState();
@@ -28,26 +29,26 @@ class _PageRssState extends State<PageRss> {
             padding: const EdgeInsets.only(top: 30),
             color: Colors.green,
             child: Column(
-              children:[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(width: 20, height: 20),
-                    InkWell(
-                      child: const Icon(
-                        CupertinoIcons.arrow_left_circle_fill,
-                        color: Colors.white,
-                        size: 40,
+                children:[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(width: 20, height: 20),
+                      InkWell(
+                        child: const Icon(
+                          CupertinoIcons.arrow_left_circle_fill,
+                          color: Colors.white,
+                          size: 40,
+                        ),
+                        onTap: () {
+                          Get.to(FirebaseHome(maTK: maTK,));
+                        },
                       ),
-                      onTap: () {
-                        Get.to(FirebaseHome(maTK: maTK,));
-                      },
-                    ),
-                    SizedBox(width: 103,),
-                    Text("Tin tức", style: TextStyle(fontSize: 30, color: Colors.white))
-                  ],
-                ),
-              ]
+                      SizedBox(width: 103,),
+                      Text("Tin tức", style: TextStyle(fontSize: 30, color: Colors.white))
+                    ],
+                  ),
+                ]
             ),
           ),
           Container(
@@ -145,7 +146,7 @@ class _PageRssState extends State<PageRss> {
             case 2: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
             case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageRss(),)); break;
+                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK),)); break;
           }
         },
       ),
@@ -163,5 +164,11 @@ class _PageRssState extends State<PageRss> {
         ],
       ),
     );
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    maTK = widget.maTK;
   }
 }
