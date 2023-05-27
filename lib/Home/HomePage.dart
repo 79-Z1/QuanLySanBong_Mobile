@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:quanlysanbong/Account/AccountPage.dart';
+import 'package:quanlysanbong/Booking/BookingPage.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
 import 'package:quanlysanbong/Firebase/JoinTable.dart';
 import 'package:quanlysanbong/Firebase/San_Data.dart';
@@ -237,7 +238,7 @@ class _HomePageState extends State<HomePage> {
                                       SizedBox(width: 10,),
                                       ElevatedButton(
                                           onPressed: () {
-
+                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => FireBaseBooking(maTK: maTK, maSan: "${list[index].san!.MaSan}",)));
                                           },
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.green,

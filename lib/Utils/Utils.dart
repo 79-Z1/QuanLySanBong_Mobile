@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:quanlysanbong/Firebase/BangGiaSan_Data.dart';
 import 'package:quanlysanbong/Firebase/JoinTable.dart';
+import 'package:quanlysanbong/Firebase/TaiKhoan_Data.dart';
 
 extension DateOnlyCompare on DateTime {
   bool compareDate(DateTime other) {
@@ -9,12 +13,6 @@ extension DateOnlyCompare on DateTime {
       else return false;
     } else return false;
   }
-}
-
-String _layTenNguoiDungTuMaTK(String maTK){
-  Stream<List<Map<dynamic, dynamic>>>? taiKhoan = JoinTable.TaiKhoanFromMaTK(maTK);
-
-  return "â";
 }
 
 

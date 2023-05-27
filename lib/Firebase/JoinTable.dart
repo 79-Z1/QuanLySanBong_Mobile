@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:quanlysanbong/Firebase/BangGiaSan_Data.dart';
 import 'package:quanlysanbong/Firebase/ChiTietSan.dart';
 import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
 import 'package:quanlysanbong/Firebase/San_Data.dart';
@@ -29,6 +30,66 @@ class JoinTable {
     yield results;
   }
 
+  // static Future<double> tinhTienSan(String maTK, String maSan, int gioBatDau, int gioKetThuc ) async {
+  //   var db = FirebaseFirestore.instance;
+  //   double tongTien = 0;
+  //   for(int i = gioBatDau; i < gioKetThuc; i++){
+  //     var bangGiaSanSnapshot = await db.collection('BangGiaSan')
+  //         .where('MaSan', isEqualTo: maSan)
+  //         .where('Gio', isEqualTo: i)
+  //         .get();
+  //     var bangGiaSan = BangGiaSan.fromJson(bangGiaSanSnapshot.docs.first.data()!);
+  //     tongTien += double.parse(bangGiaSan.GiaTheoGio.toString());
+  //   }
+  //   var taiKhoanSnapshot = await db.collection('TaiKhoan')
+  //       .where('MaTK', isEqualTo: maTK)
+  //       .get();
+  //   var taiKhoan = TaiKhoan.fromJson(taiKhoanSnapshot.docs.first.data()!);
+  //
+  //   if(taiKhoan.Vip == true){
+  //     return tongTien - tongTien * 0.05;
+  //     print(tongTien - tongTien * 0.05);
+  //   }
+  //
+  //   else{
+  //     return tongTien;
+  //     print(tongTien);
+  //   }
+  // }
+  static Stream<List<Map<dynamic, dynamic>>> tinhTienSan(String maTK, String maSan, int gioBatDau, int gioKetThuc ) async* {
+    var db = FirebaseFirestore.instance;
+    var results = <Map<dynamic, dynamic>>[];
+    double tongTien = 0;
+    for(int i = gioBatDau; i < gioKetThuc; i++){
+      var bangGiaSanSnapshot = await db.collection('BangGiaSan')
+          .where('MaSan', isEqualTo: maSan)
+          .where('Gio', isEqualTo: i)
+          .get();
+      var bangGiaSan = BangGiaSan.fromJson(bangGiaSanSnapshot.docs.first.data()!);
+      tongTien += double.parse(bangGiaSan.GiaTheoGio.toString());
+    }
+    var taiKhoanSnapshot = await db.collection('TaiKhoan')
+        .where('MaTK', isEqualTo: maTK)
+        .get();
+    var taiKhoan = TaiKhoan.fromJson(taiKhoanSnapshot.docs.first.data()!);
+
+    if(taiKhoan.Vip == true){
+      tongTien =  tongTien - tongTien * 0.05;
+      var data = {
+        'TongTien' : tongTien,
+      };
+      results.add(data);
+      print(results);
+    }
+    else{
+      var data = {
+        'TongTien' : tongTien,
+      };
+      results.add(data);
+      print(results);
+    }
+    yield results;
+  }
   static Stream<List<Map<dynamic, dynamic>>> getTinhTrangSanCon(String maSan,String ngayDat, int gioDat) async* {
     var db = FirebaseFirestore.instance;
     var results = <Map<dynamic, dynamic>>[];
