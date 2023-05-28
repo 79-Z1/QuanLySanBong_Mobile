@@ -1,9 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quanlysanbong/Home/HomePage.dart';
+import 'package:quanlysanbong/Rss/Page/PageRss.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MyWebPage extends StatefulWidget {
   String url;
-  MyWebPage({Key? key, required this.url}) : super(key: key);
+  String? maTK;
+  MyWebPage({Key? key, required this.url, required this.maTK}) : super(key: key);
 
   @override
   State<MyWebPage> createState() => _MyWebPageState();
@@ -11,10 +15,18 @@ class MyWebPage extends StatefulWidget {
 
 class _MyWebPageState extends State<MyWebPage> {
   late final WebViewController controller;
+  String? maTK;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Tin tức bóng đá"),),
+      appBar: AppBar(
+        title: Row(
+          children: [
+            SizedBox(width: 90,),
+            Text("Tin tức",style: TextStyle(fontSize: 27)),
+        ],
+        )
+      ),
       body: WebViewWidget(controller: controller,),
     );
   }
@@ -22,6 +34,7 @@ class _MyWebPageState extends State<MyWebPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    maTK = widget.maTK;
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))

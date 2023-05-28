@@ -9,9 +9,8 @@ import '../../Account/AccountPage.dart';
 import '../../History/HistoryPage.dart';
 
 class PageRss extends StatefulWidget {
+  PageRss({Key? key,required this.maTK}) : super(key: key);
   String? maTK;
-  PageRss({Key? key , required this.maTK}) : super(key: key);
-
   @override
   State<PageRss> createState() => _PageRssState();
 }
@@ -41,7 +40,9 @@ class _PageRssState extends State<PageRss> {
                         size: 40,
                       ),
                       onTap: () {
-                        Get.to(FirebaseHome(maTK: maTK,));
+                        Navigator.pop(context,
+                          //MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)
+                        );
                       },
                     ),
                     SizedBox(width: 103,),
@@ -77,7 +78,7 @@ class _PageRssState extends State<PageRss> {
                                 border: Border.all(color: Colors.green,width: 2),
                               ),
                               child: GestureDetector(
-                                onTap: () => Get.to(MyWebPage(url: "${listRSS[index].link}")),
+                                onTap: () => Get.to(MyWebPage(url: "${listRSS[index].link}",maTK: maTK,)),
                                 child: Padding(
                                   padding: EdgeInsets.all(7),
                                   child: Row(
@@ -139,14 +140,15 @@ class _PageRssState extends State<PageRss> {
 
           });
           switch(value){
-            case 0: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)); break;
+            case 0: Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),),(route) => false,
+            ); break;
             case 1: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseAccount(maTK: maTK),)); break;
             case 2: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
             case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK),)); break;
+                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK,),)); break;
           }
         },
       ),

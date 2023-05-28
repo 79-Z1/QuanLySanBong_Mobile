@@ -227,7 +227,7 @@ class _HomePageState extends State<HomePage> {
                                       SizedBox(width: 10,),
                                       Icon(Icons.location_on,color: Colors.white,),
                                       Container(
-                                        width: 220,
+                                        width: 200,
                                           child: Text("${list[index].san!.DiaChi}",
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -305,8 +305,9 @@ class _HomePageState extends State<HomePage> {
 
           });
           switch(value){
-            case 0: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)); break;
+            case 0: Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),),(route) => false,
+            ); break;
             case 1: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseAccount(maTK: maTK),)); break;
             case 2: Navigator.push(context,
