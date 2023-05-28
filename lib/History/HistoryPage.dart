@@ -247,7 +247,7 @@ class _PageHistoryState extends State<PageHistory> {
                                     children: [
                                       ElevatedButton(
                                           onPressed: () {
-                                            
+
                                           },
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.green,
