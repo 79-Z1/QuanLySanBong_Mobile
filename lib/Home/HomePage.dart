@@ -227,7 +227,7 @@ class _HomePageState extends State<HomePage> {
                                       SizedBox(width: 10,),
                                       Icon(Icons.location_on,color: Colors.white,),
                                       Container(
-                                        width: 220,
+                                        width: 200,
                                           child: Text("${list[index].san!.DiaChi}",
                                               style: TextStyle(
                                                 color: Colors.white,
