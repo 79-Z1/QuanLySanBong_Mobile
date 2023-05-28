@@ -22,6 +22,7 @@ class PageRegister extends StatelessWidget {
         obscureText: typePassword,
         controller: txt,
         decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(vertical: 8),
             filled: true,
             fillColor: Colors.white,
             labelText: text,
@@ -33,7 +34,7 @@ class PageRegister extends StatelessWidget {
         ),
         validator: (value) => validateString(
             value,
-            displayText: displayText
+            displayText: displayText,
         ),
       ),
     );
@@ -147,16 +148,15 @@ class PageRegister extends StatelessWidget {
         title: Text("Thông báo"),
         content: Container(
           child: Text("Bạn đã đăng kí thành công"),
-
         ),
         actions: [
           ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => QuanLySanBongApp()),(route) => false,);
               },
               child: Text("Ok")
           )
-        ],
+        ]
       );
       showDialog(context: context, builder: (context) => dialog);
     }

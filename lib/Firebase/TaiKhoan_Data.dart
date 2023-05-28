@@ -18,6 +18,12 @@ class TaiKhoan{
     required this.Vip
   });
 
+  TaiKhoan.update({
+    required this.HoTen,
+    required this.SDT,
+    required this.DiaChi,
+  });
+
   Map<String, dynamic> toJson(){
     return {
       'MaTK': this.MaTK,
@@ -62,12 +68,7 @@ class TaiKhoanSnapShot{
         documentReference: docSnapTaiKhoan.reference
     );
   }
-  Future<void>  capNhat(TaiKhoan taiKhoan) async{
-    return documentReference!.update(taiKhoan.toJson());
-  }
-  Future<void> xoa() async{
-    return documentReference!.delete();
-  }
+
   static Future<DocumentReference> themMoi(TaiKhoan taiKhoan) async{
     return FirebaseFirestore.instance.collection("TaiKhoan").add(taiKhoan.toJson());
   }
