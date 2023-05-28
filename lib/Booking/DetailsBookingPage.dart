@@ -94,8 +94,6 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
     tongTien = 0;
     super.initState();
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -318,7 +316,8 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                               if(snapshot.hasError) {
                                 print("Lỗi nè");
                                 print(snapshot.error);
-                                return Column(
+                                 return
+                                Column(
                                   children: [
                                     Container(
                                       width: 150,
