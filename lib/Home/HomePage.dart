@@ -153,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            const SizedBox(height: 5,),
+            const SizedBox(height: 20,),
             Text("${time}",
               style: const TextStyle(
                 fontSize: 45,
@@ -161,25 +161,25 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 5,),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 200,
-                padding: const EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey,
-                    style:BorderStyle.solid,
-                    width: 3,
-                  ),
-                ),
-                child: WebViewWidget(
-                  controller: controller,
-                ),
-              ),
-            ),
-            const SizedBox(height: 5,),
+            // const SizedBox(height: 5,),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Container(
+            //     height: 200,
+            //     padding: const EdgeInsets.all(3),
+            //     decoration: BoxDecoration(
+            //       border: Border.all(
+            //         color: Colors.grey,
+            //         style:BorderStyle.solid,
+            //         width: 3,
+            //       ),
+            //     ),
+            //     child: WebViewWidget(
+            //       controller: controller,
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(height: 5,),
             StreamBuilder(
               stream: SanSnapShot.getAll(),
               builder: (context, snapshot) {
@@ -204,9 +204,9 @@ class _HomePageState extends State<HomePage> {
                   return ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                    separatorBuilder: (context, index) => const SizedBox(height: 20,),
                     itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.only(left: 8.0,right: 8.0),
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -283,25 +283,25 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     maTK = widget.maTK;
     startTimer();
-    controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },
-        ),
-      )
-      ..loadRequest(Uri.parse('https://www.accuweather.com/vi/vn/nha-trang/354222/weather-forecast/354222'));
+    // controller = WebViewController()
+    //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    //   ..setBackgroundColor(const Color(0x00000000))
+    //   ..setNavigationDelegate(
+    //     NavigationDelegate(
+    //       onProgress: (int progress) {
+    //         // Update loading bar.
+    //       },
+    //       onPageStarted: (String url) {},
+    //       onPageFinished: (String url) {},
+    //       onWebResourceError: (WebResourceError error) {},
+    //       onNavigationRequest: (NavigationRequest request) {
+    //         if (request.url.startsWith('https://www.youtube.com/')) {
+    //           return NavigationDecision.prevent;
+    //         }
+    //         return NavigationDecision.navigate;
+    //       },
+    //     ),
+    //   )
+    //   ..loadRequest(Uri.parse('https://www.accuweather.com/vi/vn/nha-trang/354222/weather-forecast/354222'));
   }
 }

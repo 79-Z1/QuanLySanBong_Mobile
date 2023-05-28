@@ -32,20 +32,7 @@ class _PageRssState extends State<PageRss> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(width: 20, height: 20),
-                    InkWell(
-                      child: const Icon(
-                        CupertinoIcons.arrow_left_circle_fill,
-                        color: Colors.white,
-                        size: 40,
-                      ),
-                      onTap: () {
-                        // Navigator.pop(context,
-                        //   //MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)
-                        // );
-                      },
-                    ),
-                    SizedBox(width: 103,),
+                    SizedBox(width: 165,),
                     Text("Tin tức", style: TextStyle(fontSize: 30, color: Colors.white))
                   ],
                 ),

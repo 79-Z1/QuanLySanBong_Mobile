@@ -56,17 +56,7 @@ class _PageHistoryState extends State<PageHistory> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(width: 20, height: 20),
-                  InkWell(
-                    child: const Icon(
-                      CupertinoIcons.arrow_left_circle_fill,
-                      color: Colors.white,
-                      size: 40,
-                    ),
-                    onTap: () {
-                    },
-                  ),
-                  const SizedBox(width: 103,),
+                  const SizedBox(width: 165,),
                   const Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
                 ],
               ),

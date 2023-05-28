@@ -54,21 +54,8 @@ class _PageAccountState extends State<PageAccount> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(width: 20, height: 20),
-                InkWell(
-                  child: const Icon(
-                    CupertinoIcons.arrow_left_circle_fill,
-                    color: Colors.white,
-                    size: 40,
-                  ),
-                  onTap: () {
-                    // Navigator.pop(context,
-                    //   //MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)
-                    // );
-                  },
-                ),
-                const SizedBox(width: 30,),
-                const Text("Thông tin tài khoản", style: TextStyle(fontSize: 30, color: Colors.white))
+                SizedBox(width: 90,),
+                Text("Thông tin tài khoản", style: TextStyle(fontSize: 30, color: Colors.white))
               ],
             ),
           ),
