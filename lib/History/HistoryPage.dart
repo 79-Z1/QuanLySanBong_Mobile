@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:quanlysanbong/Account/AccountPage.dart';
 import 'package:quanlysanbong/Booking/BookingPage.dart';
 import 'package:quanlysanbong/Booking/DetailsBookingPage.dart';
-import 'package:quanlysanbong/Booking/EditDetailsBooKingPage.dart';
+import 'package:quanlysanbong/Booking/SeeDetailsBooKingPage.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
 import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
 import 'package:quanlysanbong/Firebase/JoinTable.dart';
