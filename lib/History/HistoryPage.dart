@@ -82,7 +82,6 @@ class _PageHistoryState extends State<PageHistory> {
                   const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
-
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green[400],
@@ -248,7 +247,7 @@ class _PageHistoryState extends State<PageHistory> {
                                     children: [
                                       ElevatedButton(
                                           onPressed: () {
-
+                                            
                                           },
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.green,
