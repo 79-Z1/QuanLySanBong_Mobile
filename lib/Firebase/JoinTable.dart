@@ -180,57 +180,31 @@ class JoinTable {
     yield results;
   }
 
-  // static Stream<List<Map<dynamic, dynamic>>> getTinhTrangSanCon(String maSan,String ngayDat, int gioDat) async* {
-  //   var db = FirebaseFirestore.instance;
-  //   var results = <Map<dynamic, dynamic>>[];
-  //   var sanConDaDuocDats = <String>[];
-  //   int soSanConConLai;
-  //
-  //   var sanSnapshot = await db.collection('San')
-  //       .where('MaSan', isEqualTo: maSan)
-  //       .get();
-  //
-  //   var datSanSnapshot = await db.collection('DatSan')
-  //       .where('MaSan', isEqualTo: maSan)
-  //       .where('NgayDenSan', isEqualTo: ngayDat)
-  //       .where('GioBatDau', isEqualTo: gioDat)
-  //       .get();
-  //
-  //   var san = San.fromJson(sanSnapshot.docs.first.data()!);
-  //   if (datSanSnapshot.docs.isNotEmpty) {
-  //     for (var datSanDoc in datSanSnapshot.docs) {
-  //       var datSan = DatSan.fromJson(datSanDoc.data()!);
-  //
-  //       for (var sancon in san.SanCons!) {
-  //         if (sancon == datSan.ViTriSan) {
-  //           var data = {
-  //             'TenSan': san.TenSan,
-  //             'TenSanCon': sancon,
-  //             'TinhTrang': 'Đang được đặt',
-  //           };
-  //           results.add(data);
-  //         } else {
-  //           var data = {
-  //             'TenSan': san.TenSan,
-  //             'TenSanCon': sancon,
-  //             'TinhTrang': 'Còn Trống',
-  //           };
-  //           results.add(data);
-  //         }
-  //       }
-  //     }
-  //   } else {
-  //     for (var sancon in san.SanCons!) {
-  //       var data = {
-  //         'TenSan': san.TenSan,
-  //         'TenSanCon': sancon,
-  //         'TinhTrang': 'Còn Trống',
-  //       };
-  //       results.add(data);
-  //     }
-  //   }
-  //   yield results;
-  // }
+  static Future<void> xoaByMaTK_NgayDat_GioDat(String maTK, String ngayDat, int gioBatDau) async{
+    var db = FirebaseFirestore.instance;
+
+    var datSanSnapshot = await db.collection('DatSan')
+        .where('MaTK', isEqualTo: maTK)
+        .where('NgayDenSan', isEqualTo: ngayDat)
+        .where('GioBatDau', isEqualTo: gioBatDau)
+        .get();
+    await datSanSnapshot.docs.first.reference.delete();
+
+    var datSanTheoMa = DatSan.fromJson(datSanSnapshot.docs.first.data()!);
+
+    var datSanSnapshot2 = await db.collection('DatSan')
+        .where('MaTK', isEqualTo: 'HideBooking')
+        .where('NgayDenSan', isEqualTo: ngayDat)
+        .get();
+    for(var i=datSanTheoMa.GioBatDau!; i<datSanTheoMa.GioKetThuc!; i++) {
+      for(var datSanDoc in datSanSnapshot2.docs) {
+        var datSanHide = DatSan.fromJson(datSanDoc.data()!);
+        if(datSanHide.GioBatDau == i) {
+          await datSanDoc.reference.delete();
+        }
+      }
+    }
+  }
 
   static Stream<List<Map<String, dynamic>>> joinTables() {
     final streamController = StreamController<List<Map<String, dynamic>>>();

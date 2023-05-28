@@ -240,7 +240,7 @@ class _PageHistoryState extends State<PageHistory> {
                                       const SizedBox(width: 10),
                                       ElevatedButton(
                                           onPressed: () async {
-                                            await DatSanSnapShot.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
+                                            await JoinTable.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
                                             setState(() {
                                             });
                                           },
@@ -285,7 +285,7 @@ class _PageHistoryState extends State<PageHistory> {
                                       const SizedBox(width: 10),
                                       ElevatedButton(
                                           onPressed: () async {
-                                            await DatSanSnapShot.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
+                                            await JoinTable.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
                                             setState(() {
                                             });
                                           },
