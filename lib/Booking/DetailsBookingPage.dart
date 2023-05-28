@@ -95,6 +95,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -316,10 +317,31 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                             if(snapshot.hasError) {
                               print("Lỗi nè");
                               print(snapshot.error);
-                              return const Center(
-                                child: Text("Lỗi dữ liệu Firebase",
-                                  style: TextStyle(color: Colors.red),
-                                ),
+                              return Column(
+                                children: [
+                                  Container(
+                                    width: 150,
+                                    height: 55,
+                                    child: Text("0 vnđ",
+                                      style: TextStyle(
+                                        fontSize: 23,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 30,),
+                                  Container(
+                                    width: 150,
+                                    height: 55,
+                                    child: Text("Bạn không thể đặt sân trong khoảng 10h-14h hoặc 22h-4h",
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               );
                             } else if(!snapshot.hasData) {
                               return const Center(
