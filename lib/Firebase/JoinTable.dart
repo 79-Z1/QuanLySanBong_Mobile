@@ -29,17 +29,17 @@ class JoinTable {
     }
     yield results;
   }
-  static Stream<List<Map<dynamic, dynamic>>> BangGiaSanFromMaSan(
-      String maSan) async* {
+  static Stream<List<Map<dynamic, dynamic>>> BangGiaSanFromMaSan(String maSan) async* {
     var db = FirebaseFirestore.instance;
 
-    var collection = db.collectionGroup('BangGiaSan').where(
-        'MaSan', isEqualTo: maSan);
-    var snapshot = await collection.get();
+    var bangGiaSanSnapshot = await db.collection('BangGiaSan')
+        .where('MaSan', isEqualTo: maSan)
+        .orderBy('Gio', descending: false)
+        .get();
 
     var results = <Map<dynamic, dynamic>>[];
 
-    for (var doc in snapshot.docs) {
+    for (var doc in bangGiaSanSnapshot.docs) {
       var bangGiaSan = BangGiaSan.fromJson(doc.data()!);
       var data = {
         ...bangGiaSan.toJson(),
