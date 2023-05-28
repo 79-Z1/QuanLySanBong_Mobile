@@ -6,6 +6,7 @@ import 'package:quanlysanbong/Firebase/ChiTietSan.dart';
 import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
 import 'package:quanlysanbong/Firebase/San_Data.dart';
 import 'package:quanlysanbong/Firebase/TaiKhoan_Data.dart';
+import 'package:quanlysanbong/Utils/Utils.dart';
 
 
 class JoinTable {
@@ -19,7 +20,6 @@ class JoinTable {
     var snapshot = await collection.get();
 
     var results = <Map<dynamic, dynamic>>[];
-
     for (var doc in snapshot.docs) {
       var taiKhoan = TaiKhoan.fromJson(doc.data()!);
       var data = {
@@ -151,8 +151,83 @@ class JoinTable {
         results.add(data);
       }
     }
+    // results.sortedBy((it) => it['TenSanCon']);
+    results.sort((a, b) => a['TenSanCon'].compareTo(b['TenSanCon']));
+
     yield results;
   }
+
+  static Stream<List<Map<dynamic, dynamic>>> getTinhTrangSanCon2(String maSan, String ngayDat, int gioDat) {
+    var db = FirebaseFirestore.instance;
+    var results = <Map<dynamic, dynamic>>[];
+    var sanConDaDuocDats = <String>[];
+
+    StreamController<List<Map<dynamic, dynamic>>> streamController = StreamController();
+    late StreamSubscription<QuerySnapshot> subscription;
+
+    subscription = db.collection('DatSan')
+        .where('MaSan', isEqualTo: maSan)
+        .where('NgayDenSan', isEqualTo: ngayDat)
+        .where('GioBatDau', isEqualTo: gioDat)
+        .where('MaTK', isEqualTo: "HideBooking")
+        .snapshots()
+        .listen((datSanSnapshot) async {
+      var sanSnapshot = await db.collection('San')
+          .where('MaSan', isEqualTo: maSan)
+          .get();
+
+      var san = San.fromJson(sanSnapshot.docs.first.data()!);
+
+      results.clear();
+      sanConDaDuocDats.clear();
+
+      if (datSanSnapshot.docs.isNotEmpty) {
+        for (var datSanDoc in datSanSnapshot.docs) {
+          var datSan = DatSan.fromJson(datSanDoc.data()!);
+
+          for (var sancon in san.SanCons!) {
+            if (sancon == datSan.ViTriSan) {
+              sanConDaDuocDats.add(sancon);
+              var data = {
+                'TenSan': san.TenSan,
+                'TenSanCon': sancon,
+                'TinhTrang': 'Đang được đặt',
+              };
+              results.add(data);
+            }
+          }
+        }
+        for (var sancon in san.SanCons!) {
+          if (!sanConDaDuocDats.contains(sancon)) {
+            var data = {
+              'TenSan': san.TenSan,
+              'TenSanCon': sancon,
+              'TinhTrang': 'Còn Trống',
+            };
+            results.add(data);
+          }
+        }
+      } else {
+        for (var sancon in san.SanCons!) {
+          var data = {
+            'TenSan': san.TenSan,
+            'TenSanCon': sancon,
+            'TinhTrang': 'Còn Trống',
+          };
+          results.add(data);
+        }
+      }
+      results.sort((a, b) => a['TenSanCon'].compareTo(b['TenSanCon']));
+      streamController.add(results);
+    });
+
+    subscription.onDone(() {
+      streamController.close();
+    });
+
+    return streamController.stream;
+  }
+
 
   static Stream<List<Map<dynamic, dynamic>>> joinDatSan_San(
       String maTK) async* {

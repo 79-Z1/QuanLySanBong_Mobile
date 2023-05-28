@@ -56,18 +56,7 @@ class _PageHistoryState extends State<PageHistory> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(width: 20, height: 20),
-                  InkWell(
-                    child: const Icon(
-                      CupertinoIcons.arrow_left_circle_fill,
-                      color: Colors.white,
-                      size: 40,
-                    ),
-                    onTap: () {
-                      Get.to( FirebaseHome(maTK: maTK,));
-                    },
-                  ),
-                  const SizedBox(width: 103,),
+                  const SizedBox(width: 165,),
                   const Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
                 ],
               ),
@@ -86,7 +75,6 @@ class _PageHistoryState extends State<PageHistory> {
                   const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
-
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green[400],
@@ -327,47 +315,6 @@ class _PageHistoryState extends State<PageHistory> {
             )
           ],
         ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home,color: Colors.green,),
-            label: "Trang chủ",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle,color: Colors.green),
-            label: "Tài khoản",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history_outlined,color: Colors.green),
-            label: "Lịch sử",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.newspaper,color: Colors.green),
-            label: "Tin tức",
-          ),
-        ],
-        type: BottomNavigationBarType.shifting,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        selectedItemColor: Colors.green,
-        currentIndex: 2,
-        iconSize: 40,
-        onTap: (value) {
-          indexBar = value;
-          setState(() {
-
-          });
-          switch(value){
-            case 0: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)); break;
-            case 1: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FireBaseAccount(maTK: maTK),)); break;
-            case 2: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
-            case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK),)); break;
-          }
-        },
-      ),
     );
   }
   @override

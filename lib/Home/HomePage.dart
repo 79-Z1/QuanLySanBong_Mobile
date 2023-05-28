@@ -7,6 +7,7 @@ import 'package:quanlysanbong/Booking/BookingPage.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
 import 'package:quanlysanbong/Firebase/JoinTable.dart';
 import 'package:quanlysanbong/Firebase/San_Data.dart';
+import 'package:quanlysanbong/Firebase/TaiKhoan_Data.dart';
 import 'package:quanlysanbong/History/HistoryPage.dart';
 import 'package:quanlysanbong/Rss/Page/PageRss.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -51,7 +52,7 @@ class _HomePageState extends State<HomePage> {
 
   void startTimer() {
     countdownTimer =
-        Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
+        Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
   }
 
   void setCountDown() {
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               height: 80,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.green,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(20),
@@ -78,24 +79,24 @@ class _HomePageState extends State<HomePage> {
               ),
               child: Row(
                 children: [
-                  Icon(Icons.account_circle,size: 60,color: Colors.white,),
-                  SizedBox(width: 5,),
+                  const Icon(Icons.account_circle,size: 60,color: Colors.white,),
+                  const SizedBox(width: 5,),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Xin chào",
+                      const Text("Xin chào",
                         style: TextStyle(
                             fontSize: 12,
                             color: Colors.white
                         ),
                       ),
-                      StreamBuilder(
-                          stream: JoinTable.TaiKhoanFromMaTK(maTK!),
+                      StreamBuilder<TaiKhoanSnapShot>(
+                          stream: TaiKhoanSnapShot.getTKByMaTk(maTK!),
                           builder: (context, snapshot) {
                               if(snapshot.hasError){
                                 print(snapshot.error);
-                                return Center(
+                                return const Center(
                                   child: Text("Lỗi dữ liệu Firebase",
                                     style: TextStyle(
                                         color: Colors.red),
@@ -104,15 +105,15 @@ class _HomePageState extends State<HomePage> {
                               }
                               else
                               if(!snapshot.hasData){
-                                return Center(
+                                return const Center(
                                   child: CircularProgressIndicator(),
                                 );
                               }
                               else
                               {
                                 var list = snapshot.data!;
-                                return Text("${list[0]['HoTen']}",
-                                    style: TextStyle(
+                                return Text("${list.taiKhoan!.HoTen}",
+                                    style: const TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white)
@@ -125,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Container(
               width: 406,
               height: 200,
@@ -153,39 +154,39 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            const SizedBox(height: 20,),
             Text("${time}",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 45,
                 color: Colors.green,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 5,),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 200,
-                padding: EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey,
-                    style:BorderStyle.solid,
-                    width: 3,
-                  ),
-                ),
-                child: WebViewWidget(
-                  controller: controller,
-                ),
-              ),
-            ),
-            SizedBox(height: 5,),
+            // const SizedBox(height: 5,),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Container(
+            //     height: 200,
+            //     padding: const EdgeInsets.all(3),
+            //     decoration: BoxDecoration(
+            //       border: Border.all(
+            //         color: Colors.grey,
+            //         style:BorderStyle.solid,
+            //         width: 3,
+            //       ),
+            //     ),
+            //     child: WebViewWidget(
+            //       controller: controller,
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(height: 5,),
             StreamBuilder(
               stream: SanSnapShot.getAll(),
               builder: (context, snapshot) {
                 if(snapshot.hasError){
                   print(snapshot.error);
-                  return Center(
+                  return const Center(
                     child: Text("Lỗi dữ liệu Firebase",
                       style: TextStyle(
                           color: Colors.red),
@@ -194,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                 }
                 else
                 if(!snapshot.hasData){
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
@@ -203,10 +204,10 @@ class _HomePageState extends State<HomePage> {
                   var list = snapshot.data!;
                   return ListView.separated(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) => SizedBox(height: 10,),
+                    physics: const NeverScrollableScrollPhysics(),
+                    separatorBuilder: (context, index) => const SizedBox(height: 20,),
                     itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.only(left: 8.0,right: 8.0),
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -221,21 +222,21 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               child: Column(
                                 children: [
-                                  SizedBox(height: 150,),
+                                  const SizedBox(height: 150,),
                                   Row(
                                     children: [
-                                      SizedBox(width: 10,),
-                                      Icon(Icons.location_on,color: Colors.white,),
+                                      const SizedBox(width: 10,),
+                                      const Icon(Icons.location_on,color: Colors.white,),
                                       Container(
                                         width: 220,
                                           child: Text("${list[index].san!.DiaChi}",
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold
                                               ),
                                           ),
                                       ),
-                                      SizedBox(width: 10,),
+                                      const SizedBox(width: 10,),
                                       ElevatedButton(
                                           onPressed: () {
                                             Navigator.of(context).push(MaterialPageRoute(builder: (context) => FireBaseBooking(maTK: maTK, maSan: "${list[index].san!.MaSan}",)));
@@ -275,48 +276,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home,color: Colors.green,),
-            label: "Trang chủ",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle,color: Colors.green),
-            label: "Tài khoản",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history_outlined,color: Colors.green),
-            label: "Lịch sử",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.newspaper,color: Colors.green),
-            label: "Tin tức",
-          ),
-        ],
-        type: BottomNavigationBarType.shifting,
-        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-        selectedItemColor: Colors.green,
-        currentIndex: indexBar,
-        iconSize: 40,
-        onTap: (value) {
-          indexBar = value;
-          setState(() {
-
-          });
-          switch(value){
-            case 0: Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),),(route) => false,
-            ); break;
-            case 1: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FireBaseAccount(maTK: maTK),)); break;
-            case 2: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
-            case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK),)); break;
-          }
-        },
-      ),
     );
   }
   @override
@@ -325,25 +284,25 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     maTK = widget.maTK;
     startTimer();
-    controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },
-        ),
-      )
-      ..loadRequest(Uri.parse('https://www.accuweather.com/vi/vn/nha-trang/354222/weather-forecast/354222'));
+    // controller = WebViewController()
+    //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    //   ..setBackgroundColor(const Color(0x00000000))
+    //   ..setNavigationDelegate(
+    //     NavigationDelegate(
+    //       onProgress: (int progress) {
+    //         // Update loading bar.
+    //       },
+    //       onPageStarted: (String url) {},
+    //       onPageFinished: (String url) {},
+    //       onWebResourceError: (WebResourceError error) {},
+    //       onNavigationRequest: (NavigationRequest request) {
+    //         if (request.url.startsWith('https://www.youtube.com/')) {
+    //           return NavigationDecision.prevent;
+    //         }
+    //         return NavigationDecision.navigate;
+    //       },
+    //     ),
+    //   )
+    //   ..loadRequest(Uri.parse('https://www.accuweather.com/vi/vn/nha-trang/354222/weather-forecast/354222'));
   }
 }

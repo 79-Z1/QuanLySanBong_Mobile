@@ -8,6 +8,7 @@ import 'package:quanlysanbong/Authen/LoginPage.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
 import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
 import 'package:quanlysanbong/Firebase/JoinTable.dart';
+import 'package:quanlysanbong/Firebase/TaiKhoan_Data.dart';
 import 'package:quanlysanbong/History/HistoryPage.dart';
 import 'package:quanlysanbong/Home/HomePage.dart';
 import 'package:quanlysanbong/Rss/Page/PageRss.dart';
@@ -53,21 +54,8 @@ class _PageAccountState extends State<PageAccount> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(width: 20, height: 20),
-                InkWell(
-                  child: const Icon(
-                    CupertinoIcons.arrow_left_circle_fill,
-                    color: Colors.white,
-                    size: 40,
-                  ),
-                  onTap: () {
-                    Navigator.pop(context,
-                      //MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)
-                    );
-                  },
-                ),
-                const SizedBox(width: 30,),
-                const Text("Thông tin tài khoản", style: TextStyle(fontSize: 30, color: Colors.white))
+                SizedBox(width: 90,),
+                Text("Thông tin tài khoản", style: TextStyle(fontSize: 30, color: Colors.white))
               ],
             ),
           ),
@@ -88,8 +76,8 @@ class _PageAccountState extends State<PageAccount> {
                 const Divider(
                   color: Colors.black, thickness: 2,
                 ),
-                StreamBuilder<List<dynamic>>(
-                  stream: JoinTable.TaiKhoanFromMaTK(maTK!),
+                StreamBuilder<TaiKhoanSnapShot>(
+                  stream: TaiKhoanSnapShot.getTKByMaTk(maTK!),
                   builder: (context, snapshot) {
                     if(snapshot.hasError) {
                       print("Lỗi nè");
@@ -105,6 +93,7 @@ class _PageAccountState extends State<PageAccount> {
                       );
                     } else {
                       var list = snapshot.data!;
+                      print(list.taiKhoan);
                       return Column(
                         children: [
                           SizedBox(height: 40,),
@@ -162,42 +151,42 @@ class _PageAccountState extends State<PageAccount> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("${list[0]['SDT']}",
+                                    Text("${list.taiKhoan!.SDT}",
                                       style: TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     SizedBox(height: 30,),
-                                    Text("${list[0]['HoTen']}",
+                                    Text("${list.taiKhoan!.HoTen}",
                                       style: TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     SizedBox(height: 30,),
-                                    Text("${list[0]['DiaChi']}",
+                                    Text("${list.taiKhoan!.DiaChi}",
                                       style: TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     SizedBox(height: 30,),
-                                    Text("${list[0]['Email']}",
+                                    Text("${list.taiKhoan!.Email}",
                                       style: TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     SizedBox(height: 30,),
-                                    Text("${list[0]['Vip']==true?'VIP':'Thường'}",
+                                    Text("${list.taiKhoan!.Vip==true?'VIP':'Thường'}",
                                       style: TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     SizedBox(height: 30,),
-                                    Text("${list[0]['DiemTich']}",
+                                    Text("${list.taiKhoan!.DiemTich}",
                                       style: TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
@@ -274,48 +263,6 @@ class _PageAccountState extends State<PageAccount> {
             ),
           )
         ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home,color: Colors.green,),
-            label: "Trang chủ",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle,color: Colors.green),
-            label: "Tài khoản",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history_outlined,color: Colors.green),
-            label: "Lịch sử",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.newspaper,color: Colors.green),
-            label: "Tin tức",
-          ),
-        ],
-        type: BottomNavigationBarType.shifting,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        selectedItemColor: Colors.green,
-        currentIndex: 1,
-        iconSize: 40,
-        onTap: (value) {
-          indexBar = value;
-          setState(() {
-
-          });
-          switch(value){
-            case 0: Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),),(route) => false,
-            ); break;
-            case 1: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FireBaseAccount(maTK: maTK),)); break;
-            case 2: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
-            case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK,),)); break;
-          }
-        },
       ),
     );
   }
