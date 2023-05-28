@@ -7,6 +7,7 @@ import 'package:quanlysanbong/Booking/BookingPage.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
 import 'package:quanlysanbong/Firebase/JoinTable.dart';
 import 'package:quanlysanbong/Firebase/San_Data.dart';
+import 'package:quanlysanbong/Firebase/TaiKhoan_Data.dart';
 import 'package:quanlysanbong/History/HistoryPage.dart';
 import 'package:quanlysanbong/Rss/Page/PageRss.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -90,8 +91,8 @@ class _HomePageState extends State<HomePage> {
                             color: Colors.white
                         ),
                       ),
-                      StreamBuilder(
-                          stream: JoinTable.TaiKhoanFromMaTK(maTK!),
+                      StreamBuilder<TaiKhoanSnapShot>(
+                          stream: TaiKhoanSnapShot.getTKByMaTk(maTK!),
                           builder: (context, snapshot) {
                               if(snapshot.hasError){
                                 print(snapshot.error);
@@ -111,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                               else
                               {
                                 var list = snapshot.data!;
-                                return Text("${list[0]['HoTen']}",
+                                return Text("${list.taiKhoan!.HoTen}",
                                     style: const TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
