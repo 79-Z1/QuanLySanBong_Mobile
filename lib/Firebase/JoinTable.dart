@@ -6,6 +6,7 @@ import 'package:quanlysanbong/Firebase/ChiTietSan.dart';
 import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
 import 'package:quanlysanbong/Firebase/San_Data.dart';
 import 'package:quanlysanbong/Firebase/TaiKhoan_Data.dart';
+import 'package:quanlysanbong/Utils/Utils.dart';
 
 
 class JoinTable {
@@ -151,6 +152,9 @@ class JoinTable {
         results.add(data);
       }
     }
+    // results.sortedBy((it) => it['TenSanCon']);
+    results.sort((a, b) => a['TenSanCon'].compareTo(b['TenSanCon']));
+
     yield results;
   }
 
