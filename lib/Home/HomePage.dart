@@ -302,7 +302,6 @@ class _HomePageState extends State<HomePage> {
         onTap: (value) {
           indexBar = value;
           setState(() {
-
           });
           switch(value){
             case 0: Navigator.pushAndRemoveUntil(context,
