@@ -75,6 +75,15 @@ flutter:
       - asset/images/banner/banner3.png
       - asset/images/banner/banner4.png
       - asset/images/banner/banner5.png
+      - asset/images/sans/AP.png
+      - asset/images/sans/DQ.png
+      - asset/images/sans/KH.png
+      - asset/images/sans/MXT.png
+      - asset/images/sans/ruby.png
+      - asset/images/sans/SV.png
+      - asset/images/sans/TR.png
+      - asset/images/sans/TT.png
+      - asset/images/sans/VInhPhuov.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

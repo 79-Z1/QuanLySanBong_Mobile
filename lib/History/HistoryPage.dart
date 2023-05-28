@@ -144,7 +144,7 @@ class _PageHistoryState extends State<PageHistory> {
                                   const SizedBox(height: 10),
                                   Row(
                                     children: [
-                                      Expanded(child: Image.network("${list[index]['Anh']}", height: 100,width: 50)),
+                                      Expanded(child: Image.asset("${list[index]['Anh']}", height: 100,width: 50)),
                                       const SizedBox(width: 10),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
