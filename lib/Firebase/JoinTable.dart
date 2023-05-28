@@ -97,17 +97,6 @@ class JoinTable {
     yield results;
   }
 
-  // static Stream<List<SinhVienSnapshot>> dsSVTuFirebase(){
-  //   Stream<QuerySnapshot> streamQS = FirebaseFirestore.instance.collection("SinhVien").snapshots();
-  //   //Chuyển Stream<QS> --> Stream<List<DS>>
-  //   Stream<List<DocumentSnapshot>> StreamListDocSnap = streamQS.map((querySn) => (querySn.docs));
-  //   //map1: chyển Stream<List> --> Stream<List khác kiểu>
-  //   //map2:chuyển List<DocumentSnapshot> --> List<SinhVienSnapshot>
-  //   return StreamListDocSnap.map(
-  //           (listDocSnap) => listDocSnap.map((docSnap) => SinhVienSnapshot.fromSnapshot(docSnap)).toList()
-  //   );
-  // }
-
   static Stream<List<Map<dynamic, dynamic>>> getTinhTrangSanCon(String maSan,String ngayDat, int gioDat) async* {
     var db = FirebaseFirestore.instance;
     var results = <Map<dynamic, dynamic>>[];
@@ -168,69 +157,77 @@ class JoinTable {
     yield results;
   }
 
-  // static Stream<List<Map<dynamic, dynamic>>> getTinhTrangSanCon(String maSan,String ngayDat, int gioDat) {
-  //   var db = FirebaseFirestore.instance;
-  //   var results = <Map<dynamic, dynamic>>[];
-  //   var sanConDaDuocDats = <String>[];
-  //
-  //   var  qsSanSnapshot = db.collection('San')
-  //       .where('MaSan', isEqualTo: maSan)
-  //       .snapshots();
-  //
-  //   var qsDatSanSnapshot = db.collection('DatSan')
-  //       .where('MaSan', isEqualTo: maSan)
-  //       .where('NgayDenSan', isEqualTo: ngayDat)
-  //       .where('GioBatDau', isEqualTo: gioDat)
-  //       .where('MaTK', isEqualTo: "HideBooking")
-  //       .snapshots();
-  //
-  //   var san = qsSanSnapshot.map((qs) => qs.docs).map((listDocSnap) =>
-  //   listDocSnap.map((docSnap) => SanSnapShot.fromSnapShot(docSnap)).first);
-  //
-  //   var datSanSnapshots = qsDatSanSnapshot.map((qs) => qs.docs).map((listDocSnap) =>
-  //   listDocSnap.map((docSnap) => TaiKhoanSnapShot.fromSnapShot(docSnap)).toList());
-  //
-  //   if (qsDatSanSnapshot) {
-  //     for (var datSanDoc in datSanSnapshots.docs) {
-  //       var datSan = DatSan.fromJson(datSanDoc.data()!);
-  //
-  //       for (var sancon in san.SanCons!) {
-  //         if (sancon == datSan.ViTriSan) {
-  //           sanConDaDuocDats.add(sancon);
-  //           var data = {
-  //             'TenSan': san.TenSan,
-  //             'TenSanCon': sancon,
-  //             'TinhTrang': 'Đang được đặt',
-  //           };
-  //           results.add(data);
-  //         }
-  //       }
-  //     }
-  //     for (var sancon in san.SanCons!) {
-  //       if (!sanConDaDuocDats.contains(sancon)) {
-  //         var data = {
-  //           'TenSan': san.TenSan,
-  //           'TenSanCon': sancon,
-  //           'TinhTrang': 'Còn Trống',
-  //         };
-  //         results.add(data);
-  //       }
-  //     }
-  //   } else {
-  //     for (var sancon in san.SanCons!) {
-  //       var data = {
-  //         'TenSan': san.TenSan,
-  //         'TenSanCon': sancon,
-  //         'TinhTrang': 'Còn Trống',
-  //       };
-  //       results.add(data);
-  //     }
-  //   }
-  //   // results.sortedBy((it) => it['TenSanCon']);
-  //   results.sort((a, b) => a['TenSanCon'].compareTo(b['TenSanCon']));
-  //
-  //   return results;
-  // }
+  static Stream<List<Map<dynamic, dynamic>>> getTinhTrangSanCon2(String maSan, String ngayDat, int gioDat) {
+    var db = FirebaseFirestore.instance;
+    var results = <Map<dynamic, dynamic>>[];
+    var sanConDaDuocDats = <String>[];
+
+    StreamController<List<Map<dynamic, dynamic>>> streamController = StreamController();
+    late StreamSubscription<QuerySnapshot> subscription;
+
+    subscription = db.collection('DatSan')
+        .where('MaSan', isEqualTo: maSan)
+        .where('NgayDenSan', isEqualTo: ngayDat)
+        .where('GioBatDau', isEqualTo: gioDat)
+        .where('MaTK', isEqualTo: "HideBooking")
+        .snapshots()
+        .listen((datSanSnapshot) async {
+      var sanSnapshot = await db.collection('San')
+          .where('MaSan', isEqualTo: maSan)
+          .get();
+
+      var san = San.fromJson(sanSnapshot.docs.first.data()!);
+
+      results.clear();
+      sanConDaDuocDats.clear();
+
+      if (datSanSnapshot.docs.isNotEmpty) {
+        for (var datSanDoc in datSanSnapshot.docs) {
+          var datSan = DatSan.fromJson(datSanDoc.data()!);
+
+          for (var sancon in san.SanCons!) {
+            if (sancon == datSan.ViTriSan) {
+              sanConDaDuocDats.add(sancon);
+              var data = {
+                'TenSan': san.TenSan,
+                'TenSanCon': sancon,
+                'TinhTrang': 'Đang được đặt',
+              };
+              results.add(data);
+            }
+          }
+        }
+        for (var sancon in san.SanCons!) {
+          if (!sanConDaDuocDats.contains(sancon)) {
+            var data = {
+              'TenSan': san.TenSan,
+              'TenSanCon': sancon,
+              'TinhTrang': 'Còn Trống',
+            };
+            results.add(data);
+          }
+        }
+      } else {
+        for (var sancon in san.SanCons!) {
+          var data = {
+            'TenSan': san.TenSan,
+            'TenSanCon': sancon,
+            'TinhTrang': 'Còn Trống',
+          };
+          results.add(data);
+        }
+      }
+      results.sort((a, b) => a['TenSanCon'].compareTo(b['TenSanCon']));
+      streamController.add(results);
+    });
+
+    subscription.onDone(() {
+      streamController.close();
+    });
+
+    return streamController.stream;
+  }
+
 
   static Stream<List<Map<dynamic, dynamic>>> joinDatSan_San(
       String maTK) async* {
