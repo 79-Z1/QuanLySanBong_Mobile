@@ -89,8 +89,8 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
     gioDat = widget.gioDat;
     tenSan = widget.tenSan;
     viTriSan = widget.viTriSan;
-    txtSoGioInput.text = "0";
-    gioKetThuc = int.parse(gioDat.toString());
+    txtSoGioInput.text = "1";
+    gioKetThuc = int.parse(gioDat.toString())  + int.parse(txtSoGioInput.text);
     tongTien = 0;
     super.initState();
   }
@@ -112,336 +112,337 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
           ],
         ),
       ),
-    body: Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.green,
-            width: 3,
-            style: BorderStyle.solid
+    body: SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.green,
+              width: 3,
+              style: BorderStyle.solid
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(30)),
           ),
-          borderRadius: BorderRadius.all(Radius.circular(30)),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-              top: 10,
-            left: 20,
-            right: 20,
-            bottom: 10,
-          ),
-          child: Column(
-            children: [
-              SizedBox(height: 30,),
-              Row(
-                children: [
-                  SizedBox(width: 20,),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 150,
-                        height: 55,
-                        child: Text("Ngày đặt",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+          child: Padding(
+            padding: const EdgeInsets.only(
+                top: 10,
+              left: 20,
+              right: 20,
+              bottom: 10,
+            ),
+            child: Column(
+              children: [
+                SizedBox(height: 30,),
+                Row(
+                  children: [
+                    SizedBox(width: 20,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Text("Ngày đặt",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30,),
-                      Container(
-                        width: 150,
-                        height: 55,
-                        child: Text("Giờ bắt đầu",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+                        SizedBox(height: 30,),
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Text("Giờ bắt đầu",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30,),
-                      Container(
-                        width: 150,
-                        height: 55,
-                        child: Text("Số giờ đặt",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+                        SizedBox(height: 30,),
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Text("Số giờ đặt",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30,),
-                      Container(
-                        width: 150,
-                        height: 55,
-                        child: Text("Giờ kết thúc",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+                        SizedBox(height: 30,),
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Text("Giờ kết thúc",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30,),
-                      Container(
-                        width: 150,
-                        height: 55,
-                        child: Text("Tên sân",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+                        SizedBox(height: 30,),
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Text("Tên sân",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30,),
-                      Container(
-                        width: 150,
-                        height: 55,
-                        child: Text("Vị trí sân",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+                        SizedBox(height: 30,),
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Text("Vị trí sân",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30,),
-                      Container(
-                        width: 150,
-                        height: 55,
-                        child: Text("Giảm giá",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+                        SizedBox(height: 30,),
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Text("Giảm giá",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30,),
-                      Container(
-                        width: 150,
-                        height: 55,
-                        child: Text("Thành tiền",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+                        SizedBox(height: 30,),
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Text("Thành tiền",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 15,),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 150,
-                        height: 55,
-                        child: Text("${ngayDat}",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+                      ],
+                    ),
+                    SizedBox(width: 15,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Text("${ngayDat}",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30,),
-                      Container(
-                        width: 150,
-                        height: 55,
-                        child: Text("${gioDat}",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+                        SizedBox(height: 30,),
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Text("${gioDat}",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 20,),
-                      Container(
-                        width: 30,
-                        height: 55,
-                        child: TextField(
-                          controller: txtSoGioInput,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            NumericalRangeFormatter(min: 1, max: 5,)
-                          ],
+                        SizedBox(height: 20,),
+                        Container(
+                          width: 30,
+                          height: 55,
+                          child: TextField(
+                            controller: txtSoGioInput,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              NumericalRangeFormatter(min: 1, max: 5,)
+                            ],
 
-                          style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
-                          onSubmitted: (value) {
-                            setState(() {
-                              txtSoGioInput.text = value;
-                              gioKetThuc = int.parse(gioDat.toString()) + int.parse(txtSoGioInput.text);
+                            style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                            onSubmitted: (value) {
                               setState(() {
+                                txtSoGioInput.text = value;
+                                gioKetThuc = int.parse(gioDat.toString()) + int.parse(txtSoGioInput.text);
+                                setState(() {
 
+                                });
                               });
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(height: 40,),
-                      Container(
-                        width: 150,
-                        height: 55,
-                        child: Text("${gioKetThuc}",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+                            },
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30,),
-                      Container(
-                        width: 150,
-                        height: 55,
-                        child: Text("${tenSan}",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+                        SizedBox(height: 40,),
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Text("${gioKetThuc}",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30,),
-                      Container(
-                        width: 150,
-                        height: 55,
-                        child: Text("${viTriSan}",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+                        SizedBox(height: 30,),
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Text("${tenSan}",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30,),
-                      StreamBuilder(
-                          stream: JoinTable.tinhTienSan(maTK!, maSan!, int.parse(gioDat.toString()), gioKetThuc!),
-                          builder: (context, snapshot) {
-                            if(snapshot.hasError) {
-                              print("Lỗi nè");
-                              print(snapshot.error);
-                              return Column(
-                                children: [
-                                  Container(
-                                    width: 150,
-                                    height: 55,
-                                    child: Text("0 vnđ",
-                                      style: TextStyle(
-                                        fontSize: 23,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 30,),
-                                  Container(
-                                    width: 150,
-                                    height: 55,
-                                    child: Text("Chúng tôi không mở sân trong khoảng 10h-14h hoặc 22h-4h",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            } else if(!snapshot.hasData) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }else {
-                              var list = snapshot.data!;
-                              tongTien = list[0]['TongTien'];
-                              return Column(
-                                children: [
-                                  Container(
-                                        width: 150,
-                                        height: 55,
-                                        child: Text("${usCurrency.format(list[0]['SoTienGiam'])} vnđ",
-                                          style: TextStyle(
-                                            fontSize: 23,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                        SizedBox(height: 30,),
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Text("${viTriSan}",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 30,),
+                        StreamBuilder(
+                            stream: JoinTable.tinhTienSan(maTK!, maSan!, int.parse(gioDat.toString()), gioKetThuc!),
+                            builder: (context, snapshot) {
+                              if(snapshot.hasError) {
+                                print("Lỗi nè");
+                                print(snapshot.error);
+                                return Column(
+                                  children: [
+                                    Container(
+                                      width: 150,
+                                      height: 55,
+                                      child: Text("0 vnđ",
+                                        style: TextStyle(
+                                          fontSize: 23,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                  SizedBox(height: 30,),
-                                  Container(
-                                    width: 150,
-                                    height: 55,
-                                    child: Text("${usCurrency.format(list[0]['TongTien'])} vnđ",
-                                      style: TextStyle(
-                                        fontSize: 23,
-                                        fontWeight: FontWeight.bold,
+                                    ),
+                                    SizedBox(height: 30,),
+                                    Container(
+                                      width: 150,
+                                      height: 55,
+                                      child: Text("Chúng tôi không mở sân trong khoảng 10h-14h hoặc 22h-4h",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              );
-                            }
-                          },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 50,),
-              ElevatedButton(
-                  onPressed: () {
-                      FirebaseFirestore.instance
-                          .collection('TaiKhoan')
-                          .where('MaTK', isEqualTo: maTK) // MaTK là giá trị cụ thể của MaTK mà bạn muốn cập nhật
-                          .get()
-                          .then((querySnapshot) {
-                        querySnapshot.docs.forEach((documentSnapshot) {
-                          var taiKhoan = TaiKhoan.fromJson(documentSnapshot.data()!);
-                          int diem = taiKhoan.DiemTich! + (gioKetThuc! - int.parse(gioDat.toString()))*10;
-                          documentSnapshot.reference.update({
-                            'DiemTich':  diem,
+                                  ],
+                                );
+                              } else if(!snapshot.hasData) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }else {
+                                var list = snapshot.data!;
+                                tongTien = list[0]['TongTien'];
+                                return Column(
+                                  children: [
+                                    Container(
+                                          width: 150,
+                                          height: 55,
+                                          child: Text("${usCurrency.format(list[0]['SoTienGiam'])} vnđ",
+                                            style: TextStyle(
+                                              fontSize: 23,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                    SizedBox(height: 30,),
+                                    Container(
+                                      width: 150,
+                                      height: 55,
+                                      child: Text("${usCurrency.format(list[0]['TongTien'])} vnđ",
+                                        style: TextStyle(
+                                          fontSize: 23,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }
+                            },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 50,),
+                ElevatedButton(
+                    onPressed: () {
+                        FirebaseFirestore.instance
+                            .collection('TaiKhoan')
+                            .where('MaTK', isEqualTo: maTK) // MaTK là giá trị cụ thể của MaTK mà bạn muốn cập nhật
+                            .get()
+                            .then((querySnapshot) {
+                          querySnapshot.docs.forEach((documentSnapshot) {
+                            var taiKhoan = TaiKhoan.fromJson(documentSnapshot.data()!);
+                            int diem = taiKhoan.DiemTich! + (gioKetThuc! - int.parse(gioDat.toString()))*10;
+                            documentSnapshot.reference.update({
+                              'DiemTich':  diem,
+                            });
                           });
                         });
-                      });
-                      for(int i = int.parse(gioDat.toString()); i < gioKetThuc!; i++){
+                        for(int i = int.parse(gioDat.toString()); i < gioKetThuc!; i++){
+                          DatSan datSan = new DatSan(
+                            MaSan: maSan,
+                            MaTK: "HideBooking",
+                            ViTriSan: viTriSan,
+                            NgayDenSan: ngayDat,
+                            GioBatDau: i,
+                            GioKetThuc: i+1,
+                            TongTien: tongTien!.toInt(),
+                          );
+                          DatSanSnapShot.themMoi(datSan);
+                        }
                         DatSan datSan = new DatSan(
                           MaSan: maSan,
-                          MaTK: "HideBooking",
+                          MaTK: maTK,
                           ViTriSan: viTriSan,
                           NgayDenSan: ngayDat,
-                          GioBatDau: i,
-                          GioKetThuc: i+1,
+                          GioBatDau: int.parse(gioDat.toString()),
+                          GioKetThuc: gioKetThuc,
                           TongTien: tongTien!.toInt(),
                         );
-                        DatSanSnapShot.themMoi(datSan);
-                      }
-                      DatSan datSan = new DatSan(
-                        MaSan: maSan,
-                        MaTK: maTK,
-                        ViTriSan: viTriSan,
-                        NgayDenSan: ngayDat,
-                        GioBatDau: int.parse(gioDat.toString()),
-                        GioKetThuc: gioKetThuc,
-                        TongTien: tongTien!.toInt(),
-                      );
-                      DatSanSnapShot.themMoi(datSan).whenComplete(()
-                      {
-                        showSnackbar(context, "Đã đặt sân thành công, bạn có thể kiểm tra trong lịch sử");
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),));
-                      }
-                      );
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
-                      shape: const RoundedRectangleBorder(
-                          side: BorderSide(
-                              color: Colors.black
-                          )
-                      )
-                  ),
-                  child: const Text("Đặt sân", style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25
-                  ))
-              ),
-            ],
+                        DatSanSnapShot.themMoi(datSan).whenComplete(()
+                        {
+                          showSnackbar(context, "Đã đặt sân thành công, bạn có thể kiểm tra trong lịch sử");
+                          Navigator.pop(context);
+                        }
+                        );
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
+                        shape: const RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: Colors.black
+                            )
+                        )
+                    ),
+                    child: const Text("Đặt sân", style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 25
+                    ))
+                ),
+              ],
+            ),
           ),
         ),
       ),
