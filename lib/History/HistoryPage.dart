@@ -35,6 +35,7 @@ class PageHistory extends StatefulWidget {
 
 class _PageHistoryState extends State<PageHistory> {
   String? maTK;
+  final NumberFormat usCurrency = NumberFormat('#,##0', 'en_US');
   @override
   Widget build(BuildContext context) {
     int indexBar = 0;
@@ -59,13 +60,11 @@ class _PageHistoryState extends State<PageHistory> {
                       size: 40,
                     ),
                     onTap: () {
-                      Navigator.pop(context,
-                        //MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)
-                      );
+                      Get.to( FirebaseHome(maTK: maTK,));
                     },
                   ),
                   SizedBox(width: 103,),
-                  const Text("Lịch sử", style: TextStyle(fontSize: 25, color: Colors.white))
+                  const Text("Lịch sử", style: TextStyle(fontSize: 30, color: Colors.white))
                 ],
               ),
             ),
@@ -175,10 +174,11 @@ class _PageHistoryState extends State<PageHistory> {
                                                   fontWeight: FontWeight.bold
                                               )),
                                               const SizedBox(width: 10,),
-                                              Text("${list[index]['TongTien']}đ", style:const TextStyle(
+                                              Text("${usCurrency.format(list[index]['TongTien'])}đ", style:const TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold
-                                              )),
+                                              ),
+                                              ),
                                             ],
                                           ),
                                           Row(
@@ -310,15 +310,14 @@ class _PageHistoryState extends State<PageHistory> {
 
           });
           switch(value){
-            case 0: Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),),(route) => false,
-            ); break;
+            case 0: Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)); break;
             case 1: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseAccount(maTK: maTK),)); break;
             case 2: Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
             case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK,),)); break;
+                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK),)); break;
           }
         },
       ),

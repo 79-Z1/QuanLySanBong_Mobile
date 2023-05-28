@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:quanlysanbong/Account/AccountPage.dart';
+import 'package:quanlysanbong/Booking/BookingPage.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
 import 'package:quanlysanbong/Firebase/JoinTable.dart';
 import 'package:quanlysanbong/Firebase/San_Data.dart';
@@ -52,6 +53,7 @@ class _HomePageState extends State<HomePage> {
     countdownTimer =
         Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
   }
+
   void setCountDown() {
     setState(() {
       time = DateFormat("HH:mm:ss").format(DateTime.now());
@@ -202,9 +204,65 @@ class _HomePageState extends State<HomePage> {
                   return ListView.separated(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) => SizedBox(height: 5,),
-                    itemBuilder: (context, index) => Container(
-                      child: Image.network("${list[index].san!.Anh}"),
+                    separatorBuilder: (context, index) => SizedBox(height: 10,),
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 2,
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                          ),
+                        ),
+                        child: Stack(
+                          children: [
+                            Image.network("${list[index].san!.Anh}"),
+                            Container(
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 150,),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 10,),
+                                      Icon(Icons.location_on,color: Colors.white,),
+                                      Container(
+                                        width: 220,
+                                          child: Text("${list[index].san!.DiaChi}",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold
+                                              ),
+                                          ),
+                                      ),
+                                      SizedBox(width: 10,),
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => FireBaseBooking(maTK: maTK, maSan: "${list[index].san!.MaSan}",)));
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.green,
+                                              padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
+                                              shape: const RoundedRectangleBorder(
+                                                  side: BorderSide(
+                                                    width: 2,
+                                                      color: Colors.black
+                                                  )
+                                              )
+                                          ),
+                                          child: const Text("Đặt sân ngay", style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15
+                                          ))
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     itemCount: list.length,
                   );

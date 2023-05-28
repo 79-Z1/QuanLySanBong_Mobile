@@ -59,6 +59,15 @@ class SanSnapShot{
     return streamQS.map((qs) => qs.docs).map((listDocSnap) =>
         listDocSnap.map((docSnap) => SanSnapShot.fromSnapShot(docSnap)).toList());
   }
+
+  static Stream<SanSnapShot> getSanByMaSan(String maSan){
+    Stream<QuerySnapshot> streamQS = FirebaseFirestore.instance.collection("San")
+        .where('MaSan', isEqualTo: maSan)
+        .snapshots();
+    return streamQS.map((qs) => qs.docs).map((listDocSnap) =>
+        listDocSnap.map((docSnap) => SanSnapShot.fromSnapShot(docSnap)).first);
+  }
+
   static Future<List<SanSnapShot>> dsSanTuFirebaseOneTime() async{
     QuerySnapshot qs = await FirebaseFirestore.instance.collection("San").get();
     return qs.docs.map((doc) => SanSnapShot.fromSnapShot(doc)).toList();

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:quanlysanbong/Firebase/BangGiaSan_Data.dart';
 import 'package:quanlysanbong/Firebase/ChiTietSan.dart';
 import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
 import 'package:quanlysanbong/Firebase/San_Data.dart';
@@ -8,6 +9,150 @@ import 'package:quanlysanbong/Firebase/TaiKhoan_Data.dart';
 
 
 class JoinTable {
+
+  static Stream<List<Map<dynamic, dynamic>>> TaiKhoanFromMaTK(
+      String maTK) async* {
+    var db = FirebaseFirestore.instance;
+
+    var collection = db.collectionGroup('TaiKhoan').where(
+        'MaTK', isEqualTo: maTK);
+    var snapshot = await collection.get();
+
+    var results = <Map<dynamic, dynamic>>[];
+
+    for (var doc in snapshot.docs) {
+      var taiKhoan = TaiKhoan.fromJson(doc.data()!);
+      var data = {
+        ...taiKhoan.toJson(),
+      };
+      results.add(data);
+    }
+    yield results;
+  }
+  static Stream<List<Map<dynamic, dynamic>>> BangGiaSanFromMaSan(
+      String maSan) async* {
+    var db = FirebaseFirestore.instance;
+
+    var collection = db.collectionGroup('BangGiaSan').where(
+        'MaSan', isEqualTo: maSan);
+    var snapshot = await collection.get();
+
+    var results = <Map<dynamic, dynamic>>[];
+
+    for (var doc in snapshot.docs) {
+      var bangGiaSan = BangGiaSan.fromJson(doc.data()!);
+      var data = {
+        ...bangGiaSan.toJson(),
+      };
+      results.add(data);
+    }
+    yield results;
+  }
+
+  static Stream<List<Map<dynamic, dynamic>>> tinhTienSan(String maTK, String maSan, int gioBatDau, int gioKetThuc ) async* {
+    var db = FirebaseFirestore.instance;
+    var results = <Map<dynamic, dynamic>>[];
+    double tongTien = 0;
+    double soTienGiam = 0;
+    for(int i = gioBatDau; i < gioKetThuc; i++){
+      var bangGiaSanSnapshot = await db.collection('BangGiaSan')
+          .where('MaSan', isEqualTo: maSan)
+          .where('Gio', isEqualTo: i)
+          .get();
+      var bangGiaSan = BangGiaSan.fromJson(bangGiaSanSnapshot.docs.first.data()!);
+      tongTien += int.parse(bangGiaSan.GiaTheoGio.toString());
+    }
+    var taiKhoanSnapshot = await db.collection('TaiKhoan')
+        .where('MaTK', isEqualTo: maTK)
+        .get();
+    var taiKhoan = TaiKhoan.fromJson(taiKhoanSnapshot.docs.first.data()!);
+
+    if(taiKhoan.DiemTich! >= 1000 && taiKhoan.DiemTich! <= 2000){
+      soTienGiam = tongTien * 0.05;
+      tongTien =  tongTien - soTienGiam;
+      var data = {
+        'SoTienGiam' : soTienGiam,
+        'TongTien' : tongTien,
+      };
+      results.add(data);
+    }
+    else{
+      if(taiKhoan.DiemTich! >= 2000){
+        soTienGiam = tongTien * 0.1;
+        tongTien =  tongTien - soTienGiam;
+        var data = {
+          'SoTienGiam' : soTienGiam,
+          'TongTien' : tongTien,
+        };
+        results.add(data);
+      }
+      else{
+        var data = {
+          'SoTienGiam' : 0,
+          'TongTien' : tongTien,
+        };
+        results.add(data);
+      }
+    }
+    yield results;
+  }
+  static Stream<List<Map<dynamic, dynamic>>> getTinhTrangSanCon(String maSan,String ngayDat, int gioDat) async* {
+    var db = FirebaseFirestore.instance;
+    var results = <Map<dynamic, dynamic>>[];
+    var sanConDaDuocDats = <String>[];
+
+    var sanSnapshot = await db.collection('San')
+        .where('MaSan', isEqualTo: maSan)
+        .get();
+
+    var datSanSnapshot = await db.collection('DatSan')
+        .where('MaSan', isEqualTo: maSan)
+        .where('NgayDenSan', isEqualTo: ngayDat)
+        .where('GioBatDau', isEqualTo: gioDat)
+        .where('MaTK', isEqualTo: "HideBooking")
+        .get();
+
+    var san = San.fromJson(sanSnapshot.docs.first.data()!);
+
+    if (datSanSnapshot.docs.isNotEmpty) {
+      for (var datSanDoc in datSanSnapshot.docs) {
+        var datSan = DatSan.fromJson(datSanDoc.data()!);
+
+        for (var sancon in san.SanCons!) {
+          if (sancon == datSan.ViTriSan) {
+            sanConDaDuocDats.add(sancon);
+            var data = {
+              'TenSan': san.TenSan,
+              'TenSanCon': sancon,
+              'TinhTrang': 'Đang được đặt',
+            };
+            results.add(data);
+          }
+        }
+      }
+      for (var sancon in san.SanCons!) {
+        if (!sanConDaDuocDats.contains(sancon)) {
+          var data = {
+            'TenSan': san.TenSan,
+            'TenSanCon': sancon,
+            'TinhTrang': 'Còn Trống',
+          };
+          results.add(data);
+        }
+      }
+    } else {
+      for (var sancon in san.SanCons!) {
+        var data = {
+          'TenSan': san.TenSan,
+          'TenSanCon': sancon,
+          'TinhTrang': 'Còn Trống',
+        };
+        results.add(data);
+      }
+    }
+    yield results;
+  }
+
   static Stream<List<dynamic>> joinChiTietSanAndDatSan() async* {
     var datSanCollection = FirebaseFirestore.instance.collection('DatSan');
     var chitietSanCollection = FirebaseFirestore.instance.collection(
@@ -61,7 +206,6 @@ class JoinTable {
           ...chiTietSan.toJson(),
           ...datSan.toJson(),
         };
-        print(data);
 
         results.add(data);
       }
@@ -101,25 +245,7 @@ class JoinTable {
     }
     yield results;
   }
-  static Stream<List<Map<dynamic, dynamic>>> TaiKhoanFromMaTK(
-      String maTK) async* {
-    var db = FirebaseFirestore.instance;
 
-    var collection = db.collectionGroup('TaiKhoan').where(
-        'MaTK', isEqualTo: maTK);
-    var snapshot = await collection.get();
-
-    var results = <Map<dynamic, dynamic>>[];
-
-    for (var doc in snapshot.docs) {
-      var taiKhoan = TaiKhoan.fromJson(doc.data()!);
-      var data = {
-        ...taiKhoan.toJson(),
-      };
-      results.add(data);
-    }
-    yield results;
-  }
   static Stream<List<Map<String, dynamic>>> joinTables() {
     final streamController = StreamController<List<Map<String, dynamic>>>();
 
@@ -153,7 +279,6 @@ class JoinTable {
               'SoSan': chiTietSanData['SoSan'],
               // Các trường dữ liệu khác bạn muốn lấy từ các bảng
             };
-            print(joinedRow);
             joinedData.add(joinedRow);
           }
         }
