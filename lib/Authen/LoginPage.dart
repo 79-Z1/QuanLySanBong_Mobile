@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:quanlysanbong/Authen/RegisterPage.dart';
 import 'package:get/get.dart';
 import 'package:quanlysanbong/Firebase/TaiKhoan_Controller.dart';
+import 'package:quanlysanbong/Home/BottomNavPage.dart';
 import 'package:quanlysanbong/Home/HomePage.dart';
 import '../Firebase/Connect_Firebase.dart';
 
@@ -83,7 +84,7 @@ class PageLogin extends StatelessWidget {
                             FirebaseFirestore.instance.collection('TaiKhoan').where('Email', isEqualTo: txtemail.text.trim()).get().then((querySnapshot) {
                               querySnapshot.docs.forEach((doc) {
                                 String maTK = doc['MaTK'];
-                                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK,)),(route) => false,);
+                                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => FirebaseMain(maTK: maTK,)),(route) => false,);
                               });
                             });
                           } on FirebaseAuthException catch(e){

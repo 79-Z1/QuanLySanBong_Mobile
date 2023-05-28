@@ -77,6 +77,14 @@ class TaiKhoanSnapShot{
     return streamQS.map((qs) => qs.docs).map((listDocSnap) =>
         listDocSnap.map((docSnap) => TaiKhoanSnapShot.fromSnapShot(docSnap)).toList());
   }
+  static Stream<TaiKhoanSnapShot> getTKByMaTk(String maTK){
+    Stream<QuerySnapshot> streamQS = FirebaseFirestore.instance.collection("TaiKhoan")
+        .where('MaTK', isEqualTo: maTK)
+        .snapshots();
+    var stream = streamQS.map((qs) => qs.docs).map((listDocSnap) =>
+    listDocSnap.map((docSnap) => TaiKhoanSnapShot.fromSnapShot(docSnap)).first);
+    return stream;
+  }
   static Future<List<TaiKhoanSnapShot>> dsTaiKhoanTuFirebaseOneTime() async{
     QuerySnapshot qs = await FirebaseFirestore.instance.collection("TaiKhoan").get();
     return qs.docs.map((doc) => TaiKhoanSnapShot.fromSnapShot(doc)).toList();

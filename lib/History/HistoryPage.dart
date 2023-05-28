@@ -64,7 +64,6 @@ class _PageHistoryState extends State<PageHistory> {
                       size: 40,
                     ),
                     onTap: () {
-                      Get.to( FirebaseHome(maTK: maTK,));
                     },
                   ),
                   const SizedBox(width: 103,),
@@ -326,47 +325,6 @@ class _PageHistoryState extends State<PageHistory> {
             )
           ],
         ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home,color: Colors.green,),
-            label: "Trang chủ",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle,color: Colors.green),
-            label: "Tài khoản",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history_outlined,color: Colors.green),
-            label: "Lịch sử",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.newspaper,color: Colors.green),
-            label: "Tin tức",
-          ),
-        ],
-        type: BottomNavigationBarType.shifting,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        selectedItemColor: Colors.green,
-        currentIndex: 2,
-        iconSize: 40,
-        onTap: (value) {
-          indexBar = value;
-          setState(() {
-
-          });
-          switch(value){
-            case 0: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FirebaseHome(maTK: maTK),)); break;
-            case 1: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FireBaseAccount(maTK: maTK),)); break;
-            case 2: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FireBaseHistory(maTK: maTK),)); break;
-            case 3: Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PageRss(maTK: maTK),)); break;
-          }
-        },
-      ),
     );
   }
   @override

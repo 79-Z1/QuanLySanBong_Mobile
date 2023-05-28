@@ -333,7 +333,7 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                                   Container(
                                     width: 150,
                                     height: 55,
-                                    child: Text("Bạn không thể đặt sân trong khoảng 10h-14h hoặc 22h-4h",
+                                    child: Text("Chúng tôi không mở sân trong khoảng 10h-14h hoặc 22h-4h",
                                       style: TextStyle(
                                         fontSize: 15,
                                         color: Colors.red,
