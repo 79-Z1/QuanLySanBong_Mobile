@@ -29,64 +29,70 @@ class JoinTable {
     }
     yield results;
   }
+  static Stream<List<Map<dynamic, dynamic>>> BangGiaSanFromMaSan(
+      String maSan) async* {
+    var db = FirebaseFirestore.instance;
 
-  // static Future<double> tinhTienSan(String maTK, String maSan, int gioBatDau, int gioKetThuc ) async {
-  //   var db = FirebaseFirestore.instance;
-  //   double tongTien = 0;
-  //   for(int i = gioBatDau; i < gioKetThuc; i++){
-  //     var bangGiaSanSnapshot = await db.collection('BangGiaSan')
-  //         .where('MaSan', isEqualTo: maSan)
-  //         .where('Gio', isEqualTo: i)
-  //         .get();
-  //     var bangGiaSan = BangGiaSan.fromJson(bangGiaSanSnapshot.docs.first.data()!);
-  //     tongTien += double.parse(bangGiaSan.GiaTheoGio.toString());
-  //   }
-  //   var taiKhoanSnapshot = await db.collection('TaiKhoan')
-  //       .where('MaTK', isEqualTo: maTK)
-  //       .get();
-  //   var taiKhoan = TaiKhoan.fromJson(taiKhoanSnapshot.docs.first.data()!);
-  //
-  //   if(taiKhoan.Vip == true){
-  //     return tongTien - tongTien * 0.05;
-  //     print(tongTien - tongTien * 0.05);
-  //   }
-  //
-  //   else{
-  //     return tongTien;
-  //     print(tongTien);
-  //   }
-  // }
+    var collection = db.collectionGroup('BangGiaSan').where(
+        'MaSan', isEqualTo: maSan);
+    var snapshot = await collection.get();
+
+    var results = <Map<dynamic, dynamic>>[];
+
+    for (var doc in snapshot.docs) {
+      var bangGiaSan = BangGiaSan.fromJson(doc.data()!);
+      var data = {
+        ...bangGiaSan.toJson(),
+      };
+      results.add(data);
+    }
+    yield results;
+  }
+
   static Stream<List<Map<dynamic, dynamic>>> tinhTienSan(String maTK, String maSan, int gioBatDau, int gioKetThuc ) async* {
     var db = FirebaseFirestore.instance;
     var results = <Map<dynamic, dynamic>>[];
     double tongTien = 0;
+    double soTienGiam = 0;
     for(int i = gioBatDau; i < gioKetThuc; i++){
       var bangGiaSanSnapshot = await db.collection('BangGiaSan')
           .where('MaSan', isEqualTo: maSan)
           .where('Gio', isEqualTo: i)
           .get();
       var bangGiaSan = BangGiaSan.fromJson(bangGiaSanSnapshot.docs.first.data()!);
-      tongTien += double.parse(bangGiaSan.GiaTheoGio.toString());
+      tongTien += int.parse(bangGiaSan.GiaTheoGio.toString());
     }
     var taiKhoanSnapshot = await db.collection('TaiKhoan')
         .where('MaTK', isEqualTo: maTK)
         .get();
     var taiKhoan = TaiKhoan.fromJson(taiKhoanSnapshot.docs.first.data()!);
 
-    if(taiKhoan.Vip == true){
-      tongTien =  tongTien - tongTien * 0.05;
+    if(taiKhoan.DiemTich! >= 1000 && taiKhoan.DiemTich! <= 2000){
+      soTienGiam = tongTien * 0.05;
+      tongTien =  tongTien - soTienGiam;
       var data = {
+        'SoTienGiam' : soTienGiam,
         'TongTien' : tongTien,
       };
       results.add(data);
-      print(results);
     }
     else{
-      var data = {
-        'TongTien' : tongTien,
-      };
-      results.add(data);
-      print(results);
+      if(taiKhoan.DiemTich! >= 2000){
+        soTienGiam = tongTien * 0.1;
+        tongTien =  tongTien - soTienGiam;
+        var data = {
+          'SoTienGiam' : soTienGiam,
+          'TongTien' : tongTien,
+        };
+        results.add(data);
+      }
+      else{
+        var data = {
+          'SoTienGiam' : 0,
+          'TongTien' : tongTien,
+        };
+        results.add(data);
+      }
     }
     yield results;
   }
