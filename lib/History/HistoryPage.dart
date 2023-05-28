@@ -4,6 +4,8 @@ import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:quanlysanbong/Account/AccountPage.dart';
+import 'package:quanlysanbong/Booking/BookingPage.dart';
+import 'package:quanlysanbong/Booking/DetailsBookingPage.dart';
 import 'package:quanlysanbong/Booking/EditDetailsBooKingPage.dart';
 import 'package:quanlysanbong/Firebase/Connect_Firebase.dart';
 import 'package:quanlysanbong/Firebase/DatSan_Data.dart';
@@ -242,6 +244,7 @@ class _PageHistoryState extends State<PageHistory> {
                                           onPressed: () async {
                                             await JoinTable.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
                                             setState(() {
+                                              showSnackbar(context, "Hủy sân thành công");
                                             });
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -266,7 +269,11 @@ class _PageHistoryState extends State<PageHistory> {
                                     children: [
                                       ElevatedButton(
                                           onPressed: () {
-
+                                            Navigator.push(context,
+                                                MaterialPageRoute(builder: (context) => FireBaseBooking(
+                                                  maTK: maTK,
+                                                  maSan: list[index]['MaSan']
+                                                )));
                                           },
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.green,
@@ -287,6 +294,7 @@ class _PageHistoryState extends State<PageHistory> {
                                           onPressed: () async {
                                             await JoinTable.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
                                             setState(() {
+                                              showSnackbar(context, "Xóa thành công");
                                             });
                                           },
                                           style: ElevatedButton.styleFrom(
