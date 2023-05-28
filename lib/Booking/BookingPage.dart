@@ -184,6 +184,7 @@ class _PageBookingState extends State<PageBooking> {
                     child: ListView.separated(
                       itemBuilder: (context, index) => InkWell(
                         onTap: () {
+                          list[index]['TinhTrang'] != "Còn Trống" ? null :
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => FireBaseDetailsBooking(
                                 maTK: maTK,
@@ -193,7 +194,7 @@ class _PageBookingState extends State<PageBooking> {
                                 tenSan: list[index]['TenSan'],
                                 viTriSan: list[index]['TenSanCon'],
                               )
-                            )
+                          )
                           );
                         },
                         child: Container(

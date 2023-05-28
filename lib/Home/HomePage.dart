@@ -217,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: Stack(
                           children: [
-                            Image.network("${list[index].san!.Anh}"),
+                            Image.asset("${list[index].san!.Anh}"),
                             Container(
                               child: Column(
                                 children: [

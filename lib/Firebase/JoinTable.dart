@@ -29,17 +29,17 @@ class JoinTable {
     }
     yield results;
   }
-  static Stream<List<Map<dynamic, dynamic>>> BangGiaSanFromMaSan(
-      String maSan) async* {
+  static Stream<List<Map<dynamic, dynamic>>> BangGiaSanFromMaSan(String maSan) async* {
     var db = FirebaseFirestore.instance;
 
-    var collection = db.collectionGroup('BangGiaSan').where(
-        'MaSan', isEqualTo: maSan);
-    var snapshot = await collection.get();
+    var bangGiaSanSnapshot = await db.collection('BangGiaSan')
+        .where('MaSan', isEqualTo: maSan)
+        .orderBy('Gio', descending: false)
+        .get();
 
     var results = <Map<dynamic, dynamic>>[];
 
-    for (var doc in snapshot.docs) {
+    for (var doc in bangGiaSanSnapshot.docs) {
       var bangGiaSan = BangGiaSan.fromJson(doc.data()!);
       var data = {
         ...bangGiaSan.toJson(),
@@ -96,6 +96,7 @@ class JoinTable {
     }
     yield results;
   }
+
   static Stream<List<Map<dynamic, dynamic>>> getTinhTrangSanCon(String maSan,String ngayDat, int gioDat) async* {
     var db = FirebaseFirestore.instance;
     var results = <Map<dynamic, dynamic>>[];
@@ -153,73 +154,12 @@ class JoinTable {
     yield results;
   }
 
-  static Stream<List<dynamic>> joinChiTietSanAndDatSan() async* {
-    var datSanCollection = FirebaseFirestore.instance.collection('DatSan');
-    var chitietSanCollection = FirebaseFirestore.instance.collection(
-        'ChiTietSan');
-
-    var snapshots = await FirebaseFirestore.instance.collectionGroup(
-        'ChiTietSan').get();
-    var chiTietSanList = snapshots.docs.map((doc) =>
-        ChiTietSan.fromJson(doc.data())).toList();
-
-    snapshots =
-    await FirebaseFirestore.instance.collectionGroup('DatSan').get();
-    var datSanList = snapshots.docs.map((doc) => DatSan.fromJson(doc.data()))
-        .toList();
-
-    var joinList = <Map<String, dynamic>>[];
-
-    for (var chiTietSan in chiTietSanList) {
-      var datSanDocs = await datSanCollection.where(
-          'MaCTS', isEqualTo: chiTietSan.MaCTS).get();
-      datSanDocs.docs.forEach((doc) {
-        joinList.add({...chiTietSan.toJson(), ...doc.data()});
-      });
-    }
-
-    yield joinList;
-  }
-
-
-  static Stream<List<Map<dynamic, dynamic>>> joinChiTietSanVaDatSan() async* {
-    var db = FirebaseFirestore.instance;
-
-    var collection = db.collectionGroup('ChiTietSan');
-    var snapshot = await collection.get();
-
-    var results = <Map<dynamic, dynamic>>[];
-
-    for (var doc in snapshot.docs) {
-      var chiTietSan = ChiTietSan.fromJson(doc.data()!);
-
-      var querySnapshotDS = await db
-          .collectionGroup('DatSan')
-          .where('MaCTS', isEqualTo: chiTietSan.MaCTS)
-          .get();
-
-
-      for (var queryDoc in querySnapshotDS.docs) {
-        var datSan = DatSan.fromJson(queryDoc.data()!);
-
-        var data = {
-          ...chiTietSan.toJson(),
-          ...datSan.toJson(),
-        };
-
-        results.add(data);
-      }
-    }
-    yield results;
-  }
-
-
   static Stream<List<Map<dynamic, dynamic>>> joinDatSan_San(
       String maTK) async* {
     var db = FirebaseFirestore.instance;
 
-    var collection = db.collectionGroup('DatSan').where(
-        'MaTK', isEqualTo: maTK);
+    var collection = db.collectionGroup('DatSan').
+    where('MaTK', isEqualTo: maTK);
     var snapshot = await collection.get();
 
     var results = <Map<dynamic, dynamic>>[];
@@ -244,6 +184,32 @@ class JoinTable {
       }
     }
     yield results;
+  }
+
+  static Future<void> xoaByMaTK_NgayDat_GioDat(String maTK, String ngayDat, int gioBatDau) async{
+    var db = FirebaseFirestore.instance;
+
+    var datSanSnapshot = await db.collection('DatSan')
+        .where('MaTK', isEqualTo: maTK)
+        .where('NgayDenSan', isEqualTo: ngayDat)
+        .where('GioBatDau', isEqualTo: gioBatDau)
+        .get();
+    await datSanSnapshot.docs.first.reference.delete();
+
+    var datSanTheoMa = DatSan.fromJson(datSanSnapshot.docs.first.data()!);
+
+    var datSanSnapshot2 = await db.collection('DatSan')
+        .where('MaTK', isEqualTo: 'HideBooking')
+        .where('NgayDenSan', isEqualTo: ngayDat)
+        .get();
+    for(var i=datSanTheoMa.GioBatDau!; i<datSanTheoMa.GioKetThuc!; i++) {
+      for(var datSanDoc in datSanSnapshot2.docs) {
+        var datSanHide = DatSan.fromJson(datSanDoc.data()!);
+        if(datSanHide.GioBatDau == i) {
+          await datSanDoc.reference.delete();
+        }
+      }
+    }
   }
 
   static Stream<List<Map<String, dynamic>>> joinTables() {
