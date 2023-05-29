@@ -239,11 +239,14 @@ class _HomePageState extends State<HomePage> {
                                       const SizedBox(width: 10,),
                                       ElevatedButton(
                                           onPressed: () {
-                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => FireBaseBooking(maTK: maTK, maSan: "${list[index].san!.MaSan}",)));
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (context) => FireBaseBooking(
+                                                  maTK: maTK, maSan: "${list[index].san!.MaSan}",)));
                                           },
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.green,
-                                              padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
+                                              padding: const EdgeInsets.only(
+                                                  right: 20, left: 20, top: 10, bottom: 10),
                                               shape: const RoundedRectangleBorder(
                                                   side: BorderSide(
                                                     width: 2,

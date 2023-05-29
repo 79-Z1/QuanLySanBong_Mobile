@@ -311,7 +311,8 @@ class _PageDetailsBookingState extends State<PageDetailsBooking> {
                         ),
                         SizedBox(height: 30,),
                         StreamBuilder(
-                            stream: JoinTable.tinhTienSan(maTK!, maSan!, int.parse(gioDat.toString()), gioKetThuc!),
+                            stream: JoinTable.tinhTienSan(
+                                maTK!, maSan!, int.parse(gioDat.toString()), gioKetThuc!),
                             builder: (context, snapshot) {
                               if(snapshot.hasError) {
                                 print("Lỗi nè");

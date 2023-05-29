@@ -244,7 +244,8 @@ class _PageHistoryState extends State<PageHistory> {
                                                 ),
                                                 ElevatedButton(
                                                     onPressed: () async{
-                                                      await JoinTable.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
+                                                      await JoinTable.xoaByMaTK_NgayDat_GioDat(
+                                                          maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
                                                       Navigator.pop(context);
                                                       setState(() {
                                                         showSnackbar(context, "Hủy sân thành công");

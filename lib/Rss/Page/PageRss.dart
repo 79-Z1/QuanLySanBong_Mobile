@@ -75,8 +75,10 @@ class _PageRssState extends State<PageRss> {
                                       Expanded(
                                         child: Column(
                                           children: [
-                                            Text("${listRSS[index].title}",style: TextStyle(fontSize: 16,color: Colors.blue)),
-                                            Text("${listRSS[index].description}",style: TextStyle(fontSize: 13),)
+                                            Text("${listRSS[index].title}",style: TextStyle(
+                                                fontSize: 16,color: Colors.blue)),
+                                            Text("${listRSS[index].description}",style: TextStyle(
+                                                fontSize: 13),)
                                           ],
                                         ),
                                       )

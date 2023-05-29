@@ -244,7 +244,8 @@ class _PageAccountState extends State<PageAccount> {
                                       },
                                       style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.green,
-                                          padding: const EdgeInsets.only(right: 103, left: 103, top: 20, bottom: 20),
+                                          padding: const EdgeInsets.only(
+                                              right: 103, left: 103, top: 20, bottom: 20),
                                           shape: const RoundedRectangleBorder(
                                               side: BorderSide(
                                                   color: Colors.black,
@@ -265,7 +266,8 @@ class _PageAccountState extends State<PageAccount> {
                                       },
                                       style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.white,
-                                          padding: const EdgeInsets.only(right: 140, left: 140, top: 10, bottom: 10),
+                                          padding: const EdgeInsets.only(
+                                              right: 140, left: 140, top: 10, bottom: 10),
                                           shape: const RoundedRectangleBorder(
                                               side: BorderSide(
                                                 color: Colors.black,

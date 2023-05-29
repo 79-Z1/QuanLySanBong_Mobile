@@ -81,10 +81,14 @@ class PageLogin extends StatelessWidget {
                                 email: txtemail.text.trim(),
                                 password: txtMK.text.trim()
                             );
-                            FirebaseFirestore.instance.collection('TaiKhoan').where('Email', isEqualTo: txtemail.text.trim()).get().then((querySnapshot) {
+                            FirebaseFirestore.instance.collection('TaiKhoan')
+                                .where('Email', isEqualTo: txtemail.text.trim())
+                                .get().then((querySnapshot) {
                               querySnapshot.docs.forEach((doc) {
                                 String maTK = doc['MaTK'];
-                                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => FirebaseMain(maTK: maTK,)),(route) => false,);
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(builder: (context) =>
+                                      FirebaseMain(maTK: maTK,)),(route) => false,);
                               });
                             });
                           } on FirebaseAuthException catch(e){
