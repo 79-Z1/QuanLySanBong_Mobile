@@ -240,17 +240,17 @@ class _PageHistoryState extends State<PageHistory> {
                                                     onPressed: () {
                                                       Navigator.pop(context);
                                                     },
-                                                    child: Text("Hủy")
+                                                    child: Text("Đóng")
                                                 ),
                                                 ElevatedButton(
                                                     onPressed: () async{
-                                                      await JoinTable.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
+                                                      await JoinTable.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau'],list[index]['ViTriSan']);
                                                       Navigator.pop(context);
                                                       setState(() {
                                                         showSnackbar(context, "Hủy sân thành công");
                                                       });
                                                     },
-                                                    child: Text("Xóa")
+                                                    child: Text("Hủy sân")
                                                 )
                                               ],
                                             );
@@ -301,7 +301,7 @@ class _PageHistoryState extends State<PageHistory> {
                                       const SizedBox(width: 10),
                                       ElevatedButton(
                                           onPressed: () async {
-                                            await JoinTable.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
+                                            await JoinTable.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau'],list[index]['ViTriSan']);
                                             setState(() {
                                               showSnackbar(context, "Xóa thành công");
                                             });
