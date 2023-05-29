@@ -261,13 +261,14 @@ class JoinTable {
     yield results;
   }
 
-  static Future<void> xoaByMaTK_NgayDat_GioDat(String maTK, String ngayDat, int gioBatDau) async{
+  static Future<void> xoaByMaTK_NgayDat_GioDat(String maTK, String ngayDat, int gioBatDau, String viTriSan) async{
     var db = FirebaseFirestore.instance;
 
     var datSanSnapshot = await db.collection('DatSan')
         .where('MaTK', isEqualTo: maTK)
         .where('NgayDenSan', isEqualTo: ngayDat)
         .where('GioBatDau', isEqualTo: gioBatDau)
+        .where('ViTriSan', isEqualTo: viTriSan)
         .get();
     await datSanSnapshot.docs.first.reference.delete();
 
@@ -276,6 +277,7 @@ class JoinTable {
     var datSanSnapshot2 = await db.collection('DatSan')
         .where('MaTK', isEqualTo: 'HideBooking')
         .where('NgayDenSan', isEqualTo: ngayDat)
+        .where('ViTriSan', isEqualTo: viTriSan)
         .get();
     for(var i=datSanTheoMa.GioBatDau!; i<datSanTheoMa.GioKetThuc!; i++) {
       for(var datSanDoc in datSanSnapshot2.docs) {
