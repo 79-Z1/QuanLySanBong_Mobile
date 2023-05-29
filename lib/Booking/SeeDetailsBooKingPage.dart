@@ -197,7 +197,7 @@ class _PaseSeeDetailsBookingState extends State<PaseSeeDetailsBooking> {
                         const SizedBox(height: 40,),
                         Container(
                           width: 150,
-                          height: 55,
+                          height: 150,
                           child: const Text("Địa chỉ",
                             style: TextStyle(
                               fontSize: 23,
@@ -254,7 +254,7 @@ class _PaseSeeDetailsBookingState extends State<PaseSeeDetailsBooking> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 50,),
+                        const SizedBox(height: 40,),
                         Container(
                           width: 150,
                           height: 55,
@@ -279,7 +279,7 @@ class _PaseSeeDetailsBookingState extends State<PaseSeeDetailsBooking> {
                         const SizedBox(height: 40,),
                         Container(
                           width: 150,
-                          height: 55,
+                          height: 150,
                           child: Text("${diaChi}",
                             style: const TextStyle(
                               fontSize: 23,

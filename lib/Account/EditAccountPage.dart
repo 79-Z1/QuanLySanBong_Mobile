@@ -106,64 +106,79 @@ class _PageEditAccountState extends State<PageEditAccount> {
                       var list = snapshot.data!;
                       return Column(
                         children: [
+                          SizedBox(height: 31,),
                           Row(
                             children: [
-                              SizedBox(width: 20,),
+                              SizedBox(width: 30,),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(height: 35,),
-                                  Text("Số điện thoại",
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
+                                  SizedBox(height: 30,),
+                                  Container(
+                                    height: 50,
+                                    child: Text("Số điện thoại",
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                  SizedBox(height: 35,),
-                                  Text("Họ tên",
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
+                                  SizedBox(height: 10,),
+                                  Container(
+                                    height: 50,
+                                    child: Text("Họ tên",
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                  SizedBox(height: 35,),
-                                  Text("Địa chỉ",
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
+                                  SizedBox(height: 10,),
+                                  Container(height: 50,
+                                    child: Text("Địa chỉ",
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                  SizedBox(height: 35,),
-                                  Text("Email",
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
+                                  SizedBox(height: 10,),
+                                  Container(height: 50,
+                                    child: Text("Email",
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                  SizedBox(height: 35,),
-                                  Text("Thành viên",
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
+                                  SizedBox(height: 40,),
+                                  Container(height: 50,
+                                    child: Text("Thành viên",
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                  SizedBox(height: 35,),
-                                  Text("Điểm tích",
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
+                                  SizedBox(height: 10,),
+                                  Container(height: 50,
+                                    child: Text("Điểm tích",
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(width: 20,),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    SizedBox(height: 25,),
+                                    //SizedBox(height: 25,),
                                     SizedBox(
-                                      height: 30,
+                                      height: 35,
                                       child: TextField(
                                         decoration: InputDecoration(
                                             border: OutlineInputBorder(),
@@ -171,12 +186,12 @@ class _PageEditAccountState extends State<PageEditAccount> {
                                         ),
                                         controller: txtsdt,
                                         keyboardType: TextInputType.number,
-                                        style: TextStyle(fontSize: 17),
+                                        style: TextStyle(fontSize: 22),
                                       ),
                                     ),
-                                    SizedBox(height: 25,),
+                                    SizedBox(height: 28,),
                                     SizedBox(
-                                      height: 30,
+                                      height: 35,
                                       child: TextField(
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(),
@@ -184,12 +199,12 @@ class _PageEditAccountState extends State<PageEditAccount> {
                                         ),
                                         controller: txtname,
                                         keyboardType: TextInputType.text,
-                                        style: TextStyle(fontSize: 17),
+                                        style: TextStyle(fontSize: 22),
                                       ),
                                     ),
-                                    SizedBox(height: 27,),
+                                    SizedBox(height: 28,),
                                     SizedBox(
-                                      height: 30,
+                                      height: 35,
                                       child: TextField(
                                         decoration: InputDecoration(
                                             border: OutlineInputBorder(),
@@ -197,27 +212,27 @@ class _PageEditAccountState extends State<PageEditAccount> {
                                         ),
                                         controller: txtdiachi,
                                         keyboardType: TextInputType.text,
-                                        style: TextStyle(fontSize: 17),
+                                        style: TextStyle(fontSize: 22),
                                       ),
                                     ),
-                                    SizedBox(height: 30,),
+                                    SizedBox(height: 25,),
                                     Text("${list.taiKhoan!.Email}",
                                       style: TextStyle(
-                                        fontSize: 17,
+                                        fontSize: 22,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    SizedBox(height: 35,),
+                                    SizedBox(height: 37,),
                                     Text("${list.taiKhoan!.Vip==true?'VIP':'Thường'}",
                                       style: TextStyle(
-                                        fontSize: 17,
+                                        fontSize: 22,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    SizedBox(height: 35,),
+                                    SizedBox(height: 37,),
                                     Text("${list.taiKhoan!.DiemTich}",
                                       style: TextStyle(
-                                        fontSize: 17,
+                                        fontSize: 22,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -240,7 +255,7 @@ class _PageEditAccountState extends State<PageEditAccount> {
                             ),
                             child: Column(
                               children: [
-                                SizedBox(height: 55,),
+                                SizedBox(height: 45,),
                                 ElevatedButton(
                                     onPressed: () {
                                       _capNhat(context);
