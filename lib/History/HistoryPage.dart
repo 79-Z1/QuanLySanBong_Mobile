@@ -229,11 +229,32 @@ class _PageHistoryState extends State<PageHistory> {
                                       ),
                                       const SizedBox(width: 10),
                                       ElevatedButton(
-                                          onPressed: () async {
-                                            await JoinTable.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
-                                            setState(() {
-                                              showSnackbar(context, "Hủy sân thành công");
-                                            });
+                                          onPressed: (){
+                                            var dialog = AlertDialog(
+                                              title: Text("Thông báo"),
+                                              content: Container(
+                                                child: Text("Bạn có thực sự muốn hủy sân không"),
+                                              ),
+                                              actions: [
+                                                ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text("Hủy")
+                                                ),
+                                                ElevatedButton(
+                                                    onPressed: () async{
+                                                      await JoinTable.xoaByMaTK_NgayDat_GioDat(maTK!, list[index]['NgayDenSan'], list[index]['GioBatDau']);
+                                                      Navigator.pop(context);
+                                                      setState(() {
+                                                        showSnackbar(context, "Hủy sân thành công");
+                                                      });
+                                                    },
+                                                    child: Text("Xóa")
+                                                )
+                                              ],
+                                            );
+                                            showDialog(context: context, builder: (context) => dialog);
                                           },
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.red,
