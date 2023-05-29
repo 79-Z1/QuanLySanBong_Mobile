@@ -142,7 +142,7 @@ class _PageEditAccountState extends State<PageEditAccount> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 10,),
+                                  SizedBox(height: 20,),
                                   Container(height: 50,
                                     child: Text("Email",
                                       style: TextStyle(
@@ -204,7 +204,7 @@ class _PageEditAccountState extends State<PageEditAccount> {
                                     ),
                                     SizedBox(height: 28,),
                                     SizedBox(
-                                      height: 35,
+                                      height: 45,
                                       child: TextField(
                                         decoration: InputDecoration(
                                             border: OutlineInputBorder(),
